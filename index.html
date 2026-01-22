@@ -4,112 +4,167 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Acceso | Hugo Alvigini</title>
-  <meta name="description" content="Accede a la plataforma de cursos de Hugo Alvigini. Herramientas de automatización y Google Sheets para emprendedores.">
+  <meta name="description" content="Accede a la formación líder en Google Sheets y Automatización. Investigación de mercado, Landing Pages y Gestión Inteligente.">
   
-  <link rel="canonical" href="https://hugo85ar.github.io/cursos-hugo-alvigini/">
+  <link rel="canonical" href="https://hugo85ar.github.io/Plataforma-de-Cursos/">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     :root {
       --platform-dark: #1a1f36;
-      --platform-blue: #1e3c72;
-      --accent-green: #1e7e34; /* Verde más oscuro para Accesibilidad 100 */
+      --accent-turq: #30D5C8;
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.15);
     }
 
-    html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; background-color: var(--platform-dark); }
+    html, body { height: 100%; margin: 0; padding: 0; background-color: var(--platform-dark); font-family: 'Open Sans', sans-serif; overflow-x: hidden; }
 
+    /* FONDO NÍTIDO Y PROFUNDO */
     .bg-container {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif'); 
       background-size: cover; background-position: center;
-      filter: brightness(0.7); z-index: -1;
+      filter: brightness(0.4) contrast(1.1); z-index: -1;
     }
 
-    .bg-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(30, 60, 114, 0.4) 0%, rgba(26, 31, 54, 0.6) 100%);
-      z-index: 0;
+    /* CONTENEDOR FLUIDO */
+    .main-wrapper {
+      display: flex; flex-direction: row; min-height: 100vh;
+      width: 100%; max-width: 1300px; margin: 0 auto;
+      align-items: center; padding: 40px; box-sizing: border-box; gap: 40px;
     }
 
-    body { font-family: 'Open Sans', sans-serif; display: flex; align-items: center; justify-content: flex-start; min-height: 100vh; position: relative; }
+    /* COLUMNA IZQUIERDA: CONTENEDORES DE INFORMACIÓN */
+    .info-column { flex: 1; color: white; }
+    .info-column h1 { font-family: 'Montserrat', sans-serif; font-size: 2.5em; margin-bottom: 30px; line-height: 1.2; }
+    
+    .course-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      padding: 20px; border-radius: 18px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 20px;
+      transition: transform 0.3s ease;
+    }
+    .course-card:hover { transform: translateX(10px); background: rgba(255, 255, 255, 0.12); }
+    .course-card i { font-size: 1.8em; color: var(--accent-turq); width: 40px; text-align: center; }
+    .course-card h3 { margin: 0; font-size: 1.1em; font-family: 'Montserrat', sans-serif; }
+    .course-card p { margin: 5px 0 0; font-size: 0.9em; opacity: 0.8; }
 
-    /* Ajuste para móvil y desktop */
-    @media (min-width: 769px) { body { padding-left: 8%; } }
-    @media (max-width: 768px) { body { justify-content: center; } }
-
+    /* COLUMNA DERECHA: CAJA DE LOGIN */
+    .login-column { flex: 0 0 420px; display: flex; justify-content: center; }
     .login-box {
-      background: #ffffff; padding: 50px; border-radius: 20px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5); width: 90%; max-width: 400px;
-      text-align: center; position: relative; z-index: 10;
+      background: #ffffff; padding: 45px; border-radius: 24px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5); width: 100%;
+      text-align: center; color: var(--platform-dark);
     }
-
-    .brand-logo { margin-top: -115px; margin-bottom: 20px; }
+    .brand-logo { margin-top: -100px; margin-bottom: 20px; }
     .brand-logo img {
-      width: 160px; height: 160px; object-fit: cover; border-radius: 50%;
+      width: 140px; height: 140px; object-fit: cover; border-radius: 50%;
       border: 6px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
 
-    h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 2.2em; margin: 0 0 5px; }
-    h2 { font-size: 1em; color: #555; margin-bottom: 30px; font-weight: 400; line-height: 1.4; }
-
-    .promo-badge {
-      display: inline-block; background: var(--accent-green); color: white;
-      padding: 6px 15px; border-radius: 20px; font-size: 0.85em;
-      font-weight: 700; margin-bottom: 20px; text-transform: uppercase;
-    }
-
+    /* FORMULARIO */
     .form-group { text-align: left; margin-bottom: 15px; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9em; color: #333; }
+    .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.85em; }
     input {
-      width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 8px;
-      box-sizing: border-box; font-size: 1em; background: #fdfdfd; outline: none;
+      width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 10px;
+      box-sizing: border-box; font-size: 1em; outline: none; transition: 0.3s;
     }
-
+    input:focus { border-color: var(--platform-blue); box-shadow: 0 0 0 3px rgba(30,60,114,0.1); }
+    
     .btn-primary {
       width: 100%; padding: 16px; background: var(--platform-dark); color: white;
-      border: none; border-radius: 10px; font-size: 1.1em; font-weight: 700;
+      border: none; border-radius: 12px; font-size: 1.1em; font-weight: 700;
       cursor: pointer; transition: 0.3s; margin-top: 15px;
     }
-    .btn-primary:hover { background: var(--platform-blue); transform: scale(1.02); }
+    .btn-primary:hover { background: #2a314d; transform: translateY(-2px); }
 
     /* HugoBot Bubble */
     .hugo-bot-bubble {
       position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
-      background: linear-gradient(135deg, #1e3c72, #1a1f36); border-radius: 50%;
-      display: flex; justify-content: center; align-items: center;
-      cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 100;
+      background: linear-gradient(135deg, var(--accent-turq), #00b894);
+      border-radius: 50%; display: flex; justify-content: center; align-items: center;
+      cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid white;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 992px) {
+      .main-wrapper { flex-direction: column; padding-top: 100px; }
+      .login-column { width: 100%; order: 1; }
+      .info-column { order: 2; width: 100%; text-align: center; }
+      .course-card { text-align: left; }
     }
   </style>
 </head>
 <body>
 
   <div class="bg-container"></div>
-  <div class="bg-overlay"></div>
 
-  <main class="login-box">
-    <div class="brand-logo">
-      <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/w_400,h_400,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" 
-           alt="Hugo Alvigini" width="160" height="160" fetchpriority="high">
-    </div>
+  <main class="main-wrapper">
     
-    <div class="promo-badge"><i class="fas fa-rocket"></i> Pensando en el Emprendedor</div>
-    
-    <h1>Hugo Alvigini</h1>
-    <h2>Lleva tu emprendimiento al siguiente nivel con nuestras herramientas.</h2>
-    
-    <form id="loginForm">
-      <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+    <section class="info-column">
+      <h1>Transformá tu negocio con herramientas inteligentes.</h1>
+      
+      <div class="course-card">
+        <i class="fas fa-gift"></i>
+        <div>
+          <h3>Curso Gratuito: Pensando en el Emprendedor</h3>
+          <p>Sentá las bases de tu proyecto y validá tu idea sin inversión inicial.</p>
+        </div>
       </div>
-      <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input type="password" id="password" name="password" placeholder="Tu contraseña" required>
+
+      <div class="course-card">
+        <i class="fas fa-magnifying-glass-chart"></i>
+        <div>
+          <h3>Investigación de Mercado</h3>
+          <p>Dominá el análisis de competencia y encontrá tu océano azul.</p>
+        </div>
       </div>
-      <button type="submit" class="btn-primary" id="submitBtn">Entrar a mis Cursos</button>
-    </form>
-    <div id="message" style="margin-top: 15px; font-weight: 600;"></div>
+
+      <div class="course-card">
+        <i class="fas fa-wand-magic-sparkles"></i>
+        <div>
+          <h3>Landing Pages de Alta Conversión</h3>
+          <p>Construí sitios web que trabajen y vendan por vos las 24 horas.</p>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <i class="fas fa-gears"></i>
+        <div>
+          <h3>Automatización en la Gestión</h3>
+          <p>Optimizá tus tiempos y procesos con el poder de Google Sheets.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="login-column">
+      <div class="login-box">
+        <div class="brand-logo">
+          <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/w_280,h_280,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" 
+               alt="Hugo Alvigini" width="140" height="140" fetchpriority="high">
+        </div>
+        
+        <h2 style="margin:0">Bienvenido</h2>
+        <p style="color:#666; font-size:0.9em; margin-bottom:25px">Ingresá a tu área de alumnos</p>
+        
+        <form id="loginForm">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="tu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" id="password" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-primary" id="submitBtn">Entrar a mis Cursos</button>
+        </form>
+        <div id="message" style="margin-top: 15px; font-weight: 600; color: #1e3c72; font-size: 0.9em;"></div>
+      </div>
+    </section>
+
   </main>
 
   <div class="hugo-bot-bubble" onclick="location.href='https://hugo85ar.github.io/HugoBot/'">
@@ -126,11 +181,9 @@
       const btn = document.getElementById('submitBtn');
       const messageDiv = document.getElementById('message');
 
-      messageDiv.style.color = "#1e3c72";
-      messageDiv.innerHTML = 'Verificando credenciales...';
+      messageDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verificando...';
       btn.disabled = true;
 
-      // Usamos el formulario POST real hacia Apps Script
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = WEB_APP_URL;
@@ -149,6 +202,5 @@
       form.submit();
     });
   </script>
-
 </body>
 </html>
