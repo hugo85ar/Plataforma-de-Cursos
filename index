@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Acceso | Hugo Alvigini</title>
+  <meta name="description" content="Accede a la plataforma de cursos de Hugo Alvigini. Herramientas de automatización y Google Sheets para emprendedores.">
+  
+  <link rel="canonical" href="https://hugo85ar.github.io/cursos-hugo-alvigini/">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --platform-dark: #1a1f36;
+      --platform-blue: #1e3c72;
+      --accent-green: #1e7e34; /* Verde más oscuro para Accesibilidad 100 */
+    }
+
+    html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; background-color: var(--platform-dark); }
+
+    .bg-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif'); 
+      background-size: cover; background-position: center;
+      filter: brightness(0.7); z-index: -1;
+    }
+
+    .bg-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(30, 60, 114, 0.4) 0%, rgba(26, 31, 54, 0.6) 100%);
+      z-index: 0;
+    }
+
+    body { font-family: 'Open Sans', sans-serif; display: flex; align-items: center; justify-content: flex-start; min-height: 100vh; position: relative; }
+
+    /* Ajuste para móvil y desktop */
+    @media (min-width: 769px) { body { padding-left: 8%; } }
+    @media (max-width: 768px) { body { justify-content: center; } }
+
+    .login-box {
+      background: #ffffff; padding: 50px; border-radius: 20px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5); width: 90%; max-width: 400px;
+      text-align: center; position: relative; z-index: 10;
+    }
+
+    .brand-logo { margin-top: -115px; margin-bottom: 20px; }
+    .brand-logo img {
+      width: 160px; height: 160px; object-fit: cover; border-radius: 50%;
+      border: 6px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 2.2em; margin: 0 0 5px; }
+    h2 { font-size: 1em; color: #555; margin-bottom: 30px; font-weight: 400; line-height: 1.4; }
+
+    .promo-badge {
+      display: inline-block; background: var(--accent-green); color: white;
+      padding: 6px 15px; border-radius: 20px; font-size: 0.85em;
+      font-weight: 700; margin-bottom: 20px; text-transform: uppercase;
+    }
+
+    .form-group { text-align: left; margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9em; color: #333; }
+    input {
+      width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 8px;
+      box-sizing: border-box; font-size: 1em; background: #fdfdfd; outline: none;
+    }
+
+    .btn-primary {
+      width: 100%; padding: 16px; background: var(--platform-dark); color: white;
+      border: none; border-radius: 10px; font-size: 1.1em; font-weight: 700;
+      cursor: pointer; transition: 0.3s; margin-top: 15px;
+    }
+    .btn-primary:hover { background: var(--platform-blue); transform: scale(1.02); }
+
+    /* HugoBot Bubble */
+    .hugo-bot-bubble {
+      position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
+      background: linear-gradient(135deg, #1e3c72, #1a1f36); border-radius: 50%;
+      display: flex; justify-content: center; align-items: center;
+      cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-container"></div>
+  <div class="bg-overlay"></div>
+
+  <main class="login-box">
+    <div class="brand-logo">
+      <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/w_400,h_400,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" 
+           alt="Hugo Alvigini" width="160" height="160" fetchpriority="high">
+    </div>
+    
+    <div class="promo-badge"><i class="fas fa-rocket"></i> Pensando en el Emprendedor</div>
+    
+    <h1>Hugo Alvigini</h1>
+    <h2>Lleva tu emprendimiento al siguiente nivel con nuestras herramientas.</h2>
+    
+    <form id="loginForm">
+      <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+      </div>
+      <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" placeholder="Tu contraseña" required>
+      </div>
+      <button type="submit" class="btn-primary" id="submitBtn">Entrar a mis Cursos</button>
+    </form>
+    <div id="message" style="margin-top: 15px; font-weight: 600;"></div>
+  </main>
+
+  <div class="hugo-bot-bubble" onclick="location.href='https://hugo85ar.github.io/HugoBot/'">
+    <i class="fas fa-comments" style="color: white; font-size: 28px;"></i>
+  </div>
+
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby0d3lmpWy_JKb-JObmsi8yL71alS_EfELD_bm63irK2U-Mxm1V4u_KkvlkprNt96ZO/exec";
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('submitBtn');
+      const messageDiv = document.getElementById('message');
+
+      messageDiv.style.color = "#1e3c72";
+      messageDiv.innerHTML = 'Verificando credenciales...';
+      btn.disabled = true;
+
+      // Usamos el formulario POST real hacia Apps Script
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = WEB_APP_URL;
+
+      const emailInput = document.createElement('input');
+      emailInput.name = 'email';
+      emailInput.value = email;
+      form.appendChild(emailInput);
+
+      const passInput = document.createElement('input');
+      passInput.name = 'password';
+      passInput.value = password;
+      form.appendChild(passInput);
+
+      document.body.appendChild(form);
+      form.submit();
+    });
+  </script>
+
+</body>
+</html>
