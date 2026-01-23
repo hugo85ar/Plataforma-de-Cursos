@@ -1,102 +1,175 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecciones | Hugo Alvigini</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Cargando curso... | Hugo Alvigini</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-    body { font-family: 'Open Sans', sans-serif; margin: 0; background: #f1f5f9; color: #1e293b; }
-    .nav-bar { background: #1e3c72; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .content-area { max-width: 900px; margin: 30px auto; padding: 0 20px; }
-    .lesson-card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-    .lesson-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
-    .btn-play { background: #1e3c72; color: white; padding: 10px 25px; border-radius: 10px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; }
-    .video-modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; justify-content:center; align-items:center; z-index:2000; }
-    iframe { width: 85%; height: 80%; border-radius: 20px; border: 4px solid white; }
-    .btn-back { background:rgba(255,255,255,0.2); color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; text-decoration:none; font-weight:bold; font-size: 0.9em; }
+    /* 🔹 MANTENEMOS TUS ESTILOS ORIGINALES */
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0; padding: 0;
+      background: linear-gradient(135deg, #1f2559, #3b82f6);
+      background-attachment: fixed;
+      color: #333; line-height: 1.6;
+    }
+    .container { max-width: 960px; margin: 2.5rem auto; padding: 0 1.5rem; }
+    .course-header {
+      background-color: #0056b3; color: white; padding: 1.5rem;
+      border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
+    }
+    .course-header h1 { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; margin: 0; flex-grow: 1; text-align: center; }
+    .action-buttons { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+    
+    /* Botones y Módulos (Se mantienen igual a tu CSS) */
+    .logout-button, .reset-password-button, .inicio-button {
+      color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none;
+      font-weight: 600; font-size: 0.9rem; width: 150px; text-align: center; cursor: pointer;
+    }
+    .logout-button { background-color: #dc3545; }
+    .reset-password-button { background-color: #ff9800; }
+    .inicio-button { background-color: #007bff; }
+    
+    .module { background-color: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; }
+    .lesson { background: #ffffff; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #f1f5f9; position: relative; }
+    .video-button { background-color: #0056b3; color: white; padding: 0.9rem 1.8rem; border-radius: 5px; cursor: pointer; display: block; text-align: center; border:none; width: 100%; font-weight: bold; }
+    
+    /* Loader y Modal */
+    #loader { color: white; text-align: center; padding: 50px; font-size: 1.2rem; }
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+    .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; }
+    .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
+    .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
   </style>
 </head>
-<body>
-  <header class="nav-bar">
-    <h2 id="courseTitle">Cargando...</h2>
-    <a id="btnVolver" href="#" class="btn-back">Volver al Inicio</a>
-  </header>
+<body oncontextmenu="return false;">
 
-  <div class="content-area" id="lessonContainer">
-     <div id="loading" style="text-align:center; padding:100px"><i class="fas fa-circle-notch fa-spin fa-3x" style="color:#1e3c72"></i><p>Buscando tus lecciones...</p></div>
+  <div class="container" id="mainContainer">
+    <header class="course-header">
+      <h1 id="courseTitle">Cargando...</h1>
+      <div class="action-buttons">
+        <a href="https://docs.google.com/forms/d/e/..." target="_blank" class="reset-password-button">Restablecer Contraseña</a>
+        <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
+        <a href="dashboard.html" class="inicio-button">Volver al Inicio</a>
+      </div>
+    </header>
+
+    <div id="courseBannerContainer"></div>
+
+    <section class="welcome-message module">
+      <h2 id="welcomeUser">¡Bienvenido!</h2>
+      <p id="courseDescription"></p>
+    </section>
+
+    <div id="loader">Cargando lecciones...</div>
+    <div id="courseContent"></div>
   </div>
 
-  <div id="videoModal" class="video-modal" onclick="cerrarVideo()">
-     <iframe id="videoIframe" src="" frameborder="0" allowfullscreen></iframe>
+  <div id="videoModal" class="modal">
+    <div class="modal-content">
+      <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
+        <h2 id="modalVideoTitle" style="margin:0; font-size:1.2rem;"></h2>
+        <span onclick="closeModal()" style="cursor:pointer; font-size:2rem;">&times;</span>
+      </div>
+      <div class="video-container-modal">
+        <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
+    </div>
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycby0d3lmpWy_JKb-JObmsi8yL71alS_EfELD_bm63irK2U-Mxm1V4u_KkvlkprNt96ZO/exec";
-    const params = new URLSearchParams(window.location.search);
-    const cursoId = params.get('cursoId');
-    const sessionId = params.get('sessionId');
+    // 1. CONFIGURACIÓN
+    const WEB_APP_URL = "TU_URL_DE_IMPLEMENTACION_AQUI";
+    const userEmail = localStorage.getItem('userEmail');
+    const userToken = localStorage.getItem('userToken');
+    const cursoId = localStorage.getItem('cursoActual');
 
-    // Configuramos el botón volver apenas carga la página
-    if (sessionId) {
-        document.getElementById('btnVolver').href = `dashboard.html?sessionId=${sessionId}`;
-    }
+    if (!userEmail || !userToken || !cursoId) window.location.href = "index.html";
 
-    async function cargarLecciones() {
-      if (!cursoId || !sessionId) {
-        document.getElementById('lessonContainer').innerHTML = "<p>Error: No se encontró la sesión o el curso.</p>";
-        return;
-      }
-
+    // 2. CARGA DE DATOS
+    async function init() {
       try {
-        const res = await fetch(`${API_URL}?action=getCourse&cursoId=${cursoId}&sessionId=${sessionId}`);
-        const data = await res.json();
+        const response = await fetch(`${WEB_APP_URL}?action=getCourseData&curso=${cursoId}&email=${userEmail}&token=${userToken}`);
+        const data = await response.json();
+
+        if (data.status === "success") {
+          renderCourse(data);
+        } else {
+          alert("Sesión no válida");
+          cerrarSesion();
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    // 3. RENDERIZADO DINÁMICO
+    function renderCourse(data) {
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('courseTitle').innerText = data.nombreCurso;
+      document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
+      document.getElementById('courseDescription').innerText = data.descripcionGeneral;
+      
+      if (data.urlBanner) {
+        document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" class="course-banner" style="width:100%; border-radius:8px; margin-bottom:1rem;">`;
+      }
+
+      const content = document.getElementById('courseContent');
+      
+      // Mapeamos los módulos y lecciones
+      for (const modulo in data.modulos) {
+        let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
         
-        if (data.success === false) {
-            document.getElementById('lessonContainer').innerHTML = `<p>Sesión expirada. Por favor <a href="index.html">inicia sesión otra vez</a>.</p>`;
-            return;
-        }
-
-        document.getElementById('courseTitle').innerText = data.curso.id.toUpperCase().replace('_', ' ');
-        const container = document.getElementById('lessonContainer');
-        container.innerHTML = "";
-
-        for (let mod in data.curso.modulos) {
-          let modHtml = `<h2 style="margin-top:40px; color:#1e3c72; border-bottom:3px solid #30D5C8; padding-bottom:10px">${mod}</h2>`;
-          data.curso.modulos[mod].forEach(leccion => {
-            if(leccion.tipo === 'leccion') {
-              modHtml += `
-                <div class="lesson-card">
-                  <div style="flex:1; padding-right:15px">
-                    <h3 style="margin:0">${leccion.titulo}</h3>
-                    <p style="color:#64748b; font-size:0.9em; margin:5px 0 0">${leccion.descripcion || ''}</p>
-                  </div>
-                  ${leccion.video.url ? `<button class="btn-play" onclick="verVideo('${leccion.video.url}')"><i class="fas fa-play"></i> Ver</button>` : ''}
-                </div>`;
-            }
-          });
-          container.innerHTML += modHtml;
-        }
-      } catch (error) {
-        console.error(error);
-        document.getElementById('lessonContainer').innerHTML = "<p>Error de conexión con el servidor. Intenta refrescar la página.</p>";
+        data.modulos[modulo].forEach(item => {
+          if (item.tipo === 'leccion') {
+            moduloHtml += `
+              <div class="lesson">
+                <div class="lesson-info">
+                  <h3>Lección ${item.id}: ${item.titulo}</h3>
+                  <p>${item.descripcion || ''}</p>
+                </div>
+                ${item.videoUrl ? `
+                  <button class="video-button" onclick="verificarYVer('${item.videoUrl}', 'Lección ${item.id}: ${item.titulo}')">
+                    Ver Video
+                  </button>
+                ` : ''}
+                ${item.material ? `<a href="${item.material}" target="_blank" class="material-button" style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none;">Descargar Material</a>` : ''}
+              </div>`;
+          }
+        });
+        moduloHtml += `</div>`;
+        content.innerHTML += moduloHtml;
       }
     }
 
-    function verVideo(url) {
-      const modal = document.getElementById('videoModal');
-      const iframe = document.getElementById('videoIframe');
-      // Convertimos el link de Google Drive para que sea reproducible
-      iframe.src = url.replace('/view?usp=sharing', '/preview').replace('/view', '/preview');
-      modal.style.display = 'flex';
+    // 4. EL "GUARDIA" EN TIEMPO REAL
+    async function verificarYVer(url, titulo) {
+      // Antes de abrir el video, confirmamos que el token sigue siendo el del Excel
+      const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
+      const data = await response.json();
+
+      if (data.esValido) {
+        const frame = document.getElementById('modalVideoFrame');
+        document.getElementById('modalVideoTitle').innerText = titulo;
+        frame.src = url.replace('/view?usp=sharing', '/preview');
+        document.getElementById('videoModal').style.display = 'flex';
+      } else {
+        alert("Tu sesión ha expirado porque ingresaste desde otro dispositivo.");
+        cerrarSesion();
+      }
     }
 
-    function cerrarVideo() {
-      document.getElementById('videoIframe').src = "";
+    function closeModal() {
       document.getElementById('videoModal').style.display = 'none';
+      document.getElementById('modalVideoFrame').src = '';
     }
 
-    window.onload = cargarLecciones;
+    function cerrarSesion() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+
+    init();
   </script>
 </body>
 </html>
