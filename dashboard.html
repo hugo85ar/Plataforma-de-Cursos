@@ -3,54 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mis Cursos | Plataforma Hugo Alvigini</title>
+  <title>Mis Cursos | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* Usamos tu diseño azul de la captura */
     body { font-family: 'Open Sans', sans-serif; margin: 0; background: linear-gradient(135deg, #1f2559, #3b82f6); color: white; min-height: 100vh; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-    .header { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); padding: 20px; border-radius: 15px; margin-bottom: 30px; }
+    .container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
+    .header { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.9); padding: 20px; border-radius: 18px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
     .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
-    .card { background: white; color: #333; border-radius: 15px; overflow: hidden; transition: 0.3s; }
-    .card:hover { transform: translateY(-10px); }
+    .card { background: white; color: #333; border-radius: 16px; overflow: hidden; transition: 0.3s; text-decoration: none; display: flex; flex-direction: column; }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
     .card img { width: 100%; height: 180px; object-fit: cover; }
-    .card-body { padding: 20px; }
-    .btn-enter { display: block; background: #28a745; color: white; text-align: center; padding: 10px; border-radius: 10px; text-decoration: none; font-weight: bold; }
-    #loader { text-align: center; padding: 50px; font-size: 1.5em; }
+    .card-content { padding: 20px; flex-grow: 1; }
+    .btn-enter { background: #22c55e; color: white; text-align: center; padding: 12px; border-radius: 30px; font-weight: bold; margin: 15px; }
+    #loader { text-align: center; padding: 100px; font-size: 1.5em; }
   </style>
 </head>
 <body>
   <div class="container">
     <header class="header">
       <h1>Mis Cursos</h1>
-      <button onclick="logout()" style="background:#dc3545; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer;">Cerrar Sesión</button>
+      <button onclick="location.href='index.html'" style="background:#ef4444; color:white; border:none; padding:10px 20px; border-radius:30px; cursor:pointer; font-weight:bold;">Cerrar Sesión</button>
     </header>
 
-    <div id="loader"><i class="fas fa-spinner fa-spin"></i> Cargando tus cursos...</div>
+    <div id="loader"><i class="fas fa-circle-notch fa-spin"></i> Cargando tus cursos...</div>
     <div class="course-grid" id="courseContainer"></div>
   </div>
 
   <script>
-    const API_URL = "TU_URL_DE_APPS_SCRIPT";
+    const API_URL = "TU_URL_DE_APPS_SCRIPT_AQUI"; // El que termina en Nt96ZO/exec
+    const sessionId = new URLSearchParams(window.location.search).get('sessionId');
 
-    async function cargarDashboard() {
-      // Aquí pediríamos los datos al script de Google
-      // Por ahora, simulamos la carga para que veas el efecto:
-      const container = document.getElementById('courseContainer');
-      const loader = document.getElementById('loader');
+    async function cargarCursos() {
+      if (!sessionId) { location.href = 'index.html'; return; }
       
-      // En una implementación real, aquí harías un fetch a tu API_URL
-      // const res = await fetch(API_URL + "?action=getDashboard&sessionId=...");
-      
-      loader.style.display = 'none';
-      // Aquí generarías el HTML de las tarjetas con un loop
-    }
+      try {
+        const response = await fetch(`${API_URL}?action=getDashboard&sessionId=${sessionId}`);
+        const data = await response.json();
+        
+        document.getElementById('loader').style.display = 'none';
+        const container = document.getElementById('courseContainer');
 
-    function logout() {
-      localStorage.clear();
-      window.location.href = 'index.html';
+        data.cursos.forEach(curso => {
+          container.innerHTML += `
+            <a href="curso.html?cursoId=${curso.id}&sessionId=${sessionId}" class="card">
+              <img src="${curso.urlBanner || 'https://via.placeholder.com/400x200?text=Curso'}" alt="${curso.nombre}">
+              <div class="card-content">
+                <h3 style="margin:0">${curso.nombre}</h3>
+                <p style="color:#666; font-size:0.9em">${curso.descripcion}</p>
+              </div>
+              <div class="btn-enter">Acceder al Curso</div>
+            </a>`;
+        });
+      } catch (e) {
+        document.getElementById('loader').innerHTML = "Error al cargar la sesión.";
+      }
     }
-
-    window.onload = cargarDashboard;
+    window.onload = cargarCursos;
   </script>
 </body>
 </html>
