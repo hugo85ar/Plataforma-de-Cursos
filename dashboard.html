@@ -1,65 +1,144 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mis Cursos | Hugo Alvigini</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Mis Cursos - Plataforma</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-    /* Usamos tu diseño azul de la captura */
-    body { font-family: 'Open Sans', sans-serif; margin: 0; background: linear-gradient(135deg, #1f2559, #3b82f6); color: white; min-height: 100vh; }
-    .container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
-    .header { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.9); padding: 20px; border-radius: 18px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-    .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
-    .card { background: white; color: #333; border-radius: 16px; overflow: hidden; transition: 0.3s; text-decoration: none; display: flex; flex-direction: column; }
-    .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-    .card img { width: 100%; height: 180px; object-fit: cover; }
-    .card-content { padding: 20px; flex-grow: 1; }
-    .btn-enter { background: #22c55e; color: white; text-align: center; padding: 12px; border-radius: 30px; font-weight: bold; margin: 15px; }
-    #loader { text-align: center; padding: 100px; font-size: 1.5em; }
+    /* 🔹 MANTENEMOS TUS ESTILOS ORIGINALES */
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0; padding: 0;
+      background: linear-gradient(135deg, #1f2559, #3b82f6);
+      color: #333; line-height: 1.6; min-height: 100vh;
+    }
+    .container { max-width: 1200px; margin: 2.5rem auto; padding: 0 1.5rem 3rem; }
+    .header {
+      background: rgba(15, 23, 42, 0.96); color: #f9fafb;
+      padding: 1.25rem 1.5rem; border-radius: 18px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1.8rem; box-shadow: 0 18px 45px rgba(15, 23, 42, 0.4);
+    }
+    .logout-button {
+      background: linear-gradient(135deg, #f97373, #ef4444); color: white;
+      padding: 0.65rem 1.4rem; border-radius: 999px; text-decoration: none;
+      font-weight: 600; cursor: pointer;
+    }
+    .welcome-message {
+      background: rgba(248, 250, 252, 0.98); padding: 1.5rem;
+      margin-bottom: 1.8rem; border-radius: 16px;
+    }
+    .course-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.8rem;
+    }
+    /* Estilos de las Cards (Mismos que ya tienes) */
+    .course-card {
+      background: white; border-radius: 16px; overflow: hidden;
+      display: flex; flex-direction: column; height: 100%; min-height: 450px;
+    }
+    .course-card-image { width: 100%; height: 200px; object-fit: cover; }
+    .course-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+    .course-card-button {
+      background: linear-gradient(135deg, #22c55e, #16a34a); color: white;
+      padding: 0.8rem; border-radius: 12px; text-align: center; font-weight: 600;
+      border: none; cursor: pointer; margin-top: auto;
+    }
+    /* Loader simple */
+    #loader { color: white; text-align: center; font-size: 1.2rem; margin-top: 50px; }
   </style>
 </head>
 <body>
+
   <div class="container">
     <header class="header">
       <h1>Mis Cursos</h1>
-      <button onclick="location.href='index.html'" style="background:#ef4444; color:white; border:none; padding:10px 20px; border-radius:30px; cursor:pointer; font-weight:bold;">Cerrar Sesión</button>
+      <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
     </header>
 
-    <div id="loader"><i class="fas fa-circle-notch fa-spin"></i> Cargando tus cursos...</div>
-    <div class="course-grid" id="courseContainer"></div>
+    <section class="welcome-message">
+      <h2 id="welcomeText">Cargando...</h2>
+      <p>Aquí tienes los cursos a los que tienes acceso. ¡Aprende a tu ritmo!</p>
+    </section>
+
+    <div id="loader">Cargando tus cursos...</div>
+    <div class="course-grid" id="courseGrid"></div>
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycby0d3lmpWy_JKb-JObmsi8yL71alS_EfELD_bm63irK2U-Mxm1V4u_KkvlkprNt96ZO/exec";
-    const sessionId = new URLSearchParams(window.location.search).get('sessionId');
+    // 1. CONFIGURACIÓN: PEGA TU URL DE APPS SCRIPT AQUÍ
+    const WEB_APP_URL = "TU_URL_DE_IMPLEMENTACION_AQUI";
 
-    async function cargarCursos() {
-      if (!sessionId) { location.href = 'index.html'; return; }
-      
+    // 2. RECUPERAR DATOS DE SESIÓN
+    const userEmail = localStorage.getItem('userEmail');
+    const userToken = localStorage.getItem('userToken');
+
+    // 3. SEGURIDAD: SI NO HAY DATOS, AL LOGIN
+    if (!userEmail || !userToken) {
+      window.location.href = "index.html";
+    }
+
+    // 4. CARGAR CURSOS AL INICIAR
+    async function cargarDashboard() {
       try {
-        const response = await fetch(`${API_URL}?action=getDashboard&sessionId=${sessionId}`);
-        const data = await response.json();
-        
-        document.getElementById('loader').style.display = 'none';
-        const container = document.getElementById('courseContainer');
-
-        data.cursos.forEach(curso => {
-          container.innerHTML += `
-            <a href="curso.html?cursoId=${curso.id}&sessionId=${sessionId}" class="card">
-              <img src="${curso.urlBanner || 'https://via.placeholder.com/400x200?text=Curso'}" alt="${curso.nombre}">
-              <div class="card-content">
-                <h3 style="margin:0">${curso.nombre}</h3>
-                <p style="color:#666; font-size:0.9em">${curso.descripcion}</p>
-              </div>
-              <div class="btn-enter">Acceder al Curso</div>
-            </a>`;
+        const params = new URLSearchParams({
+          action: 'getDashboard', // Nueva acción para tu API
+          email: userEmail,
+          token: userToken
         });
-      } catch (e) {
-        document.getElementById('loader').innerHTML = "Error al cargar la sesión.";
+
+        const response = await fetch(`${WEB_APP_URL}?${params}`);
+        const data = await response.json();
+
+        if (data.status === "success") {
+          document.getElementById('loader').style.display = 'none';
+          document.getElementById('welcomeText').innerText = `¡Bienvenido, ${data.nombre}!`;
+          renderizarCursos(data.cursos);
+        } else {
+          alert("Sesión expirada");
+          cerrarSesion();
+        }
+      } catch (error) {
+        console.error("Error cargando dashboard:", error);
       }
     }
-    window.onload = cargarCursos;
+
+    // 5. DIBUJAR LAS TARJETAS EN PANTALLA
+    function renderizarCursos(cursos) {
+      const grid = document.getElementById('courseGrid');
+      grid.innerHTML = ''; // Limpiar
+
+      cursos.forEach(curso => {
+        const card = `
+          <div class="course-card">
+            <img src="${curso.urlBanner || 'https://via.placeholder.com/400x180'}" class="course-card-image">
+            <div class="course-card-content">
+              <h3>${curso.nombre}</h3>
+              <p>${curso.descripcion}</p>
+              <button class="course-card-button" onclick="irAlCurso('${curso.id}')">
+                Acceder al Curso
+              </button>
+            </div>
+          </div>
+        `;
+        grid.innerHTML += card;
+      });
+    }
+
+    function irAlCurso(id) {
+      // Guardamos el ID del curso y vamos a la página de lecciones
+      localStorage.setItem('cursoActual', id);
+      window.location.href = "curso.html";
+    }
+
+    function cerrarSesion() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+
+    // Iniciar
+    cargarDashboard();
   </script>
 </body>
 </html>
