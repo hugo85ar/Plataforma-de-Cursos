@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargando Lección...</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { font-family: 'Open Sans', sans-serif; margin: 0; background: #f4f7f9; color: #333; }
+    .nav-header { background: #0056b3; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
+    .content { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+    .module-box { background: white; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .lesson-item { border-bottom: 1px solid #eee; padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+    .btn-video { background: #0056b3; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; }
+    .video-container { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:2000; }
+    iframe { width: 80%; height: 80%; border-radius: 15px; }
+  </style>
+</head>
+<body>
+  <header class="nav-header">
+    <h2 id="courseTitle">Cargando...</h2>
+    <button onclick="history.back()" style="background:rgba(255,255,255,0.2); color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">Volver al Inicio</button>
+  </header>
+
+  <div class="content" id="courseContent">
+     <div style="text-align:center; padding:50px"><i class="fas fa-spinner fa-spin fa-3x"></i></div>
+  </div>
+
+  <div id="videoModal" class="video-container" onclick="this.style.display='none'">
+     <iframe id="videoIframe" src="" frameborder="0" allowfullscreen></iframe>
+  </div>
+
+  <script>
+    const API_URL = "TU_URL_DE_APPS_SCRIPT_AQUÍ";
+    const params = new URLSearchParams(window.location.search);
+    const cursoId = params.get('cursoId');
+    const sessionId = params.get('sessionId');
+
+    async function cargarLecciones() {
+      const res = await fetch(`${API_URL}?action=getCourse&cursoId=${cursoId}&sessionId=${sessionId}`);
+      const data = await res.json();
+      
+      document.getElementById('courseTitle').innerText = cursoId.toUpperCase();
+      const container = document.getElementById('courseContent');
+      container.innerHTML = "";
+
+      for (let mod in data.curso.modulos) {
+        let modHtml = `<div class="module-box"><h2>${mod}</h2>`;
+        data.curso.modulos[mod].forEach(less => {
+          if(less.tipo === 'leccion') {
+            modHtml += `
+              <div class="lesson-item">
+                <div>
+                  <h3 style="margin:0">${less.titulo}</h3>
+                  <p style="color:#666; font-size:0.9em">${less.descripcion || ''}</p>
+                </div>
+                ${less.video.url ? `<button class="btn-video" onclick="verVideo('${less.video.url}')">Ver Video</button>` : ''}
+              </div>`;
+          }
+        });
+        modHtml += `</div>`;
+        container.innerHTML += modHtml;
+      }
+    }
+
+    function verVideo(url) {
+      const modal = document.getElementById('videoModal');
+      const iframe = document.getElementById('videoIframe');
+      iframe.src = url.replace('/view?usp=sharing', '/preview');
+      modal.style.display = 'flex';
+    }
+
+    window.onload = cargarLecciones;
+  </script>
+</body>
+</html>
