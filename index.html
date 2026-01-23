@@ -1,4 +1,5 @@
 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -35,7 +36,6 @@
       align-items: center; padding: 40px; box-sizing: border-box; gap: 50px;
     }
 
-    /* COLUMNA IZQUIERDA: LA ESCALERA */
     .info-column { flex: 1; color: white; }
     .info-column h1 { font-family: 'Montserrat', sans-serif; font-size: 2.8em; margin-bottom: 10px; line-height: 1.1; }
     .info-column h2 { font-size: 1.2em; font-weight: 400; margin-bottom: 40px; opacity: 0.9; color: var(--accent-turq); }
@@ -64,7 +64,6 @@
     .step-content h3 { margin: 0; font-size: 1.1em; font-family: 'Montserrat', sans-serif; }
     .step-content p { margin: 5px 0 0; font-size: 0.9em; opacity: 0.8; line-height: 1.4; }
 
-    /* COLUMNA DERECHA: CAJA DE LOGIN */
     .login-column { flex: 0 0 420px; display: flex; justify-content: center; }
     .login-box {
       background: #ffffff; padding: 45px; border-radius: 24px;
@@ -91,7 +90,6 @@
     }
     .btn-primary:hover { background: #2a314d; transform: translateY(-2px); }
 
-    /* BURBUJA WHATSAPP SOPORTE */
     .wa-bubble {
       position: fixed; bottom: 30px; right: 30px; 
       background: var(--wa-green); color: white;
@@ -104,7 +102,6 @@
     .wa-bubble:hover { transform: scale(1.05) translateY(-5px); background: #20ba5a; }
     .wa-bubble i { font-size: 1.5em; }
 
-    /* RESPONSIVO */
     @media (max-width: 992px) {
       .main-wrapper { flex-direction: column; padding: 120px 20px 40px; gap: 40px; }
       .login-column { width: 100%; order: 1; }
@@ -127,7 +124,6 @@
       <h2>Un camino diseñado para cada etapa de tu crecimiento.</h2>
       
       <div class="ladder-container">
-        
         <div class="step-card">
           <div class="step-number">1</div>
           <div class="step-content">
@@ -159,7 +155,6 @@
             <p>Maestría en Google Sheets para que tu gestión funcione sola.</p>
           </div>
         </div>
-
       </div>
     </article>
 
@@ -173,7 +168,7 @@
         <h2 style="margin:0; font-family:'Montserrat'; font-size: 1.8em;">¡Hola!</h2>
         <p style="color:#666; font-size:0.95em; margin-bottom:25px">Iniciá sesión para continuar</p>
         
-        <form id="loginForm">
+        <form action="https://script.google.com/macros/s/AKfycby0d3lmpWy_JKb-JObmsi8yL71alS_EfELD_bm63irK2U-Mxm1V4u_KkvlkprNt96ZO/exec" method="POST">
           <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="tu@email.com" required>
@@ -190,7 +185,7 @@
 
   </main>
 
-  <a href="https://wa.me/TUNUMEROAQUÍ?text=Hola%20Hugo!%20Necesito%20ayuda%20con%20el%20acceso%20a%20la%20plataforma" 
+  <a href="https://wa.me/TUNUMERO?text=Hola%20Hugo!%20Necesito%20ayuda%20con%20el%20acceso%20a%20la%20plataforma" 
      class="wa-bubble" 
      target="_blank" 
      aria-label="Soporte por WhatsApp">
@@ -199,30 +194,15 @@
   </a>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby0d3lmpWy_JKb-JObmsi8yL71alS_EfELD_bm63irK2U-Mxm1V4u_KkvlkprNt96ZO/exec";
-
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const btn = document.getElementById('submitBtn');
-
-  btn.innerText = 'Verificando...';
-  btn.disabled = true;
-
-  fetch(WEB_APP_URL, {
-    method: 'POST',
-    mode: 'no-cors', // Importante para Google Apps Script
-    body: JSON.stringify({email: email, password: password})
-  }).then(() => {
-    // Como Google no devuelve respuesta fácil por CORS, 
-    // lo enviamos a una página de "puente" o intentamos validación manual
-    // TIP: Para simplificar, guarda los datos y redirige:
-    localStorage.setItem('userEmail', email);
-    window.location.href = 'dashboard.html'; 
-  });
-});
-    
+    // Ya no usamos fetch aquí. El formulario se envía solo.
+    // Solo dejamos esto por si quieres mostrar un mensaje de "Cargando..." al hacer clic
+    document.querySelector('form').addEventListener('submit', function() {
+        const btn = document.getElementById('submitBtn');
+        const messageDiv = document.getElementById('message');
+        btn.innerText = 'Iniciando sesión...';
+        btn.disabled = true;
+        messageDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Conectando con el servidor...';
+    });
   </script>
-</body>
+  </body>
 </html>
