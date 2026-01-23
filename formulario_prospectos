@@ -1,0 +1,119 @@
+<style>
+  /* Mantenemos tus estilos originales */
+  .formulario-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  .formulario-container h3 { text-align: center; color: #333; margin-bottom: 20px; }
+  .formulario-group { margin-bottom: 15px; }
+  .formulario-group label { display: block; margin-bottom: 5px; color: #555; font-weight: bold; }
+  .formulario-group textarea, .formulario-group select {
+    width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+  }
+  .formulario-group .opciones-checkbox, .opciones-radio { display: flex; flex-direction: column; text-align: left; }
+  .formulario-group label { font-weight: bold; margin-bottom: 10px; }
+  .formulario-submit {
+    width: 100%; padding: 12px; background-color: #007BFF; color: white;
+    border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: 0.3s;
+  }
+  .formulario-submit:hover { background-color: #0056b3; }
+  .formulario-submit.completado { background-color: #28a745; cursor: default; }
+  #respuesta-mensaje { text-align: center; margin-top: 15px; font-weight: bold; }
+</style>
+
+<div class="formulario-container">
+    <h3>¡Ayúdanos a conocerte mejor!</h3>
+    <p>Completa este breve formulario para que podamos preparar contenido exclusivo para ti.</p>
+    
+    <div id="formulario-contenido">
+        <div class="formulario-group">
+            <label for="desafio">¿Cuál es tu principal desafío con Google Sheets?</label>
+            <textarea id="desafio" rows="3" placeholder="Ej: No sé cómo hacer que mi tabla se actualice sola..."></textarea>
+        </div>
+
+        <div class="formulario-group">
+            <label for="nivel">¿Qué tan cómodo te sientes usando Google Sheets?</label>
+            <select id="nivel">
+                <option value="Novato">1 - No lo conozco. ¡Soy un novato total!</option>
+                <option value="Basico">2 - Básico. Lo uso, pero me pierdo con las fórmulas.</option>
+                <option value="Intermedio">3 - Intermedio. Hago mis tablas, pero me cuesta organizarlas y sacarles provecho.</option>
+                <option value="Avanzado">4 - Avanzado. Lo uso a diario y busco cómo optimizar mis procesos.</option>
+                <option value="Experto">5 - Experto. Quiero aprender trucos y técnicas que no conozco.</option>
+            </select>
+        </div>
+
+        <div class="formulario-group">
+            <label>¿Cuál es el problema más grande en tu negocio hoy?</label>
+            <div class="opciones-radio">
+                <label><input type="radio" name="problema_negocio" value="Falta de clientes"> No consigo suficientes clientes.</label>
+                <label><input type="radio" name="problema_negocio" value="Desorden operativo"> Mi negocio es un desorden.</label>
+                <label><input type="radio" name="problema_negocio" value="Validacion idea"> Tengo una idea, pero no sé por dónde empezar.</label>
+                <label><input type="radio" name="problema_negocio" value="Ventas online"> Necesito mejorar mi presencia online.</label>
+            </div>
+        </div>
+
+        <div class="formulario-group">
+            <label>¿Qué prioridad tienes ahora?</label>
+            <div class="opciones-checkbox">
+                <label><input type="checkbox" name="prioridades" value="Validar"> Validar mi idea de negocio.</label>
+                <label><input type="checkbox" name="prioridades" value="Web"> Necesito una página web.</label>
+                <label><input type="checkbox" name="prioridades" value="Automatizar"> Organizar y automatizar mi negocio.</label>
+            </div>
+        </div>
+
+        <button class="formulario-submit" onclick="enviarFormularioGitHub()">Enviar y Comenzar</button>
+    </div>
+    <div id="respuesta-mensaje"></div>
+</div>
+
+<script>
+  async function enviarFormularioGitHub() {
+    // 1. Recuperamos datos del alumno desde la memoria del navegador
+    const nombre = localStorage.getItem('userName') || 'Alumno'; 
+    const email = localStorage.getItem('userEmail'); 
+    
+    const desafio = document.getElementById('desafio').value;
+    const nivel = document.getElementById('nivel').value;
+    const tipoEmprendedor = document.querySelector('input[name="problema_negocio"]:checked')?.value || 'No especificado';
+    const intereses = Array.from(document.querySelectorAll('input[name="prioridades"]:checked'))
+                           .map(cb => cb.value).join(', ');
+    
+    const mensajeDiv = document.getElementById('respuesta-mensaje');
+    const formularioDiv = document.getElementById('formulario-contenido');
+    const boton = document.querySelector('.formulario-submit');
+    
+    mensajeDiv.textContent = "Guardando tus respuestas...";
+    
+    try {
+      // 2. Enviamos al Apps Script (Cerebro)
+      const response = await fetch(WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Para evitar bloqueos de Google
+        body: JSON.stringify({
+          action: 'procesarFormulario',
+          nombre: nombre,
+          email: email,
+          desafio: desafio,
+          tipoEmprendedor: tipoEmprendedor,
+          nivel: nivel,
+          intereses: intereses
+        })
+      });
+
+      // 3. UI de éxito
+      boton.textContent = "¡Listo!";
+      boton.classList.add('completado');
+      formularioDiv.style.display = 'none';
+      mensajeDiv.innerHTML = `¡Gracias ${nombre}! Tus respuestas han sido guardadas. <br> Disfruta el curso.`;
+      mensajeDiv.style.color = 'green';
+      
+    } catch (error) {
+      console.error("Error al enviar formulario:", error);
+      mensajeDiv.textContent = "Hubo un error al guardar. Intenta de nuevo.";
+      mensajeDiv.style.color = 'red';
+    }
+  }
+</script>
