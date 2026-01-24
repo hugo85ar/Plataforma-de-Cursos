@@ -139,6 +139,32 @@
 
     // Iniciar
     cargarDashboard();
+
+    // 1. ATRACO DE DATOS: Los tomamos de la URL que nos mandó Google
+const params = new URLSearchParams(window.location.search);
+const tokenUrl = params.get('token');
+const emailUrl = params.get('email');
+const nombreUrl = params.get('nombre');
+
+// 2. GUARDADO: Si existen, los metemos en la memoria local (localStorage)
+if (tokenUrl && emailUrl) {
+    localStorage.setItem('userToken', tokenUrl);
+    localStorage.setItem('userEmail', emailUrl);
+    localStorage.setItem('userName', nombreUrl);
+    
+    // Limpiamos la URL (borramos el token de la vista por seguridad)
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
+
+// 3. VALIDACIÓN FINAL: Si después de todo NO hay Token, entonces sí lo echamos
+const userEmail = localStorage.getItem('userEmail');
+const userToken = localStorage.getItem('userToken');
+
+if (!userEmail || !userToken) {
+    window.location.href = "index.html"; // Expulsión
+} else {
+    cargarDashboard(); // Todo bien, cargamos los cursos
+}
   </script>
 </body>
 </html>
