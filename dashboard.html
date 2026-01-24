@@ -66,29 +66,48 @@
     <div class="course-grid" id="courseGrid"></div>
   </div>
 
-  <script>
+<script>
     // 1. CONFIGURACIÓN: PEGA TU URL DE APPS SCRIPT AQUÍ
-    const WEB_APP_URL = "TU_URL_DE_IMPLEMENTACION_AQUI";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbydRJF2yjXEI7AOhbJB2QpGdN5Vi5VHcSdlrB2VoSGi_sUtUYn1H1o8ncSWOzoMnqcf6A/exec";
 
-    // 2. RECUPERAR DATOS DE SESIÓN
+    // 2. PROCESAR DATOS DE LA URL (SI VIENEN DE GOOGLE TRAS EL LOGIN)
+    const params = new URLSearchParams(window.location.search);
+    const tokenUrl = params.get('token');
+    const emailUrl = params.get('email');
+    const nombreUrl = params.get('nombre');
+
+    if (tokenUrl && emailUrl) {
+        localStorage.setItem('userToken', tokenUrl);
+        localStorage.setItem('userEmail', emailUrl);
+        localStorage.setItem('userName', nombreUrl);
+        
+        // Limpiamos la URL para que quede profesional y sin el token a la vista
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    // 3. RECUPERAR DATOS DE SESIÓN (UNA SOLA VEZ)
     const userEmail = localStorage.getItem('userEmail');
     const userToken = localStorage.getItem('userToken');
 
-    // 3. SEGURIDAD: SI NO HAY DATOS, AL LOGIN
+    // 4. SEGURIDAD: SI NO HAY DATOS, AL LOGIN. SI HAY, CARGAR DASHBOARD.
     if (!userEmail || !userToken) {
-      window.location.href = "index.html";
+        window.location.href = "index.html";
+    } else {
+        // Iniciamos la carga de datos desde Apps Script
+        cargarDashboard();
     }
 
-    // 4. CARGAR CURSOS AL INICIAR
+    // --- FUNCIONES DE LÓGICA ---
+
     async function cargarDashboard() {
       try {
-        const params = new URLSearchParams({
-          action: 'getDashboard', // Nueva acción para tu API
+        const queryParams = new URLSearchParams({
+          action: 'getDashboard', 
           email: userEmail,
           token: userToken
         });
 
-        const response = await fetch(`${WEB_APP_URL}?${params}`);
+        const response = await fetch(`${WEB_APP_URL}?${queryParams}`);
         const data = await response.json();
 
         if (data.status === "success") {
@@ -96,18 +115,18 @@
           document.getElementById('welcomeText').innerText = `¡Bienvenido, ${data.nombre}!`;
           renderizarCursos(data.cursos);
         } else {
-          alert("Sesión expirada");
+          alert("Sesión expirada o inválida");
           cerrarSesion();
         }
       } catch (error) {
         console.error("Error cargando dashboard:", error);
+        document.getElementById('loader').innerText = "Error al conectar con el servidor.";
       }
     }
 
-    // 5. DIBUJAR LAS TARJETAS EN PANTALLA
     function renderizarCursos(cursos) {
       const grid = document.getElementById('courseGrid');
-      grid.innerHTML = ''; // Limpiar
+      grid.innerHTML = ''; 
 
       cursos.forEach(curso => {
         const card = `
@@ -127,7 +146,6 @@
     }
 
     function irAlCurso(id) {
-      // Guardamos el ID del curso y vamos a la página de lecciones
       localStorage.setItem('cursoActual', id);
       window.location.href = "curso.html";
     }
@@ -136,35 +154,6 @@
       localStorage.clear();
       window.location.href = "index.html";
     }
-
-    // Iniciar
-    cargarDashboard();
-
-    // 1. ATRACO DE DATOS: Los tomamos de la URL que nos mandó Google
-const params = new URLSearchParams(window.location.search);
-const tokenUrl = params.get('token');
-const emailUrl = params.get('email');
-const nombreUrl = params.get('nombre');
-
-// 2. GUARDADO: Si existen, los metemos en la memoria local (localStorage)
-if (tokenUrl && emailUrl) {
-    localStorage.setItem('userToken', tokenUrl);
-    localStorage.setItem('userEmail', emailUrl);
-    localStorage.setItem('userName', nombreUrl);
-    
-    // Limpiamos la URL (borramos el token de la vista por seguridad)
-    window.history.replaceState({}, document.title, window.location.pathname);
-}
-
-// 3. VALIDACIÓN FINAL: Si después de todo NO hay Token, entonces sí lo echamos
-const userEmail = localStorage.getItem('userEmail');
-const userToken = localStorage.getItem('userToken');
-
-if (!userEmail || !userToken) {
-    window.location.href = "index.html"; // Expulsión
-} else {
-    cargarDashboard(); // Todo bien, cargamos los cursos
-}
-  </script>
+</script>
 </body>
 </html>
