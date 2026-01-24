@@ -8,127 +8,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
   <style>
-    :root {
-      --platform-dark: #1a1f36;
-      --platform-blue: #1e3c72;
-      --accent-green: #5cb85c;
-    }
-
+    /* Mantenemos tu diseño original intacto */
+    :root { --platform-dark: #1a1f36; --platform-blue: #1e3c72; --accent-green: #5cb85c; }
     html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
-
-    .bg-container {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif'); 
-      background-size: cover;
-      background-position: center;
-      filter: brightness(0.8); 
-      z-index: -1;
-    }
-
-    .bg-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(30, 60, 114, 0.4) 0%, rgba(26, 31, 54, 0.6) 100%);
-      z-index: 0;
-    }
-
-    body {
-      font-family: 'Open Sans', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding-left: 8%;
-      position: relative;
-    }
-
-    .login-box {
-      background: #ffffff;
-      padding: 50px;
-      border-radius: 20px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
-      width: 100%;
-      max-width: 450px;
-      text-align: center;
-      position: relative;
-      z-index: 10;
-      animation: slideIn 0.8s ease-out;
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-30px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
+    .bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif'); background-size: cover; background-position: center; filter: brightness(0.8); z-index: -1; }
+    .bg-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(30, 60, 114, 0.4) 0%, rgba(26, 31, 54, 0.6) 100%); z-index: 0; }
+    body { font-family: 'Open Sans', sans-serif; display: flex; align-items: center; justify-content: flex-start; min-height: 100vh; padding-left: 8%; position: relative; }
+    .login-box { background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); width: 100%; max-width: 450px; text-align: center; position: relative; z-index: 10; animation: slideIn 0.8s ease-out; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
     .brand-logo { margin-top: -115px; margin-bottom: 20px; }
-    .brand-logo img {
-      width: 160px; height: 160px;
-      object-fit: cover; border-radius: 50%;
-      border: 6px solid white;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
-
+    .brand-logo img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; border: 6px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
     h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 2.2em; margin-bottom: 5px; }
     h2 { font-size: 1em; color: #666; margin-bottom: 30px; font-weight: 400; line-height: 1.4; }
-
-    .promo-badge {
-      display: inline-block;
-      background: var(--accent-green);
-      color: white;
-      padding: 5px 15px;
-      border-radius: 20px;
-      font-size: 0.85em;
-      font-weight: 700;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-    }
-
+    .promo-badge { display: inline-block; background: var(--accent-green); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.85em; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; }
     .form-group { text-align: left; margin-bottom: 15px; }
     .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9em; color: #444; }
-    input {
-      width: 100%; padding: 14px;
-      border: 1px solid #ddd; border-radius: 8px;
-      box-sizing: border-box; font-size: 1em; background: #fdfdfd;
-    }
-
-    .btn-primary {
-      width: 100%; padding: 16px;
-      background: var(--platform-dark); color: white;
-      border: none; border-radius: 10px;
-      font-size: 1.1em; font-weight: 700;
-      cursor: pointer; transition: 0.3s;
-      margin-top: 15px;
-    }
-
+    input { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1em; background: #fdfdfd; }
+    .btn-primary { width: 100%; padding: 16px; background: var(--platform-dark); color: white; border: none; border-radius: 10px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 15px; }
     .btn-primary:hover { background: var(--platform-blue); transform: scale(1.02); }
-
-    .error-message { color: #e74c3c; margin-top: 15px; font-weight: 600; display: none; }
-
-    /* BOT BUBBLE Y MODAL */
-    .hugo-bot-bubble {
-      position: fixed; bottom: 30px; right: 30px;
-      width: 70px; height: 70px;
-      background: linear-gradient(135deg, #30D5C8, #00b894);
-      border-radius: 50%; display: flex;
-      justify-content: center; align-items: center;
-      cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      border: 3px solid white; z-index: 100;
-    }
-
-    .hugo-modal {
-      display: none; position: fixed; top: 0; left: 0; 
-      width: 100%; height: 100%; z-index: 1000; 
-      justify-content: center; align-items: center;
-      background: rgba(26, 31, 54, 0.85); backdrop-filter: blur(10px);
-    }
+    .hugo-bot-bubble { position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; background: linear-gradient(135deg, #30D5C8, #00b894); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 3px solid white; z-index: 100; }
+    .hugo-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; justify-content: center; align-items: center; background: rgba(26, 31, 54, 0.85); backdrop-filter: blur(10px); }
     .hugo-modal.active { display: flex; }
     .hugo-content { width: 90%; max-width: 1000px; height: 85vh; background: white; border-radius: 25px; overflow: hidden; }
-    
-    @media (max-width: 768px) {
-      body { padding-left: 0; justify-content: center; }
-      .login-box { width: 92%; padding: 40px 25px; }
-    }
+    @media (max-width: 768px) { body { padding-left: 0; justify-content: center; } .login-box { width: 92%; padding: 40px 25px; } }
   </style>
 </head>
 <body>
@@ -144,17 +46,17 @@
     <h1>Hugo Alvigini</h1>
     <h2>Lleva tu emprendimiento al siguiente nivel con nuestras herramientas.</h2>
     
-    <form id="loginForm" method="POST" action="TU_URL_DE_IMPLEMENTACION_DE_APPS_SCRIPT">
-  <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email" required>
-  </div>
-  <div class="form-group">
-      <label for="password">Contraseña</label>
-      <input type="password" name="password" id="password" required>
-  </div>
-  <button type="submit" class="btn-primary" id="submitBtn">Entrar a mis Cursos</button>
-</form>
+    <form id="loginForm" method="POST" action="https://script.google.com/macros/s/AKfycbydRJF2yjXEI7AOhbJB2QpGdN5Vi5VHcSdlrB2VoSGi_sUtUYn1H1o8ncSWOzoMnqcf6A/exec">
+      <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" required>
+      </div>
+      <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" name="password" id="password" required>
+      </div>
+      <button type="submit" class="btn-primary" id="submitBtn">Entrar a mis Cursos</button>
+    </form>
   </div>
 
   <div class="hugo-bot-bubble" onclick="toggleHugo()">
@@ -168,40 +70,16 @@
   </div>
 
   <script>
-    
-    // ⚠️ REEMPLAZA CON LA URL DE TU COPIA DE APPS SCRIPT
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbydRJF2yjXEI7AOhbJB2QpGdN5Vi5VHcSdlrB2VoSGi_sUtUYn1H1o8ncSWOzoMnqcf6A/exec";
-
+    // 🔹 SOLO FEEDBACK VISUAL: No usamos fetch aquí
     document.getElementById('loginForm').onsubmit = function() {
-    document.getElementById('submitBtn').innerText = 'Verificando datos...';
-  };
-    
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
       const btn = document.getElementById('submitBtn');
-      btn.innerText = 'Verificando...';
-      
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      try {
-        const response = await fetch(WEB_APP_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: JSON.stringify({ email, password })
-        });
-
-        // Guardamos localmente y saltamos al dashboard
-        localStorage.setItem('userEmail', email);
-        window.location.href = "dashboard.html";
-      } catch (error) {
-        document.getElementById('errorBox').style.display = 'block';
-        btn.innerText = 'Entrar a mis Cursos';
-      }
-    });
+      btn.innerText = 'Verificando datos...';
+      btn.style.opacity = '0.7';
+    };
 
     function toggleHugo() {
-      document.getElementById('hugoModal').classList.toggle('active');
+      const modal = document.getElementById('hugoModal');
+      modal.classList.toggle('active');
     }
   </script>
 </body>
