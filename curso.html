@@ -40,21 +40,37 @@
     #loader { color: white; text-align: center; padding: 50px; font-size: 1.2rem; }
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
     .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; }
-    .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
-    .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+    /* ESTILO CORREGIDO PARA EL ESCUDO INVISIBLE */
+    .video-container-modal {
+        position: relative; /* Crucial para que el overlay se posicione respecto a este contenedor */
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        background: #000;
+    }
+    
+    .video-container-modal iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1; /* El iframe queda en una capa inferior */
+    }
 
     /* Bloquea el clic en el botón de pop-out de Google Drive */
 .video-popout-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px; /* Cubre el área del botón */
-    height: 80px;
-    z-index: 10;
-    background: transparent;
-    cursor: default;
-}
-
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 80px;  /* Ancho suficiente para cubrir el botón */
+        height: 80px; /* Alto suficiente para cubrir el botón */
+        z-index: 9999 !important; /* ¡Un valor altísimo para que quede encima de TODO! */
+        background: transparent; /* Invisible */
+        cursor: default; /* El cursor no cambia, parece que no hay nada */
+        pointer-events: auto; /* Captura el clic */
+    }
 /* Evita que el usuario use el botón derecho sobre el video */
 .video-container-modal {
     position: relative;
@@ -85,19 +101,21 @@
     <div id="courseContent"></div>
   </div>
 
-  <div id="videoModal" class="modal">
-    <div class="modal-content">
-      <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
-        <h2 id="modalVideoTitle" style="margin:0; font-size:1.2rem;"></h2>
-        <span onclick="closeModal()" style="cursor:pointer; font-size:2rem;">&times;</span>
-      </div>
-      <div class="video-container-modal">
-    <div class="video-popout-overlay" oncontextmenu="return false;"></div>
-    
-    <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-</div>
+ <div id="videoModal" class="modal">
+  <div class="modal-content">
+    <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
+      <h2 id="modalVideoTitle" style="margin:0; font-size:1.2rem;"></h2>
+      <span onclick="closeModal()" style="cursor:pointer; font-size:2rem;">&times;</span>
     </div>
+    
+    <div class="video-container-modal">
+      <div class="video-popout-overlay" oncontextmenu="return false;"></div>
+      
+      <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+    
   </div>
+</div>
 
   <script>
     // 1. CONFIGURACIÓN
