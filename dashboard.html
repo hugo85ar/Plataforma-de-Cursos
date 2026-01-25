@@ -6,7 +6,7 @@
   <title>Mis Cursos - Plataforma</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-    /* 🔹 MANTENEMOS TUS ESTILOS ORIGINALES */
+    /* 🔹 TUS ESTILOS ORIGINALES */
     body {
       font-family: 'Open Sans', sans-serif;
       margin: 0; padding: 0;
@@ -23,7 +23,7 @@
     .logout-button {
       background: linear-gradient(135deg, #f97373, #ef4444); color: white;
       padding: 0.65rem 1.4rem; border-radius: 999px; text-decoration: none;
-      font-weight: 600; cursor: pointer;
+      font-weight: 600; cursor: pointer; border: none;
     }
     .welcome-message {
       background: rgba(248, 250, 252, 0.98); padding: 1.5rem;
@@ -33,10 +33,10 @@
       display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.8rem;
     }
-    /* Estilos de las Cards (Mismos que ya tienes) */
     .course-card {
       background: white; border-radius: 16px; overflow: hidden;
-      display: flex; flex-direction: column; height: 100%; min-height: 450px;
+      display: flex; flex-direction: column; height: 100%; min-height: 400px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
     .course-card-image { width: 100%; height: 200px; object-fit: cover; }
     .course-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
@@ -45,7 +45,6 @@
       padding: 0.8rem; border-radius: 12px; text-align: center; font-weight: 600;
       border: none; cursor: pointer; margin-top: auto;
     }
-    /* Loader simple */
     #loader { color: white; text-align: center; font-size: 1.2rem; margin-top: 50px; }
   </style>
 </head>
@@ -57,23 +56,20 @@
       <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
     </header>
 
-   <section class="welcome-message">
+    <section class="welcome-message">
       <h2 id="welcomeText">Cargando...</h2>
       <p>Aquí tienes los cursos a los que tienes acceso. ¡Aprende a tu ritmo!</p>
     </section>
 
-    <div class="course-grid" id="gridCursos">
-  </div>
-    
-    <div id="loader">Cargando tus cursos...</div>
+    <div id="loader">Conectando con la academia...</div>
     <div class="course-grid" id="courseGrid"></div>
   </div>
 
 <script>
-    // 1. CONFIGURACIÓN: PEGA TU URL DE APPS SCRIPT AQUÍ
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzsSDXwl1BUdeabdfEcsAJk4VZP7GzF1baObJMq8UMZQbXVrB-FcW_kuchgeSK67_x1ug/exec";
+    // 1. CONFIGURACIÓN ÚNICA (Verifica que sea la misma en index.html)
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzsSDXwl1BUdeabdfEcsAJk4VZP7GzF1baObJMq8UMZQbXVrB-FcW_kuchgeSK67_x1ug/exec";
 
-    // 2. PROCESAR DATOS DE LA URL (SI VIENEN DE GOOGLE TRAS EL LOGIN)
+    // 2. CAPTURAR DATOS DEL LOGIN (Vienen en la URL)
     const params = new URLSearchParams(window.location.search);
     const tokenUrl = params.get('token');
     const emailUrl = params.get('email');
@@ -82,70 +78,79 @@
     if (tokenUrl && emailUrl) {
         localStorage.setItem('userToken', tokenUrl);
         localStorage.setItem('userEmail', emailUrl);
-        localStorage.setItem('userName', nombreUrl);
+        localStorage.setItem('userName', nombreUrl || 'Emprendedor');
         
-        // Limpiamos la URL para que quede profesional y sin el token a la vista
+        // Limpiamos la URL para seguridad
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    // 3. RECUPERAR DATOS DE SESIÓN (UNA SOLA VEZ)
+    // 3. RECUPERAR DE MEMORIA
     const userEmail = localStorage.getItem('userEmail');
     const userToken = localStorage.getItem('userToken');
 
-    // 4. SEGURIDAD: SI NO HAY DATOS, AL LOGIN. SI HAY, CARGAR DASHBOARD.
+    // 4. SEGURIDAD: SI NO HAY SESIÓN, AL LOGIN. SI HAY, CARGAR.
     if (!userEmail || !userToken) {
         window.location.href = "index.html";
     } else {
-        // Iniciamos la carga de datos desde Apps Script
         cargarDashboard();
     }
 
-    // --- FUNCIONES DE LÓGICA ---
-
     async function cargarDashboard() {
-    const email = localStorage.getItem('userEmail');
-    const token = localStorage.getItem('userToken');
+        const grid = document.getElementById('courseGrid');
+        const loader = document.getElementById('loader');
+        const welcome = document.getElementById('welcomeText');
 
-    // Reemplazamos google.script.run por un fetch a la URL fija
-    try {
-      const response = await fetch(`${WEB_APP_URL}?action=getDashboard&email=${email}&token=${token}`);
-      const data = await response.json();
+        try {
+            // Llamada al "Cerebro" de Google Apps Script
+            const response = await fetch(`${WEB_APP_URL}?action=getDashboard&email=${userEmail}&token=${userToken}`);
+            const data = await response.json();
 
-      if (data.status === "success") {
-        document.getElementById('saludoUsuario').innerText = "¡Bienvenido, " + data.nombre + "!";
-        // Aquí JS dibuja los cursos que recibe de Google
-        renderizarCursos(data.cursos);
-      } else {
-        alert("Sesión inválida");
-        window.location.href = "index.html";
-      }
-    } catch (e) { console.error("Error:", e); }
-  }
+            if (data.status === "success") {
+                loader.style.display = 'none';
+                welcome.innerText = "¡Bienvenido, " + (data.nombre || localStorage.getItem('userName')) + "!";
+                renderizarCursos(data.cursos);
+            } else {
+                alert("Sesión inválida o expirada");
+                cerrarSesion();
+            }
+        } catch (e) {
+            console.error("Error:", e);
+            loader.innerText = "Error al conectar con el servidor. Revisa tu conexión.";
+        }
+    }
 
-  function renderizarCursos(cursos) {
-    const grid = document.getElementById('gridCursos');
-    cursos.forEach(curso => {
-      grid.innerHTML += `
-        <div class="course-card">
-          <img src="${curso.urlBanner}" class="course-card-image">
-          <div class="course-card-content">
-            <h3>${curso.nombre}</h3>
-            <button class="course-card-button" onclick="irAlCurso('${curso.id}')">Acceder</button>
-          </div>
-        </div>`;
-    });
-  }
+    function renderizarCursos(cursos) {
+        const grid = document.getElementById('courseGrid');
+        grid.innerHTML = ''; // Limpiamos
 
-  cargarDashboard();
-  
+        if (!cursos || cursos.length === 0) {
+            grid.innerHTML = '<p style="color:white; grid-column: 1/-1; text-align:center;">No tienes cursos asignados aún.</p>';
+            return;
+        }
+
+        cursos.forEach(curso => {
+            grid.innerHTML += `
+                <div class="course-card">
+                    <img src="${curso.urlBanner || 'https://via.placeholder.com/400x180'}" class="course-card-image">
+                    <div class="course-card-content">
+                        <h3>${curso.nombre}</h3>
+                        <p>${curso.descripcion || ''}</p>
+                        <button class="course-card-button" onclick="irAlCurso('${curso.id}')">
+                            Acceder al Curso
+                        </button>
+                    </div>
+                </div>`;
+        });
+    }
+
     function irAlCurso(id) {
-      localStorage.setItem('cursoActual', id);
-      window.location.href = "curso.html";
+        localStorage.setItem('cursoActual', id);
+        window.location.href = "curso.html";
     }
 
     function cerrarSesion() {
-      localStorage.clear();
-      window.location.href = "index.html";
+        localStorage.clear();
+        window.location.href = "index.html";
     }
 </script>
 </body>
