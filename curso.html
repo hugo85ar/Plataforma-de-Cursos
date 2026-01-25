@@ -42,6 +42,24 @@
     .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; }
     .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
     .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+    /* Bloquea el clic en el botón de pop-out de Google Drive */
+.video-popout-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px; /* Cubre el área del botón */
+    height: 80px;
+    z-index: 10;
+    background: transparent;
+    cursor: default;
+}
+
+/* Evita que el usuario use el botón derecho sobre el video */
+.video-container-modal {
+    position: relative;
+}
+  
   </style>
 </head>
 <body oncontextmenu="return false;">
@@ -82,6 +100,7 @@
   <script>
     // 1. CONFIGURACIÓN
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzsSDXwl1BUdeabdfEcsAJk4VZP7GzF1baObJMq8UMZQbXVrB-FcW_kuchgeSK67_x1ug/exec";
+    
     const userEmail = localStorage.getItem('userEmail');
     const userToken = localStorage.getItem('userToken');
     const cursoId = localStorage.getItem('cursoActual');
@@ -152,40 +171,32 @@
       }
     }
 
-    // 4. EL "GUARDIA" EN TIEMPO REAL CON LIMPIEZA DE URL
-async function verificarYVer(url, titulo) {
-  if (!url) return alert("Esta lección no tiene video configurado.");
+  // 4. EL "GUARDIA" EN TIEMPO REAL (Mejorado para Drive)
+    async function verificarYVer(url, titulo) {
+      if (!url) return alert("Lección sin video");
+      
+      const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
+      const data = await response.json();
 
-  // Antes de abrir, confirmamos sesión
-  const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
-  const data = await response.json();
-
-  if (data.esValido) {
-    const frame = document.getElementById('modalVideoFrame');
-    document.getElementById('modalVideoTitle').innerText = titulo;
-
-    // 🔹 LÓGICA DE CONVERSIÓN FUERTE PARA DRIVE
-    // Esto convierte cualquier link de Drive (view, edit, share) en formato /preview
-    let videoId = "";
-    if (url.includes('d/')) {
-        videoId = url.split('d/')[1].split('/')[0];
-    } else if (url.includes('id=')) {
-        videoId = url.split('id=')[1].split('&')[0];
-    }
-    
-    if (videoId) {
+      if (data.esValido) {
+        const frame = document.getElementById('modalVideoFrame');
+        document.getElementById('modalVideoTitle').innerText = titulo;
+        
+        // Limpiamos la URL de Drive para que use el modo preview correctamente
+        let videoId = "";
+        if (url.includes('d/')) {
+            videoId = url.split('d/')[1].split('/')[0];
+        } else if (url.includes('id=')) {
+            videoId = url.split('id=')[1].split('&')[0];
+        }
+        
         frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
         document.getElementById('videoModal').style.display = 'flex';
-    } else {
-        // Si no es un link de Drive, lo cargamos tal cual (ej: YouTube)
-        frame.src = url;
-        document.getElementById('videoModal').style.display = 'flex';
+      } else {
+        alert("Sesión expirada");
+        cerrarSesion();
+      }
     }
-  } else {
-    alert("Tu sesión ha expirado porque ingresaste desde otro dispositivo.");
-    cerrarSesion();
-  }
-}
 
     function closeModal() {
       document.getElementById('videoModal').style.display = 'none';
