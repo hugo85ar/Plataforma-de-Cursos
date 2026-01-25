@@ -148,6 +148,20 @@
       document.getElementById('courseTitle').innerText = data.nombreCurso;
       document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
       document.getElementById('courseDescription').innerText = data.descripcionGeneral;
+
+      const content = document.getElementById('courseContent');
+      content.innerHTML = ''; 
+
+      // 🔹 NUEVO: Si no completó el formulario, lo mostramos arriba de todo
+      if (data.formCompletado === false) {
+          content.innerHTML = `
+            <div class="formulario-seccion" id="seccionEncuesta" style="background:#fff3cd; padding:20px; border-radius:10px; margin-bottom:20px; border:1px solid #ffeeba; text-align:center;">
+                <h3>¡Queremos conocerte mejor!</h3>
+                <p>Completa esta breve encuesta para desbloquear contenido exclusivo.</p>
+                <button class="video-button" onclick="window.open('TU_URL_DE_FORMULARIO_O_MOSTRAR_DIV', '_blank')">Completar ahora</button>
+            </div>
+          `;
+      }
       
       if (data.urlBanner) {
         document.getElementById('courseBannerContainer').innerHTML = `
