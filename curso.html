@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cargando curso... | Hugo Alvigini</title>
+  <title>Mi Curso | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-    /* 🔹 MANTENEMOS TUS ESTILOS ORIGINALES */
+    /* 🔹 ESTILOS GENERALES */
     body {
       font-family: 'Open Sans', sans-serif;
       margin: 0; padding: 0;
@@ -15,67 +15,56 @@
       color: #333; line-height: 1.6;
     }
     .container { max-width: 960px; margin: 2.5rem auto; padding: 0 1.5rem; }
+    
+    /* Header */
     .course-header {
       background-color: #0056b3; color: white; padding: 1.5rem;
       border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
     }
     .course-header h1 { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; margin: 0; flex-grow: 1; text-align: center; }
-    .action-buttons { display: flex; flex-direction: column; gap: 10px; align-items: center; }
     
-    /* Botones y Módulos (Se mantienen igual a tu CSS) */
+    .action-buttons { display: flex; flex-direction: column; gap: 10px; align-items: center; }
     .logout-button, .reset-password-button, .inicio-button {
       color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none;
-      font-weight: 600; font-size: 0.9rem; width: 150px; text-align: center; cursor: pointer;
+      font-weight: 600; font-size: 0.9rem; width: 150px; text-align: center; cursor: pointer; border: none;
     }
     .logout-button { background-color: #dc3545; }
     .reset-password-button { background-color: #ff9800; }
     .inicio-button { background-color: #007bff; }
+
+    /* Módulos y Lecciones */
+    .module { background-color: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .module h2 { color: #0056b3; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 0; }
+    .lesson { background: #f8fafc; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; }
+    .lesson h3 { margin-top: 0; color: #1e293b; }
+
+    /* Video y Botones */
+    .video-button { background-color: #0056b3; color: white; padding: 0.9rem 1.8rem; border-radius: 5px; cursor: pointer; display: block; text-align: center; border:none; width: 100%; font-weight: bold; transition: 0.3s; }
+    .video-button:hover { background-color: #003d82; }
     
-    .module { background-color: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; }
-    .lesson { background: #ffffff; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #f1f5f9; position: relative; }
-    .video-button { background-color: #0056b3; color: white; padding: 0.9rem 1.8rem; border-radius: 5px; cursor: pointer; display: block; text-align: center; border:none; width: 100%; font-weight: bold; }
+    .lesson-video-section img { width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.3s; }
+    .lesson-video-section img:hover { transform: scale(1.02); }
+
+    /* Modal y Escudo Protector */
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
+    .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; overflow: hidden; position: relative; }
     
-    /* Loader y Modal */
+    .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
+    .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    
+    .video-popout-overlay {
+        position: absolute; top: 0; right: 0; width: 100px; height: 80px;
+        z-index: 9999 !important; background: transparent; cursor: default;
+    }
+
     #loader { color: white; text-align: center; padding: 50px; font-size: 1.2rem; }
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
-    .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; }
-
-    /* ESTILO CORREGIDO PARA EL ESCUDO INVISIBLE */
-    .video-container-modal {
-        position: relative; /* Crucial para que el overlay se posicione respecto a este contenedor */
-        padding-bottom: 56.25%;
-        height: 0;
-        overflow: hidden;
-        background: #000;
-    }
     
-    .video-container-modal iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1; /* El iframe queda en una capa inferior */
+    @media (max-width: 600px) {
+        .course-header { flex-direction: column; }
+        .action-buttons { width: 100%; }
+        .logout-button, .reset-password-button, .inicio-button { width: 100%; }
     }
-
-    /* Bloquea el clic en el botón de pop-out de Google Drive */
-.video-popout-overlay {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 80px;  /* Ancho suficiente para cubrir el botón */
-        height: 80px; /* Alto suficiente para cubrir el botón */
-        z-index: 9999 !important; /* ¡Un valor altísimo para que quede encima de TODO! */
-        background: transparent; /* Invisible */
-        cursor: default; /* El cursor no cambia, parece que no hay nada */
-        pointer-events: auto; /* Captura el clic */
-    }
-/* Evita que el usuario use el botón derecho sobre el video */
-.video-container-modal {
-    position: relative;
-}
-  
   </style>
 </head>
 <body oncontextmenu="return false;">
@@ -101,88 +90,73 @@
     <div id="courseContent"></div>
   </div>
 
- <div id="videoModal" class="modal">
-  <div class="modal-content">
-    <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
-      <h2 id="modalVideoTitle" style="margin:0; font-size:1.2rem;"></h2>
-      <span onclick="closeModal()" style="cursor:pointer; font-size:2rem;">&times;</span>
+  <div id="videoModal" class="modal">
+    <div class="modal-content">
+      <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
+        <h2 id="modalVideoTitle" style="margin:0; font-size:1.1rem;"></h2>
+        <span onclick="closeModal()" style="cursor:pointer; font-size:2rem; line-height: 1;">&times;</span>
+      </div>
+      <div class="video-container-modal">
+        <div class="video-popout-overlay" oncontextmenu="return false;"></div>
+        <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
     </div>
-    
-    <div class="video-container-modal">
-      <div class="video-popout-overlay" oncontextmenu="return false;"></div>
-      
-      <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-    </div>
-    
   </div>
-</div>
 
   <script>
-    // 1. CONFIGURACIÓN
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzsSDXwl1BUdeabdfEcsAJk4VZP7GzF1baObJMq8UMZQbXVrB-FcW_kuchgeSK67_x1ug/exec";
-    
     const userEmail = localStorage.getItem('userEmail');
     const userToken = localStorage.getItem('userToken');
     const cursoId = localStorage.getItem('cursoActual');
 
     if (!userEmail || !userToken || !cursoId) window.location.href = "index.html";
 
-    // 2. CARGA DE DATOS
     async function init() {
       try {
         const response = await fetch(`${WEB_APP_URL}?action=getCourseData&curso=${cursoId}&email=${userEmail}&token=${userToken}`);
         const data = await response.json();
-
-        if (data.status === "success") {
-          renderCourse(data);
-        } else {
-          alert("Sesión no válida");
-          cerrarSesion();
-        }
-      } catch (e) { console.error(e); }
+        if (data.status === "success") { renderCourse(data); } 
+        else { alert("Sesión no válida"); cerrarSesion(); }
+      } catch (e) { console.error(e); document.getElementById('loader').innerText = "Error al cargar datos."; }
     }
 
-    // 3. RENDERIZADO DINÁMICO
-function renderCourse(data) {
+    function renderCourse(data) {
       document.getElementById('loader').style.display = 'none';
       document.getElementById('courseTitle').innerText = data.nombreCurso;
       document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
       document.getElementById('courseDescription').innerText = data.descripcionGeneral;
-      
+
       const content = document.getElementById('courseContent');
-      content.innerHTML = ''; // Limpiamos una sola vez
+      content.innerHTML = ''; // LIMPIEZA ÚNICA
 
-      // 1. Banner del curso
-      if (data.urlBanner) {
-        document.getElementById('courseBannerContainer').innerHTML = `
-          <img src="${data.urlBanner}" class="course-banner" 
-               style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
-      }
-
-      // 2. SECCIÓN ENCUESTA (Aparece si formCompletado es false)
+      // 1. Encuesta (Si corresponde)
       if (data.formCompletado === false) {
           content.innerHTML += `
-            <div id="seccionEncuesta" class="module" style="background:#e6f7ff; border:2px solid #91d5ff; text-align:center; padding:30px;">
-                <h3 style="color:#0056b3;">¡Queremos conocerte mejor!</h3>
-                <p>Antes de empezar, ayúdanos a entender tus desafíos.</p>
-                <button class="video-button" style="background:#28a745;" 
+            <div class="module" style="background:#fff3cd; border:2px solid #ffeeba; text-align:center; padding:30px;">
+                <h3 style="color:#856404;">🚀 ¡Solo un paso más!</h3>
+                <p>Ayúdanos a personalizar tu experiencia respondiendo estas preguntas.</p>
+                <button class="video-button" style="background:#28a745; width:auto; margin:0 auto;" 
                         onclick="document.getElementById('formIframe').style.display='block'; this.style.display='none'">
                     Completar Formulario
                 </button>
                 <div id="formIframe" style="display:none; margin-top:20px;">
-                    <iframe src="TU_URL_DE_FORMULARIO_AQUÍ" style="width:100%; height:600px; border:none; border-radius:10px;"></iframe>
+                    <iframe src="https://hugo85ar.github.io/HugoBot/" style="width:100%; height:500px; border:none; border-radius:10px;"></iframe>
                 </div>
             </div>`;
       }
 
-      // 3. GENERAR MÓDULOS Y LECCIONES CON IMÁGENES
+      // 2. Banner
+      if (data.urlBanner) {
+        document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1);">`;
+      }
+
+      // 3. Módulos y Lecciones
       for (const modulo in data.modulos) {
         let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
-        
         data.modulos[modulo].forEach(item => {
           if (item.tipo === 'leccion') {
-            const hasVideo = item.video && item.video.url;
-            const imgThumb = item.video.imgUrl || 'https://via.placeholder.com/300x168?text=Video+Caratula';
+            const hasVideo = item.video && item.video.url && item.video.url.trim() !== "";
+            const imgThumb = (item.video && item.video.imgUrl) ? item.video.imgUrl : 'https://via.placeholder.com/400x225?text=Ver+Lección';
             
             moduloHtml += `
               <div class="lesson">
@@ -190,19 +164,12 @@ function renderCourse(data) {
                   <h3>Lección ${item.id}: ${item.titulo}</h3>
                   <p>${item.descripcion || ''}</p>
                 </div>
-
                 ${hasVideo ? `
                   <div class="lesson-video-section" style="text-align:center; margin-top:15px;">
-                    <img src="${imgThumb}" style="width:100%; max-width:400px; border-radius:10px; cursor:pointer; margin-bottom:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);" 
-                         onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">
-                    
-                    <button class="video-button" onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">
-                      Ver Video
-                    </button>
-                  </div>
-                ` : '<p style="color:#999; text-align:center;">Esta lección no incluye video.</p>'}
-                
-                ${item.material ? `<a href="${item.material}" target="_blank" class="material-button" style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none;">Descargar Material</a>` : ''}
+                    <img src="${imgThumb}" onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')" alt="Miniatura">
+                    <button class="video-button" onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">Ver Video</button>
+                  </div>` : '<p style="color:#999; text-align:center;">Esta lección no incluye video.</p>'}
+                ${item.material ? `<a href="${item.material}" target="_blank" style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; font-weight:bold;">Descargar Material</a>` : ''}
               </div>`;
           }
         });
@@ -210,42 +177,21 @@ function renderCourse(data) {
         content.innerHTML += moduloHtml;
       }
     }
-  // 4. EL "GUARDIA" EN TIEMPO REAL (Mejorado para Drive)
+
     async function verificarYVer(url, titulo) {
-      if (!url) return alert("Lección sin video");
-      
       const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
       const data = await response.json();
-
       if (data.esValido) {
         const frame = document.getElementById('modalVideoFrame');
         document.getElementById('modalVideoTitle').innerText = titulo;
-        
-        // Limpiamos la URL de Drive para que use el modo preview correctamente
-        let videoId = "";
-        if (url.includes('d/')) {
-            videoId = url.split('d/')[1].split('/')[0];
-        } else if (url.includes('id=')) {
-            videoId = url.split('id=')[1].split('&')[0];
-        }
-        
+        let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
         frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
         document.getElementById('videoModal').style.display = 'flex';
-      } else {
-        alert("Sesión expirada");
-        cerrarSesion();
-      }
+      } else { alert("Sesión expirada"); cerrarSesion(); }
     }
 
-    function closeModal() {
-      document.getElementById('videoModal').style.display = 'none';
-      document.getElementById('modalVideoFrame').src = '';
-    }
-
-    function cerrarSesion() {
-      localStorage.clear();
-      window.location.href = "index.html";
-    }
+    function closeModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('modalVideoFrame').src = ''; }
+    function cerrarSesion() { localStorage.clear(); window.location.href = "index.html"; }
 
     init();
   </script>
