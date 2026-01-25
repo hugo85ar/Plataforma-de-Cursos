@@ -111,29 +111,39 @@
       document.getElementById('courseDescription').innerText = data.descripcionGeneral;
       
       if (data.urlBanner) {
-        document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" class="course-banner" style="width:100%; border-radius:8px; margin-bottom:1rem;">`;
+        document.getElementById('courseBannerContainer').innerHTML = `
+          <img src="${data.urlBanner}" class="course-banner" 
+               style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1);">`;
       }
 
       const content = document.getElementById('courseContent');
+      content.innerHTML = ''; // Limpiamos antes de cargar
       
-      // Mapeamos los módulos y lecciones
       for (const modulo in data.modulos) {
         let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
         
         data.modulos[modulo].forEach(item => {
           if (item.tipo === 'leccion') {
+            // 🔹 CORRECCIÓN: Usamos item.video.url en lugar de item.videoUrl
+            const hasVideo = item.video && item.video.url && item.video.url.trim() !== "";
+            
             moduloHtml += `
               <div class="lesson">
                 <div class="lesson-info">
                   <h3>Lección ${item.id}: ${item.titulo}</h3>
                   <p>${item.descripcion || ''}</p>
                 </div>
-                ${item.videoUrl ? `
-                  <button class="video-button" onclick="verificarYVer('${item.videoUrl}', 'Lección ${item.id}: ${item.titulo}')">
+                ${hasVideo ? `
+                  <button class="video-button" onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">
                     Ver Video
                   </button>
-                ` : ''}
-                ${item.material ? `<a href="${item.material}" target="_blank" class="material-button" style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none;">Descargar Material</a>` : ''}
+                ` : '<p style="color:#999; font-size:0.9rem; text-align:center;">Esta lección no incluye video.</p>'}
+                
+                ${item.material ? `
+                  <a href="${item.material}" target="_blank" class="material-button" 
+                     style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; font-weight:bold;">
+                     <i class="fas fa-download"></i> Descargar Material
+                  </a>` : ''}
               </div>`;
           }
         });
