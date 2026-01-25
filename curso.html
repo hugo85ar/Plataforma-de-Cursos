@@ -143,42 +143,46 @@
     }
 
     // 3. RENDERIZADO DINÁMICO
-    function renderCourse(data) {
+function renderCourse(data) {
       document.getElementById('loader').style.display = 'none';
       document.getElementById('courseTitle').innerText = data.nombreCurso;
       document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
       document.getElementById('courseDescription').innerText = data.descripcionGeneral;
-
-      const content = document.getElementById('courseContent');
-      content.innerHTML = ''; 
-
-      // 🔹 NUEVO: Si no completó el formulario, lo mostramos arriba de todo
-      if (data.formCompletado === false) {
-          content.innerHTML = `
-            <div class="formulario-seccion" id="seccionEncuesta" style="background:#fff3cd; padding:20px; border-radius:10px; margin-bottom:20px; border:1px solid #ffeeba; text-align:center;">
-                <h3>¡Queremos conocerte mejor!</h3>
-                <p>Completa esta breve encuesta para desbloquear contenido exclusivo.</p>
-                <button class="video-button" onclick="window.open('TU_URL_DE_FORMULARIO_O_MOSTRAR_DIV', '_blank')">Completar ahora</button>
-            </div>
-          `;
-      }
       
+      const content = document.getElementById('courseContent');
+      content.innerHTML = ''; // Limpiamos una sola vez
+
+      // 1. Banner del curso
       if (data.urlBanner) {
         document.getElementById('courseBannerContainer').innerHTML = `
           <img src="${data.urlBanner}" class="course-banner" 
-               style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1);">`;
+               style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
       }
 
-      const content = document.getElementById('courseContent');
-      content.innerHTML = ''; // Limpiamos antes de cargar
-      
+      // 2. SECCIÓN ENCUESTA (Aparece si formCompletado es false)
+      if (data.formCompletado === false) {
+          content.innerHTML += `
+            <div id="seccionEncuesta" class="module" style="background:#e6f7ff; border:2px solid #91d5ff; text-align:center; padding:30px;">
+                <h3 style="color:#0056b3;">¡Queremos conocerte mejor!</h3>
+                <p>Antes de empezar, ayúdanos a entender tus desafíos.</p>
+                <button class="video-button" style="background:#28a745;" 
+                        onclick="document.getElementById('formIframe').style.display='block'; this.style.display='none'">
+                    Completar Formulario
+                </button>
+                <div id="formIframe" style="display:none; margin-top:20px;">
+                    <iframe src="TU_URL_DE_FORMULARIO_AQUÍ" style="width:100%; height:600px; border:none; border-radius:10px;"></iframe>
+                </div>
+            </div>`;
+      }
+
+      // 3. GENERAR MÓDULOS Y LECCIONES CON IMÁGENES
       for (const modulo in data.modulos) {
         let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
         
         data.modulos[modulo].forEach(item => {
           if (item.tipo === 'leccion') {
-            // 🔹 CORRECCIÓN: Usamos item.video.url en lugar de item.videoUrl
-            const hasVideo = item.video && item.video.url && item.video.url.trim() !== "";
+            const hasVideo = item.video && item.video.url;
+            const imgThumb = item.video.imgUrl || 'https://via.placeholder.com/300x168?text=Video+Caratula';
             
             moduloHtml += `
               <div class="lesson">
@@ -186,17 +190,19 @@
                   <h3>Lección ${item.id}: ${item.titulo}</h3>
                   <p>${item.descripcion || ''}</p>
                 </div>
+
                 ${hasVideo ? `
-                  <button class="video-button" onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">
-                    Ver Video
-                  </button>
-                ` : '<p style="color:#999; font-size:0.9rem; text-align:center;">Esta lección no incluye video.</p>'}
+                  <div class="lesson-video-section" style="text-align:center; margin-top:15px;">
+                    <img src="${imgThumb}" style="width:100%; max-width:400px; border-radius:10px; cursor:pointer; margin-bottom:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);" 
+                         onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">
+                    
+                    <button class="video-button" onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">
+                      Ver Video
+                    </button>
+                  </div>
+                ` : '<p style="color:#999; text-align:center;">Esta lección no incluye video.</p>'}
                 
-                ${item.material ? `
-                  <a href="${item.material}" target="_blank" class="material-button" 
-                     style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; font-weight:bold;">
-                     <i class="fas fa-download"></i> Descargar Material
-                  </a>` : ''}
+                ${item.material ? `<a href="${item.material}" target="_blank" class="material-button" style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none;">Descargar Material</a>` : ''}
               </div>`;
           }
         });
@@ -204,7 +210,6 @@
         content.innerHTML += moduloHtml;
       }
     }
-
   // 4. EL "GUARDIA" EN TIEMPO REAL (Mejorado para Drive)
     async function verificarYVer(url, titulo) {
       if (!url) return alert("Lección sin video");
