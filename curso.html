@@ -152,22 +152,40 @@
       }
     }
 
-    // 4. EL "GUARDIA" EN TIEMPO REAL
-    async function verificarYVer(url, titulo) {
-      // Antes de abrir el video, confirmamos que el token sigue siendo el del Excel
-      const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
-      const data = await response.json();
+    // 4. EL "GUARDIA" EN TIEMPO REAL CON LIMPIEZA DE URL
+async function verificarYVer(url, titulo) {
+  if (!url) return alert("Esta lección no tiene video configurado.");
 
-      if (data.esValido) {
-        const frame = document.getElementById('modalVideoFrame');
-        document.getElementById('modalVideoTitle').innerText = titulo;
-        frame.src = url.replace('/view?usp=sharing', '/preview');
-        document.getElementById('videoModal').style.display = 'flex';
-      } else {
-        alert("Tu sesión ha expirado porque ingresaste desde otro dispositivo.");
-        cerrarSesion();
-      }
+  // Antes de abrir, confirmamos sesión
+  const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
+  const data = await response.json();
+
+  if (data.esValido) {
+    const frame = document.getElementById('modalVideoFrame');
+    document.getElementById('modalVideoTitle').innerText = titulo;
+
+    // 🔹 LÓGICA DE CONVERSIÓN FUERTE PARA DRIVE
+    // Esto convierte cualquier link de Drive (view, edit, share) en formato /preview
+    let videoId = "";
+    if (url.includes('d/')) {
+        videoId = url.split('d/')[1].split('/')[0];
+    } else if (url.includes('id=')) {
+        videoId = url.split('id=')[1].split('&')[0];
     }
+    
+    if (videoId) {
+        frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
+        document.getElementById('videoModal').style.display = 'flex';
+    } else {
+        // Si no es un link de Drive, lo cargamos tal cual (ej: YouTube)
+        frame.src = url;
+        document.getElementById('videoModal').style.display = 'flex';
+    }
+  } else {
+    alert("Tu sesión ha expirado porque ingresaste desde otro dispositivo.");
+    cerrarSesion();
+  }
+}
 
     function closeModal() {
       document.getElementById('videoModal').style.display = 'none';
