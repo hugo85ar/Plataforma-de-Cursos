@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Curso | Hugo Alvigini</title>
+  <title>Mi Academia | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-    /* 🔹 ESTILOS GENERALES */
+    /* 🔹 ESTILOS PROFESIONALES REFORZADOS */
     body {
       font-family: 'Open Sans', sans-serif;
       margin: 0; padding: 0;
@@ -16,7 +16,6 @@
     }
     .container { max-width: 960px; margin: 2.5rem auto; padding: 0 1.5rem; }
     
-    /* Header */
     .course-header {
       background-color: #0056b3; color: white; padding: 1.5rem;
       border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -33,23 +32,24 @@
     .reset-password-button { background-color: #ff9800; }
     .inicio-button { background-color: #007bff; }
 
-    /* Módulos y Lecciones */
     .module { background-color: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
     .module h2 { color: #0056b3; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 0; }
-    .lesson { background: #f8fafc; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; }
-    .lesson h3 { margin-top: 0; color: #1e293b; }
-
-    /* Video y Botones */
-    .video-button { background-color: #0056b3; color: white; padding: 0.9rem 1.8rem; border-radius: 5px; cursor: pointer; display: block; text-align: center; border:none; width: 100%; font-weight: bold; transition: 0.3s; }
-    .video-button:hover { background-color: #003d82; }
     
-    .lesson-video-section img { width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.3s; }
+    .lesson { background: #f8fafc; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; }
+    
+    .video-button { background-color: #0056b3; color: white; padding: 0.9rem 1.8rem; border-radius: 5px; cursor: pointer; display: block; text-align: center; border:none; width: 100%; font-weight: bold; }
+
+    /* 🔹 DISEÑO DE MINIATURAS (Imagen 3) */
+    .lesson-video-section { text-align: center; margin-top: 15px; }
+    .lesson-video-section img { 
+      width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; 
+      margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.3s; 
+    }
     .lesson-video-section img:hover { transform: scale(1.02); }
 
-    /* Modal y Escudo Protector */
+    /* 🔹 MODAL Y ESCUDO PROTECTOR (Pop-out bloqueado) */
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
     .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; overflow: hidden; position: relative; }
-    
     .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
     .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
     
@@ -59,12 +59,6 @@
     }
 
     #loader { color: white; text-align: center; padding: 50px; font-size: 1.2rem; }
-    
-    @media (max-width: 600px) {
-        .course-header { flex-direction: column; }
-        .action-buttons { width: 100%; }
-        .logout-button, .reset-password-button, .inicio-button { width: 100%; }
-    }
   </style>
 </head>
 <body oncontextmenu="return false;">
@@ -73,7 +67,7 @@
     <header class="course-header">
       <h1 id="courseTitle">Cargando...</h1>
       <div class="action-buttons">
-        <a href="https://docs.google.com/forms/d/e/..." target="_blank" class="reset-password-button">Restablecer Contraseña</a>
+        <a href="https://docs.google.com/forms/d/..." target="_blank" class="reset-password-button">Restablecer Contraseña</a>
         <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
         <a href="dashboard.html" class="inicio-button">Volver al Inicio</a>
       </div>
@@ -117,7 +111,7 @@
         const data = await response.json();
         if (data.status === "success") { renderCourse(data); } 
         else { alert("Sesión no válida"); cerrarSesion(); }
-      } catch (e) { console.error(e); document.getElementById('loader').innerText = "Error al cargar datos."; }
+      } catch (e) { console.error(e); }
     }
 
     function renderCourse(data) {
@@ -126,15 +120,21 @@
       document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
       document.getElementById('courseDescription').innerText = data.descripcionGeneral;
 
-      const content = document.getElementById('courseContent');
-      content.innerHTML = ''; // LIMPIEZA ÚNICA
+      // 1. Banner Superior (Imagen 2)
+      if (data.urlBanner) {
+        document.getElementById('courseBannerContainer').innerHTML = `
+          <img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1);">`;
+      }
 
-      // 1. Encuesta (Si corresponde)
+      const content = document.getElementById('courseContent');
+      content.innerHTML = ''; // 🔹 ÚNICA LIMPIEZA INICIAL
+
+      // 2. Sección Encuesta (Si no está completada)
       if (data.formCompletado === false) {
           content.innerHTML += `
-            <div class="module" style="background:#fff3cd; border:2px solid #ffeeba; text-align:center; padding:30px;">
-                <h3 style="color:#856404;">🚀 ¡Solo un paso más!</h3>
-                <p>Ayúdanos a personalizar tu experiencia respondiendo estas preguntas.</p>
+            <div class="module" style="background:#fff3cd; border:2px solid #ffeeba; text-align:center; padding:30px; margin-bottom:20px;">
+                <h3 style="color:#856404;">🚀 ¡Queremos conocerte mejor!</h3>
+                <p>Completa esta breve encuesta para desbloquear contenido exclusivo.</p>
                 <button class="video-button" style="background:#28a745; width:auto; margin:0 auto;" 
                         onclick="document.getElementById('formIframe').style.display='block'; this.style.display='none'">
                     Completar Formulario
@@ -145,12 +145,7 @@
             </div>`;
       }
 
-      // 2. Banner
-      if (data.urlBanner) {
-        document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1);">`;
-      }
-
-      // 3. Módulos y Lecciones
+      // 3. Generar Módulos y Lecciones con Miniaturas (Imagen 3)
       for (const modulo in data.modulos) {
         let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
         data.modulos[modulo].forEach(item => {
@@ -165,7 +160,7 @@
                   <p>${item.descripcion || ''}</p>
                 </div>
                 ${hasVideo ? `
-                  <div class="lesson-video-section" style="text-align:center; margin-top:15px;">
+                  <div class="lesson-video-section">
                     <img src="${imgThumb}" onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')" alt="Miniatura">
                     <button class="video-button" onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">Ver Video</button>
                   </div>` : '<p style="color:#999; text-align:center;">Esta lección no incluye video.</p>'}
