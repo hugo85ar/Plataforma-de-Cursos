@@ -144,8 +144,8 @@
 
 async function marcarLeccionManual(leccionId) {
     const btn = document.getElementById(`btn-${leccionId}`);
-    const icon = btn.querySelector('i');
     const text = btn.querySelector('span');
+    const icon = btn.querySelector('i');
     
     if (btn.classList.contains('visto')) return;
 
@@ -153,31 +153,33 @@ async function marcarLeccionManual(leccionId) {
     text.innerText = "Guardando...";
 
     try {
-        const formData = new URLSearchParams({ action: 'marcarCompletada', email: userEmail, curso: cursoId, leccion: leccionId });
-        const response = await fetch(WEB_APP_URL, { 
-            method: 'POST', 
-            body: formData.toString(), 
-            headers: { "Content-Type": "application/x-www-form-urlencoded" } 
+        // Usamos URLSearchParams para asegurar compatibilidad total con el doPost de Google
+        const params = new URLSearchParams();
+        params.append('action', 'marcarCompletada');
+        params.append('email', userEmail);
+        params.append('curso', cursoId);
+        params.append('leccion', leccionId);
+
+        const response = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            body: params.toString(),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         });
         
-        // El _json del servidor evita que falle aquí
-        const resData = await response.json();
+        const resData = await response.json(); // Aquí fallaba antes por el error de consola
 
         if (resData.status === "success") {
             btn.classList.add('visto');
-            icon.className = "fas fa-check-circle"; // 🔹 Aparece el círculo verde con check
+            icon.className = "fas fa-check-circle"; // Círculo verde
             text.innerText = "Lección Completada";
             
-            // 🔹 ESTO HACE QUE LA BARRA SE MUEVA
+            // 🔹 ACTUALIZACIÓN DE LA BARRA
             actualizarBarraProgreso(resData.nuevoPorcentaje);
-        } else {
-            throw new Error(resData.message);
         }
     } catch (e) {
-        console.error("Error al marcar:", e);
-        alert("No se pudo guardar el progreso: " + e.message);
-        text.innerText = "Marcar como completada";
+        console.error(e);
         btn.disabled = false;
+        text.innerText = "Marcar como completada";
     }
 }
     
