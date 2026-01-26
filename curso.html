@@ -192,38 +192,48 @@
     }
 
     // 🔹 MARCA PROGRESO Y ACTUALIZA LA BARRA
-    async function marcarLeccionManual(leccionId) {
-        const btn = document.getElementById(`btn-${leccionId}`);
-        if (btn.classList.contains('visto')) return;
+async function marcarLeccionManual(leccionId) {
+    const btn = document.getElementById(`btn-${leccionId}`);
+    const icon = btn.querySelector('i');
+    const text = btn.querySelector('span');
+    
+    if (btn.classList.contains('visto')) return;
 
-        btn.innerText = "Guardando...";
-        btn.disabled = true;
+    btn.disabled = true;
+    text.innerText = "Guardando...";
 
-        try {
-            const formData = new URLSearchParams();
-            formData.append('action', 'marcarCompletada');
-            formData.append('email', userEmail);
-            formData.append('curso', cursoId);
-            formData.append('leccion', leccionId);
+    try {
+        const formData = new URLSearchParams();
+        formData.append('action', 'marcarCompletada');
+        formData.append('email', userEmail);
+        formData.append('curso', cursoId);
+        formData.append('leccion', leccionId);
 
-            const response = await fetch(WEB_APP_URL, {
-                method: 'POST',
-                body: formData.toString(),
-                headers: { "Content-Type": "application/x-www-form-urlencoded" }
-            });
-            const resData = await response.json();
+        const response = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            body: formData.toString(),
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        });
+        const resData = await response.json();
 
-            if (resData.status === "success") {
-                btn.classList.add('visto');
-                btn.innerText = "✅ Completada";
+        if (resData.status === "success") {
+            // 1. Cambiamos el estilo del botón
+            btn.classList.add('visto');
+            icon.className = "fas fa-check-circle"; // Cambia círculo vacío por check
+            text.innerText = "Lección Completada";
+            
+            // 2. 🔹 ACTUALIZAMOS LA BARRA DE PROGRESO AL INSTANTE
+            // resData.nuevoPorcentaje viene calculado desde tu Apps Script
+            if (resData.nuevoPorcentaje !== undefined) {
                 actualizarBarraProgreso(resData.nuevoPorcentaje);
             }
-        } catch (e) {
-            console.error(e);
-            btn.innerText = "Marcar como completada";
-            btn.disabled = false;
         }
+    } catch (e) {
+        console.error(e);
+        text.innerText = "Marcar como completada";
+        btn.disabled = false;
     }
+}
 
     function actualizarBarraProgreso(porcentaje) {
         document.getElementById('progressBar').style.width = porcentaje + '%';
