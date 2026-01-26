@@ -98,150 +98,106 @@
   </div>
 
   <script>
+
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzsSDXwl1BUdeabdfEcsAJk4VZP7GzF1baObJMq8UMZQbXVrB-FcW_kuchgeSK67_x1ug/exec";
-    const userEmail = localStorage.getItem('userEmail');
-    const userToken = localStorage.getItem('userToken');
-    const cursoId = localStorage.getItem('cursoActual');
+  const userEmail = localStorage.getItem('userEmail');
+  const userToken = localStorage.getItem('userToken');
+  const cursoId = localStorage.getItem('cursoActual');
 
-    if (!userEmail || !userToken || !cursoId) window.location.href = "index.html";
+  if (!userEmail || !userToken || !cursoId) window.location.href = "index.html";
 
-    async function init() {
-      try {
-        const response = await fetch(`${WEB_APP_URL}?action=getCourseData&curso=${cursoId}&email=${userEmail}&token=${userToken}`);
-        const data = await response.json();
-        if (data.status === "success") { renderCourse(data); } 
-        else { alert("Sesión no válida"); cerrarSesion(); }
-      } catch (e) { console.error(e); }
-    }
-
-    function renderCourse(data) {
-  document.getElementById('loader').style.display = 'none';
-  document.getElementById('courseTitle').innerText = data.nombreCurso;
-  document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
-  document.getElementById('courseDescription').innerText = data.descripcionGeneral;
-
-  const content = document.getElementById('courseContent');
-  content.innerHTML = ''; // 🔹 ÚNICA LIMPIEZA INICIAL
-
-  // 1. Mostrar Encuesta (Si corresponde)
-  if (data.formCompletado === false) {
-    content.innerHTML += `
-      <div id="seccionEncuesta" class="module" style="background:#fff3cd; border:2px solid #ffeeba; text-align:center; padding:30px; margin-bottom:20px;">
-        <h3 style="color:#856404;">🚀 ¡Queremos conocerte mejor!</h3>
-        <p>Completa esta breve encuesta para desbloquear contenido exclusivo.</p>
-        <button class="video-button" style="background:#28a745; width:auto; margin:0 auto;" 
-                onclick="document.getElementById('formIframe').style.display='block'; this.style.display='none'">
-            Completar Formulario
-        </button>
-        <div id="formIframe" style="display:none; margin-top:20px;">
-            <iframe src="https://hugo85ar.github.io/HugoBot/" style="width:100%; height:500px; border:none; border-radius:10px;"></iframe>
-        </div>
-      </div>`;
-  }
-
-  // 2. Banner del curso
-  if (data.urlBanner) {
-    document.getElementById('courseBannerContainer').innerHTML = `
-      <img src="${data.urlBanner}" class="course-banner" 
-           style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1);">`;
-  }
-
-  // 3. Generar Módulos y Lecciones con Miniaturas
-  for (const modulo in data.modulos) {
-    let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
-    data.modulos[modulo].forEach(item => {
-      if (item.tipo === 'leccion') {
-        const hasVideo = item.video && item.video.url && item.video.url.trim() !== "";
-        // 🔹 Usamos la imagen que viene del Excel (Columna G)
-        const imgThumb = item.video.imgUrl || 'https://via.placeholder.com/400x225?text=Ver+Lección';
-        
-        moduloHtml += `
-          <div class="lesson">
-            <div class="lesson-info">
-              <h3>Lección ${item.id}: ${item.titulo}</h3>
-              <p>${item.descripcion || ''}</p>
-            </div>
-            ${hasVideo ? `
-              <div style="text-align:center; margin-bottom:15px;">
-                <img src="${imgThumb}" style="width:100%; max-width:450px; border-radius:12px; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.15);" 
-                     onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">
-                <button class="video-button" style="margin-top:10px;" 
-                        onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">
-                  Ver Video
-                </button>
-              </div>
-            ` : '<p style="color:#999; text-align:center;">Esta lección no incluye video.</p>'}
-            ${item.material ? `<a href="${item.material}" target="_blank" class="material-button" style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; font-weight:bold;">Descargar Material</a>` : ''}
-          </div>`;
-    });
-    moduloHtml += `</div>`;
-    content.innerHTML += moduloHtml; // 🔹 Sumamos, no borramos
-  }
-}
-
-      const content = document.getElementById('courseContent');
-      content.innerHTML = ''; // 🔹 ÚNICA LIMPIEZA INICIAL
-
-      // 2. Sección Encuesta (Si no está completada)
-      if (data.formCompletado === false) {
-          content.innerHTML += `
-            <div class="module" style="background:#fff3cd; border:2px solid #ffeeba; text-align:center; padding:30px; margin-bottom:20px;">
-                <h3 style="color:#856404;">🚀 ¡Queremos conocerte mejor!</h3>
-                <p>Completa esta breve encuesta para desbloquear contenido exclusivo.</p>
-                <button class="video-button" style="background:#28a745; width:auto; margin:0 auto;" 
-                        onclick="document.getElementById('formIframe').style.display='block'; this.style.display='none'">
-                    Completar Formulario
-                </button>
-                <div id="formIframe" style="display:none; margin-top:20px;">
-                    <iframe src="https://hugo85ar.github.io/HugoBot/" style="width:100%; height:500px; border:none; border-radius:10px;"></iframe>
-                </div>
-            </div>`;
-      }
-
-      // 3. Generar Módulos y Lecciones con Miniaturas (Imagen 3)
-      for (const modulo in data.modulos) {
-        let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
-        data.modulos[modulo].forEach(item => {
-          if (item.tipo === 'leccion') {
-            const hasVideo = item.video && item.video.url && item.video.url.trim() !== "";
-            const imgThumb = (item.video && item.video.imgUrl) ? item.video.imgUrl : 'https://via.placeholder.com/400x225?text=Ver+Lección';
-            
-            moduloHtml += `
-              <div class="lesson">
-                <div class="lesson-info">
-                  <h3>Lección ${item.id}: ${item.titulo}</h3>
-                  <p>${item.descripcion || ''}</p>
-                </div>
-                ${hasVideo ? `
-                  <div class="lesson-video-section">
-                    <img src="${imgThumb}" onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')" alt="Miniatura">
-                    <button class="video-button" onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">Ver Video</button>
-                  </div>` : '<p style="color:#999; text-align:center;">Esta lección no incluye video.</p>'}
-                ${item.material ? `<a href="${item.material}" target="_blank" style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; font-weight:bold;">Descargar Material</a>` : ''}
-              </div>`;
-          }
-        });
-        moduloHtml += `</div>`;
-        content.innerHTML += moduloHtml;
-      }
-    }
-
-    async function verificarYVer(url, titulo) {
-      const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
+  async function init() {
+    try {
+      const response = await fetch(`${WEB_APP_URL}?action=getCourseData&curso=${cursoId}&email=${userEmail}&token=${userToken}`);
       const data = await response.json();
-      if (data.esValido) {
-        const frame = document.getElementById('modalVideoFrame');
-        document.getElementById('modalVideoTitle').innerText = titulo;
-        let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
-        frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
-        document.getElementById('videoModal').style.display = 'flex';
-      } else { alert("Sesión expirada"); cerrarSesion(); }
+      if (data.status === "success") { 
+          renderCourse(data); 
+      } else { 
+          alert("Sesión no válida"); cerrarSesion(); 
+      }
+    } catch (e) { 
+      console.error(e); 
+      document.getElementById('loader').innerText = "Error de conexión con el servidor."; 
+    }
+  }
+
+  function renderCourse(data) {
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('courseTitle').innerText = data.nombreCurso;
+    document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
+    document.getElementById('courseDescription').innerText = data.descripcionGeneral;
+
+    if (data.urlBanner) {
+      document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1);">`;
     }
 
-    function closeModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('modalVideoFrame').src = ''; }
-    function cerrarSesion() { localStorage.clear(); window.location.href = "index.html"; }
+    const content = document.getElementById('courseContent');
+    content.innerHTML = ''; 
 
-    init();
+    // 1. Mostrar Encuesta (Si corresponde)
+    if (data.formCompletado === false) {
+      content.innerHTML += `
+        <div class="module" style="background:#fff3cd; border:2px solid #ffeeba; text-align:center; padding:30px; margin-bottom:20px;">
+          <h3 style="color:#856404;">🚀 ¡Solo un paso más!</h3>
+          <p>Responde estas preguntas para personalizar tu experiencia.</p>
+          <button class="video-button" style="background:#28a745; width:auto; margin:0 auto;" 
+                  onclick="document.getElementById('formIframe').style.display='block'; this.style.display='none'">
+              Completar Formulario
+          </button>
+          <div id="formIframe" style="display:none; margin-top:20px;">
+              <iframe src="https://hugo85ar.github.io/HugoBot/" style="width:100%; height:500px; border:none; border-radius:10px;"></iframe>
+          </div>
+        </div>`;
+    }
+
+    // 2. Módulos y Lecciones con Miniaturas (Columna G)
+    for (const modulo in data.modulos) {
+      let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
+      data.modulos[modulo].forEach(item => {
+        if (item.tipo === 'leccion') {
+          const videoInfo = item.video || {};
+          const hasVideo = videoInfo.url && videoInfo.url.trim() !== "";
+          const imgThumb = videoInfo.imgUrl || 'https://via.placeholder.com/400x225?text=Ver+Lección';
+          
+          moduloHtml += `
+            <div class="lesson">
+              <div class="lesson-info">
+                <h3>Lección ${item.id}: ${item.titulo}</h3>
+                <p>${item.descripcion || ''}</p>
+              </div>
+              ${hasVideo ? `
+                <div class="lesson-video-section" style="text-align:center; margin-top:15px;">
+                  <img src="${imgThumb}" style="width:100%; max-width:450px; border-radius:12px; cursor:pointer;" 
+                       onclick="verificarYVer('${videoInfo.url}', 'Lección ${item.id}: ${item.titulo}')">
+                  <button class="video-button" style="margin-top:10px;" 
+                          onclick="verificarYVer('${videoInfo.url}', 'Lección ${item.id}: ${item.titulo}')">Ver Video</button>
+                </div>` : '<p style="color:#999; text-align:center;">Esta lección no incluye video.</p>'}
+              ${item.material ? `<a href="${item.material}" target="_blank" style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; font-weight:bold;">Descargar Material</a>` : ''}
+            </div>`;
+        }
+      });
+      moduloHtml += `</div>`;
+      content.innerHTML += moduloHtml;
+    }
+  }
+
+  async function verificarYVer(url, titulo) {
+    const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
+    const data = await response.json();
+    if (data.esValido) {
+      const frame = document.getElementById('modalVideoFrame');
+      document.getElementById('modalVideoTitle').innerText = titulo;
+      let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
+      frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
+      document.getElementById('videoModal').style.display = 'flex';
+    } else { alert("Sesión expirada"); cerrarSesion(); }
+  }
+
+  function closeModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('modalVideoFrame').src = ''; }
+  function cerrarSesion() { localStorage.clear(); window.location.href = "index.html"; }
+
+  init();
+    
   </script>
 </body>
 </html>
