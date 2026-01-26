@@ -248,16 +248,24 @@ async function enviarFormularioProspectos(event) {
   const formData = new FormData(event.target);
   const params = new URLSearchParams();
   params.append('action', 'procesarFormulario');
-  params.append('email', userEmail);
+  params.append('email', userEmail); // userEmail ya está definido al inicio del script
   formData.forEach((value, key) => params.append(key, value));
 
   try {
-    await fetch(WEB_APP_URL, { method: 'POST', body: params.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
-    alert("¡Gracias! Ahora puedes acceder a las lecciones.");
-    location.reload(); // Recargamos para que el servidor vea que ya completó
+    const response = await fetch(WEB_APP_URL, { 
+        method: 'POST', 
+        body: params.toString(), 
+        headers: { "Content-Type": "application/x-www-form-urlencoded" } 
+    });
+    const res = await response.json();
+    if(res.status === "success") {
+        alert("¡Registro exitoso! Ya puedes acceder.");
+        location.reload(); // Recarga para ocultar el form y mostrar lecciones
+    }
   } catch (e) {
-    alert("Error al enviar. Inténtalo de nuevo.");
+    alert("Error al conectar. Inténtalo de nuevo.");
     btn.disabled = false;
+    btn.innerText = "Comenzar el Curso Ahora!";
   }
 }
       
