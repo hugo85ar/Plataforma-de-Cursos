@@ -115,16 +115,69 @@
     }
 
     function renderCourse(data) {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('courseTitle').innerText = data.nombreCurso;
-      document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
-      document.getElementById('courseDescription').innerText = data.descripcionGeneral;
+  document.getElementById('loader').style.display = 'none';
+  document.getElementById('courseTitle').innerText = data.nombreCurso;
+  document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
+  document.getElementById('courseDescription').innerText = data.descripcionGeneral;
 
-      // 1. Banner Superior (Imagen 2)
-      if (data.urlBanner) {
-        document.getElementById('courseBannerContainer').innerHTML = `
-          <img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1);">`;
-      }
+  const content = document.getElementById('courseContent');
+  content.innerHTML = ''; // 🔹 ÚNICA LIMPIEZA INICIAL
+
+  // 1. Mostrar Encuesta (Si corresponde)
+  if (data.formCompletado === false) {
+    content.innerHTML += `
+      <div id="seccionEncuesta" class="module" style="background:#fff3cd; border:2px solid #ffeeba; text-align:center; padding:30px; margin-bottom:20px;">
+        <h3 style="color:#856404;">🚀 ¡Queremos conocerte mejor!</h3>
+        <p>Completa esta breve encuesta para desbloquear contenido exclusivo.</p>
+        <button class="video-button" style="background:#28a745; width:auto; margin:0 auto;" 
+                onclick="document.getElementById('formIframe').style.display='block'; this.style.display='none'">
+            Completar Formulario
+        </button>
+        <div id="formIframe" style="display:none; margin-top:20px;">
+            <iframe src="https://hugo85ar.github.io/HugoBot/" style="width:100%; height:500px; border:none; border-radius:10px;"></iframe>
+        </div>
+      </div>`;
+  }
+
+  // 2. Banner del curso
+  if (data.urlBanner) {
+    document.getElementById('courseBannerContainer').innerHTML = `
+      <img src="${data.urlBanner}" class="course-banner" 
+           style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1);">`;
+  }
+
+  // 3. Generar Módulos y Lecciones con Miniaturas
+  for (const modulo in data.modulos) {
+    let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
+    data.modulos[modulo].forEach(item => {
+      if (item.tipo === 'leccion') {
+        const hasVideo = item.video && item.video.url && item.video.url.trim() !== "";
+        // 🔹 Usamos la imagen que viene del Excel (Columna G)
+        const imgThumb = item.video.imgUrl || 'https://via.placeholder.com/400x225?text=Ver+Lección';
+        
+        moduloHtml += `
+          <div class="lesson">
+            <div class="lesson-info">
+              <h3>Lección ${item.id}: ${item.titulo}</h3>
+              <p>${item.descripcion || ''}</p>
+            </div>
+            ${hasVideo ? `
+              <div style="text-align:center; margin-bottom:15px;">
+                <img src="${imgThumb}" style="width:100%; max-width:450px; border-radius:12px; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.15);" 
+                     onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">
+                <button class="video-button" style="margin-top:10px;" 
+                        onclick="verificarYVer('${item.video.url}', 'Lección ${item.id}: ${item.titulo}')">
+                  Ver Video
+                </button>
+              </div>
+            ` : '<p style="color:#999; text-align:center;">Esta lección no incluye video.</p>'}
+            ${item.material ? `<a href="${item.material}" target="_blank" class="material-button" style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; font-weight:bold;">Descargar Material</a>` : ''}
+          </div>`;
+    });
+    moduloHtml += `</div>`;
+    content.innerHTML += moduloHtml; // 🔹 Sumamos, no borramos
+  }
+}
 
       const content = document.getElementById('courseContent');
       content.innerHTML = ''; // 🔹 ÚNICA LIMPIEZA INICIAL
