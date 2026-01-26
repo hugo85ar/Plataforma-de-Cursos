@@ -6,58 +6,37 @@
   <title>Mi Academia | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-    /* 🔹 ESTILOS PROFESIONALES REFORZADOS */
-    body {
-      font-family: 'Open Sans', sans-serif;
-      margin: 0; padding: 0;
-      background: linear-gradient(135deg, #1f2559, #3b82f6);
-      background-attachment: fixed;
-      color: #333; line-height: 1.6;
-    }
+    /* 🔹 TUS ESTILOS ORIGINALES */
+    body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #1f2559, #3b82f6); background-attachment: fixed; color: #333; line-height: 1.6; }
     .container { max-width: 960px; margin: 2.5rem auto; padding: 0 1.5rem; }
-    
-    .course-header {
-      background-color: #0056b3; color: white; padding: 1.5rem;
-      border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
-    }
+    .course-header { background-color: #0056b3; color: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
     .course-header h1 { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; margin: 0; flex-grow: 1; text-align: center; }
-    
     .action-buttons { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-    .logout-button, .reset-password-button, .inicio-button {
-      color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none;
-      font-weight: 600; font-size: 0.9rem; width: 150px; text-align: center; cursor: pointer; border: none;
-    }
+    .logout-button, .reset-password-button, .inicio-button { color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.9rem; width: 150px; text-align: center; cursor: pointer; border: none; }
     .logout-button { background-color: #dc3545; }
     .reset-password-button { background-color: #ff9800; }
     .inicio-button { background-color: #007bff; }
-
     .module { background-color: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
     .module h2 { color: #0056b3; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 0; }
-    
     .lesson { background: #f8fafc; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; }
-    
     .video-button { background-color: #0056b3; color: white; padding: 0.9rem 1.8rem; border-radius: 5px; cursor: pointer; display: block; text-align: center; border:none; width: 100%; font-weight: bold; }
-
-    /* 🔹 DISEÑO DE MINIATURAS (Imagen 3) */
-    .lesson-video-section { text-align: center; margin-top: 15px; }
-    .lesson-video-section img { 
-      width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; 
-      margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.3s; 
-    }
-    .lesson-video-section img:hover { transform: scale(1.02); }
-
-    /* 🔹 MODAL Y ESCUDO PROTECTOR (Pop-out bloqueado) */
+    .lesson-video-section img { width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.3s; }
+    
+    /* 🔹 ESTILOS DEL FORMULARIO */
+    .formulario-container { background-color: #f9f9f9; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 30px; border: 2px solid #007BFF; }
+    .formulario-group { margin-bottom: 15px; text-align: left; }
+    .formulario-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
+    .formulario-group textarea, .formulario-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+    .opciones-radio, .opciones-checkbox { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
+    .formulario-submit { width: 100%; padding: 15px; background-color: #28a745; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    .formulario-submit:hover { background-color: #218838; transform: scale(1.01); }
+    
+    /* Modal y Escudo */
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
     .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; overflow: hidden; position: relative; }
     .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
     .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-    
-    .video-popout-overlay {
-        position: absolute; top: 0; right: 0; width: 100px; height: 80px;
-        z-index: 9999 !important; background: transparent; cursor: default;
-    }
-
+    .video-popout-overlay { position: absolute; top: 0; right: 0; width: 100px; height: 80px; z-index: 9999 !important; background: transparent; }
     #loader { color: white; text-align: center; padding: 50px; font-size: 1.2rem; }
   </style>
 </head>
@@ -67,7 +46,7 @@
     <header class="course-header">
       <h1 id="courseTitle">Cargando...</h1>
       <div class="action-buttons">
-        <a href="https://docs.google.com/forms/d/..." target="_blank" class="reset-password-button">Restablecer Contraseña</a>
+        <a href="https://docs.google.com/forms/..." target="_blank" class="reset-password-button">Restablecer Contraseña</a>
         <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
         <a href="dashboard.html" class="inicio-button">Volver al Inicio</a>
       </div>
@@ -98,106 +77,155 @@
   </div>
 
   <script>
-
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzsSDXwl1BUdeabdfEcsAJk4VZP7GzF1baObJMq8UMZQbXVrB-FcW_kuchgeSK67_x1ug/exec";
-  const userEmail = localStorage.getItem('userEmail');
-  const userToken = localStorage.getItem('userToken');
-  const cursoId = localStorage.getItem('cursoActual');
+    const userEmail = localStorage.getItem('userEmail');
+    const userToken = localStorage.getItem('userToken');
+    const cursoId = localStorage.getItem('cursoActual');
 
-  if (!userEmail || !userToken || !cursoId) window.location.href = "index.html";
+    if (!userEmail || !userToken || !cursoId) window.location.href = "index.html";
 
-  async function init() {
-    try {
-      const response = await fetch(`${WEB_APP_URL}?action=getCourseData&curso=${cursoId}&email=${userEmail}&token=${userToken}`);
-      const data = await response.json();
-      if (data.status === "success") { 
-          renderCourse(data); 
-      } else { 
-          alert("Sesión no válida"); cerrarSesion(); 
-      }
-    } catch (e) { 
-      console.error(e); 
-      document.getElementById('loader').innerText = "Error de conexión con el servidor."; 
-    }
-  }
-
-  function renderCourse(data) {
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('courseTitle').innerText = data.nombreCurso;
-    document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
-    document.getElementById('courseDescription').innerText = data.descripcionGeneral;
-
-    if (data.urlBanner) {
-      document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.1);">`;
+    async function init() {
+      try {
+        const response = await fetch(`${WEB_APP_URL}?action=getCourseData&curso=${cursoId}&email=${userEmail}&token=${userToken}`);
+        const data = await response.json();
+        if (data.status === "success") { renderCourse(data); } 
+        else { alert("Sesión no válida"); cerrarSesion(); }
+      } catch (e) { console.error(e); }
     }
 
-    const content = document.getElementById('courseContent');
-    content.innerHTML = ''; 
+    function renderCourse(data) {
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('courseTitle').innerText = data.nombreCurso;
+      document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
 
-    // 1. Mostrar Encuesta (Si corresponde)
-    if (data.formCompletado === false) {
-      content.innerHTML += `
-        <div class="module" style="background:#fff3cd; border:2px solid #ffeeba; text-align:center; padding:30px; margin-bottom:20px;">
-          <h3 style="color:#856404;">🚀 ¡Solo un paso más!</h3>
-          <p>Responde estas preguntas para personalizar tu experiencia.</p>
-          <button class="video-button" style="background:#28a745; width:auto; margin:0 auto;" 
-                  onclick="document.getElementById('formIframe').style.display='block'; this.style.display='none'">
-              Completar Formulario
-          </button>
-          <div id="formIframe" style="display:none; margin-top:20px;">
-              <iframe src="https://hugo85ar.github.io/HugoBot/" style="width:100%; height:500px; border:none; border-radius:10px;"></iframe>
-          </div>
-        </div>`;
-    }
+      const content = document.getElementById('courseContent');
+      content.innerHTML = ''; 
 
-    // 2. Módulos y Lecciones con Miniaturas (Columna G)
-    for (const modulo in data.modulos) {
-      let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
-      data.modulos[modulo].forEach(item => {
-        if (item.tipo === 'leccion') {
-          const videoInfo = item.video || {};
-          const hasVideo = videoInfo.url && videoInfo.url.trim() !== "";
-          const imgThumb = videoInfo.imgUrl || 'https://via.placeholder.com/400x225?text=Ver+Lección';
-          
-          moduloHtml += `
-            <div class="lesson">
-              <div class="lesson-info">
-                <h3>Lección ${item.id}: ${item.titulo}</h3>
-                <p>${item.descripcion || ''}</p>
-              </div>
-              ${hasVideo ? `
-                <div class="lesson-video-section" style="text-align:center; margin-top:15px;">
-                  <img src="${imgThumb}" style="width:100%; max-width:450px; border-radius:12px; cursor:pointer;" 
-                       onclick="verificarYVer('${videoInfo.url}', 'Lección ${item.id}: ${item.titulo}')">
-                  <button class="video-button" style="margin-top:10px;" 
-                          onclick="verificarYVer('${videoInfo.url}', 'Lección ${item.id}: ${item.titulo}')">Ver Video</button>
-                </div>` : '<p style="color:#999; text-align:center;">Esta lección no incluye video.</p>'}
-              ${item.material ? `<a href="${item.material}" target="_blank" style="display:block; margin-top:10px; text-align:center; background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; font-weight:bold;">Descargar Material</a>` : ''}
+      // 1. 🔹 LÓGICA DEL FORMULARIO (Si no está en PROSPECTOS)
+      if (data.formCompletado === false) {
+          content.innerHTML += `
+            <div class="formulario-container" id="formRegistroContainer">
+                <h3>🚀 ¡Sólo un paso más!</h3>
+                <p>Ayúdanos a conocerte mejor para desbloquear tu contenido exclusivo.</p>
+                <div id="form-inner">
+                    <div class="formulario-group">
+                        <label>¿Cuál es tu principal desafío con Google Sheets?</label>
+                        <textarea id="f_desafio" rows="3" placeholder="Ej: Automatizar mis reportes..."></textarea>
+                    </div>
+                    <div class="formulario-group">
+                        <label>¿Qué tan cómodo te sientes usando Sheets?</label>
+                        <select id="f_nivel">
+                            <option value="Novato">1 - Novato total</option>
+                            <option value="Basico">2 - Básico</option>
+                            <option value="Intermedio">3 - Intermedio</option>
+                            <option value="Avanzado">4 - Avanzado</option>
+                        </select>
+                    </div>
+                    <div class="formulario-group">
+                        <label>¿Problema más grande en tu negocio?</label>
+                        <div class="opciones-radio">
+                            <label><input type="radio" name="f_problema" value="Falta de clientes"> Falta de clientes</label>
+                            <label><input type="radio" name="f_problema" value="Desorden operativo"> Desorden operativo</label>
+                        </div>
+                    </div>
+                    <div class="formulario-group">
+                        <label>Prioridad actual:</label>
+                        <div class="opciones-checkbox">
+                            <label><input type="checkbox" name="f_interes" value="Validar"> Validar idea</label>
+                            <label><input type="checkbox" name="f_interes" value="Automatizar"> Automatizar</label>
+                        </div>
+                    </div>
+                    <button class="formulario-submit" id="btnEnviarForm" onclick="enviarFormularioEncuesta()">Enviar y Comenzar</button>
+                </div>
+                <div id="form-mensaje" style="display:none; text-align:center; padding:20px; color:green; font-weight:bold;"></div>
             </div>`;
-        }
-      });
-      moduloHtml += `</div>`;
-      content.innerHTML += moduloHtml;
+      }
+
+      // 2. Banner e Imágenes (Imagen 3)
+      if (data.urlBanner) {
+        document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
+      }
+
+      for (const modulo in data.modulos) {
+        let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
+        data.modulos[modulo].forEach(item => {
+          if (item.tipo === 'leccion') {
+            const video = item.video || {};
+            const imgThumb = video.imgUrl || 'https://via.placeholder.com/400x225?text=Ver+Leccion';
+            moduloHtml += `
+              <div class="lesson">
+                <div class="lesson-info">
+                  <h3>Lección ${item.id}: ${item.titulo}</h3>
+                  <p>${item.descripcion || ''}</p>
+                </div>
+                ${video.url ? `
+                  <div class="lesson-video-section" style="text-align:center;">
+                    <img src="${imgThumb}" onclick="verificarYVer('${video.url}', 'Leccion ${item.id}')">
+                    <button class="video-button" onclick="verificarYVer('${video.url}', 'Leccion ${item.id}')">Ver Video</button>
+                  </div>` : ''}
+              </div>`;
+          }
+        });
+        moduloHtml += `</div>`;
+        content.innerHTML += moduloHtml;
+      }
     }
-  }
 
-  async function verificarYVer(url, titulo) {
-    const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
-    const data = await response.json();
-    if (data.esValido) {
-      const frame = document.getElementById('modalVideoFrame');
-      document.getElementById('modalVideoTitle').innerText = titulo;
-      let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
-      frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
-      document.getElementById('videoModal').style.display = 'flex';
-    } else { alert("Sesión expirada"); cerrarSesion(); }
-  }
+    async function enviarFormularioEncuesta() {
+        const btn = document.getElementById('btnEnviarForm');
+        const msg = document.getElementById('form-mensaje');
+        const inner = document.getElementById('form-inner');
+        
+        btn.innerText = "Enviando...";
+        btn.disabled = true;
 
-  function closeModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('modalVideoFrame').src = ''; }
-  function cerrarSesion() { localStorage.clear(); window.location.href = "index.html"; }
+        const payload = {
+            action: 'procesarFormulario',
+            nombre: localStorage.getItem('userName') || 'Alumno',
+            email: userEmail,
+            desafio: document.getElementById('f_desafio').value,
+            nivel: document.getElementById('f_nivel').value,
+            tipoEmprendedor: document.querySelector('input[name="f_problema"]:checked')?.value || 'No especificado',
+            intereses: Array.from(document.querySelectorAll('input[name="f_interes"]:checked')).map(c => c.value).join(', ')
+        };
 
-  init();
-    
+        try {
+            await fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(payload)
+            });
+
+            inner.style.display = 'none';
+            msg.style.display = 'block';
+            msg.innerText = "✅ ¡Registro exitoso! Refrescando lecciones...";
+            
+            // Esperamos 2 segundos y recargamos para que el bloque amarillo desaparezca
+            setTimeout(() => { window.location.reload(); }, 2000);
+        } catch (e) {
+            console.error(e);
+            alert("Error al enviar. Inténtalo de nuevo.");
+            btn.innerText = "Enviar y Comenzar";
+            btn.disabled = false;
+        }
+    }
+
+    async function verificarYVer(url, titulo) {
+      const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
+      const data = await response.json();
+      if (data.esValido) {
+        const frame = document.getElementById('modalVideoFrame');
+        document.getElementById('modalVideoTitle').innerText = titulo;
+        let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
+        frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
+        document.getElementById('videoModal').style.display = 'flex';
+      } else { alert("Sesión expirada"); cerrarSesion(); }
+    }
+
+    function closeModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('modalVideoFrame').src = ''; }
+    function cerrarSesion() { localStorage.clear(); window.location.href = "index.html"; }
+
+    init();
   </script>
 </body>
 </html>
