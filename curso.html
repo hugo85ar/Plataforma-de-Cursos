@@ -179,7 +179,7 @@
     btn.innerText = "Guardando respuestas...";
     btn.disabled = true;
 
-    // Enviamos como parámetros de texto para evitar errores de JSON
+    // 🔹 IMPORTANTE: Usamos URLSearchParams para que Apps Script lo reciba en e.parameter
     const formData = new URLSearchParams();
     formData.append('action', 'procesarFormulario');
     formData.append('email', userEmail);
@@ -189,21 +189,24 @@
     formData.append('intereses', Array.from(document.querySelectorAll('input[name="f_interes"]:checked')).map(c => c.value).join(', '));
 
     try {
+        // Usamos el método POST tradicional que Apps Script entiende mejor
         await fetch(WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors', // Mantenemos esto para evitar bloqueos
+            mode: 'no-cors', // Evita errores de CORS de Google
             body: formData.toString(),
             headers: { "Content-Type": "application/x-www-form-urlencoded" }
         });
 
+        // UI de éxito
         inner.style.display = 'none';
         msg.style.display = 'block';
         msg.innerText = "✅ ¡Registro exitoso! Ya puedes ver tus lecciones.";
         
-        // Recarga para limpiar el bloque amarillo
+        // Recarga tras 2 segundos para actualizar el estado del formulario
         setTimeout(() => { window.location.reload(); }, 2000);
     } catch (e) {
-        console.error(e);
+        console.error("Error al enviar:", e);
+        alert("Hubo un problema. Inténtalo de nuevo.");
         btn.innerText = "Enviar y Comenzar";
         btn.disabled = false;
     }
