@@ -6,6 +6,30 @@
   <title>Mi Academia | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
+
+    /* 🛡️ El escudo protector */
+.video-popout-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px; /* Cubre el área del botón de ventana externa en Drive */
+  height: 80px;
+  z-index: 10; /* Se asegura de estar por encima del video */
+  background: transparent;
+  cursor: default;
+}
+
+/* Protege el contenedor contra selección de texto y clicks */
+.video-container-modal {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  background: #000;
+  -webkit-user-select: none;
+  user-select: none; /* Evita que marquen el texto del título */
+}
+    
     /* Estilos del progreso y botones */
     .btn-completar { background-color: #f1f5f9; color: #475569; padding: 0.8rem; border-radius: 8px; border: 2px solid #e2e8f0; width: 100%; font-weight: 600; cursor: pointer; margin-top: 10px; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px; }
     .btn-completar.visto { background-color: #dcfce7 !important; color: #15803d !important; border-color: #22c55e !important; cursor: default; }
@@ -28,7 +52,7 @@
     
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
     .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; overflow: hidden; position: relative; }
-    .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
+    
     .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
     #loader { color: white; text-align: center; padding: 50px; font-size: 1.2rem; }
   </style>
