@@ -95,56 +95,42 @@
     }
 
     function renderCourse(data) {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('courseTitle').innerText = data.nombreCurso;
-      document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
-      
-      document.getElementById('progressContainer').style.display = 'block';
-      actualizarBarraProgreso(data.porcentajeProgreso || 0);
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('courseTitle').innerText = data.nombreCurso;
+    document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
+    
+    document.getElementById('progressContainer').style.display = 'block';
+    actualizarBarraProgreso(data.porcentajeProgreso || 0); // 🔹 Carga inicial de la barra
 
-      const content = document.getElementById('courseContent');
-      const completadas = data.completadas || [];
-      content.innerHTML = ''; 
+    const content = document.getElementById('courseContent');
+    const completadas = data.completadas || [];
+    content.innerHTML = ''; 
 
-      if (data.urlBanner) {
-        document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
-      }
-
-      for (const modulo in data.modulos) {
+    for (const modulo in data.modulos) {
         let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
         data.modulos[modulo].forEach(item => {
-          if (item.tipo === 'leccion') {
-            const video = item.video || {};
-            const imgThumb = video.imgUrl || 'https://via.placeholder.com/400x225?text=Ver+Leccion';
-            const yaVisto = completadas.includes(String(item.id));
-
-            moduloHtml += `
-              <div class="lesson">
-                <div class="lesson-info">
-                  <h3>Lección ${item.id}: ${item.titulo}</h3>
-                  <p>${item.descripcion || ''}</p>
-                </div>
-                <div class="lesson-video-section" style="text-align:center;">
-                  ${video.url ? `<img src="${imgThumb}" onclick="verificarYVer('${video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">` : ''}
-                  <button id="btn-${item.id}" 
-                          class="btn-completar ${yaVisto ? 'visto' : ''}" 
-                          onclick="marcarLeccionManual('${item.id}')"
-                          ${yaVisto ? 'disabled' : ''}>
-                    <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
-                    <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
-                  </button>
-                </div>`;
-
-            if (item.material) {
-               moduloHtml += `<a href="${item.material}" target="_blank" class="material-button"><i class="fas fa-download"></i> Descargar Material</a>`;
+            if (item.tipo === 'leccion') {
+                const yaVisto = completadas.includes(String(item.id));
+                moduloHtml += `
+                    <div class="lesson">
+                        <h3>Lección ${item.id}: ${item.titulo}</h3>
+                        <div class="lesson-video-section" style="text-align:center;">
+                            <img src="${item.video.imgUrl || '...'}" onclick="verificarYVer('${item.video.url}', 'Leccion ${item.id}')">
+                            
+                            <button id="btn-${item.id}" 
+                                    class="btn-completar ${yaVisto ? 'visto' : ''}" 
+                                    onclick="marcarLeccionManual('${item.id}')"
+                                    ${yaVisto ? 'disabled' : ''}>
+                                <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
+                                <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
+                            </button>
+                        </div>
+                    </div>`;
             }
-            moduloHtml += `</div>`; // Cierra .lesson
-          }
         });
-        moduloHtml += `</div>`; // Cierra .module
-        content.innerHTML += moduloHtml;
-      }
+        content.innerHTML += moduloHtml + `</div>`;
     }
+}
 
     async function verificarYVer(url, titulo) {
       const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
@@ -159,36 +145,33 @@
     }
 
     async function marcarLeccionManual(leccionId) {
-        const btn = document.getElementById(`btn-${leccionId}`);
-        const icon = btn.querySelector('i');
-        const text = btn.querySelector('span');
-        if (btn.classList.contains('visto')) return;
+    const btn = document.getElementById(`btn-${leccionId}`);
+    const icon = btn.querySelector('i');
+    const text = btn.querySelector('span');
+    
+    btn.disabled = true;
+    text.innerText = "Guardando...";
 
-        btn.disabled = true;
-        text.innerText = "Guardando...";
+    try {
+        const formData = new URLSearchParams({ action: 'marcarCompletada', email: userEmail, curso: cursoId, leccion: leccionId });
+        const response = await fetch(WEB_APP_URL, { method: 'POST', body: formData.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+        const resData = await response.json();
 
-        try {
-            const formData = new URLSearchParams();
-            formData.append('action', 'marcarCompletada');
-            formData.append('email', userEmail);
-            formData.append('curso', cursoId);
-            formData.append('leccion', leccionId);
-
-            const response = await fetch(WEB_APP_URL, { method: 'POST', body: formData.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
-            const resData = await response.json();
-
-            if (resData.status === "success") {
-                btn.classList.add('visto');
-                icon.className = "fas fa-check-circle";
-                text.innerText = "Lección Completada";
-                actualizarBarraProgreso(resData.nuevoPorcentaje);
-            }
-        } catch (e) {
-            text.innerText = "Marcar como completada";
-            btn.disabled = false;
+        if (resData.status === "success") {
+            // 🔹 CAMBIO A VERDE E ICONO CHECK
+            btn.classList.add('visto');
+            icon.className = "fas fa-check-circle"; 
+            text.innerText = "Lección Completada";
+            
+            // 🔹 MOVIMIENTO DE LA BARRA
+            actualizarBarraProgreso(resData.nuevoPorcentaje);
         }
+    } catch (e) {
+        btn.disabled = false;
+        text.innerText = "Marcar como completada";
     }
-
+}
+    
     function actualizarBarraProgreso(porcentaje) {
         document.getElementById('progressBar').style.width = porcentaje + '%';
         document.getElementById('progressText').innerText = Math.round(porcentaje) + '%';
