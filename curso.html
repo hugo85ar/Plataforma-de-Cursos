@@ -100,7 +100,7 @@
     document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
     
     document.getElementById('progressContainer').style.display = 'block';
-    actualizarBarraProgreso(data.porcentajeProgreso || 0); // 🔹 Carga inicial de la barra
+    actualizarBarraProgreso(data.porcentajeProgreso || 0);
 
     const content = document.getElementById('courseContent');
     const completadas = data.completadas || [];
@@ -111,11 +111,16 @@
         data.modulos[modulo].forEach(item => {
             if (item.tipo === 'leccion') {
                 const yaVisto = completadas.includes(String(item.id));
+                const imgThumb = item.video.imgUrl || 'https://via.placeholder.com/400x225';
+
                 moduloHtml += `
                     <div class="lesson">
-                        <h3>Lección ${item.id}: ${item.titulo}</h3>
+                        <div class="lesson-info">
+                            <h3>Lección ${item.id}: ${item.titulo}</h3>
+                            <p>${item.descripcion || ''}</p>
+                        </div>
                         <div class="lesson-video-section" style="text-align:center;">
-                            <img src="${item.video.imgUrl || '...'}" onclick="verificarYVer('${item.video.url}', 'Leccion ${item.id}')">
+                            <img src="${imgThumb}" onclick="verificarYVer('${item.video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">
                             
                             <button id="btn-${item.id}" 
                                     class="btn-completar ${yaVisto ? 'visto' : ''}" 
@@ -124,14 +129,18 @@
                                 <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
                                 <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
                             </button>
-                        </div>
-                    </div>`;
+                        </div>`;
+
+                if (item.material) {
+                    moduloHtml += `<a href="${item.material}" target="_blank" class="material-button"><i class="fas fa-download"></i> Descargar Material</a>`;
+                }
+                moduloHtml += `</div>`; // Cierre correcto de .lesson
             }
         });
-        content.innerHTML += moduloHtml + `</div>`;
+        content.innerHTML += moduloHtml + `</div>`; // Cierre correcto de .module
     }
 }
-
+    
     async function verificarYVer(url, titulo) {
       const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
       const data = await response.json();
@@ -149,26 +158,30 @@
     const icon = btn.querySelector('i');
     const text = btn.querySelector('span');
     
+    if (btn.classList.contains('visto')) return;
+
     btn.disabled = true;
     text.innerText = "Guardando...";
 
     try {
         const formData = new URLSearchParams({ action: 'marcarCompletada', email: userEmail, curso: cursoId, leccion: leccionId });
         const response = await fetch(WEB_APP_URL, { method: 'POST', body: formData.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+        
+        // Aquí es donde el _json del servidor salva el día
         const resData = await response.json();
 
         if (resData.status === "success") {
-            // 🔹 CAMBIO A VERDE E ICONO CHECK
             btn.classList.add('visto');
-            icon.className = "fas fa-check-circle"; 
+            icon.className = "fas fa-check-circle"; // 🔹 Aparece el círculo verde con check
             text.innerText = "Lección Completada";
             
-            // 🔹 MOVIMIENTO DE LA BARRA
+            // 🔹 ESTO HACE QUE LA BARRA SE MUEVA
             actualizarBarraProgreso(resData.nuevoPorcentaje);
         }
     } catch (e) {
-        btn.disabled = false;
+        console.error("Error al marcar:", e);
         text.innerText = "Marcar como completada";
+        btn.disabled = false;
     }
 }
     
