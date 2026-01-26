@@ -124,52 +124,95 @@
     }
 
     function renderCourse(data) {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('courseTitle').innerText = data.nombreCurso;
-      document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
-      document.getElementById('progressContainer').style.display = 'block';
-      actualizarBarraProgreso(data.porcentajeProgreso || 0);
+  document.getElementById('loader').style.display = 'none';
+  document.getElementById('courseTitle').innerText = data.nombreCurso;
+  document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
+  
+  // 1. Mostramos la barra de progreso
+  document.getElementById('progressContainer').style.display = 'block';
+  actualizarBarraProgreso(data.porcentajeProgreso || 0);
 
-      const content = document.getElementById('courseContent');
-      const completadas = data.completadas || [];
-      content.innerHTML = ''; 
+  const content = document.getElementById('courseContent');
+  const bannerContainer = document.getElementById('courseBannerContainer');
+  content.innerHTML = ''; 
+  bannerContainer.innerHTML = ''; // Limpiamos banner por si acaso
 
-      for (const modulo in data.modulos) {
-        let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
-        data.modulos[modulo].forEach(item => {
-          if (item.tipo === 'leccion') {
-            const video = item.video || {};
-            // 🔹 Cambiamos a placehold.co para evitar errores de DNS
-            const imgThumb = (video.imgUrl && video.imgUrl !== "") ? video.imgUrl : 'https://placehold.co/400x225?text=Ver+Leccion';
-            const yaVisto = completadas.includes(String(item.id));
+  // 🔹 BLOQUE RECUPERADO: Si NO ha completado el formulario, se lo mostramos
+  if (data.formCompletado === false) {
+    content.innerHTML = `
+      <div class="formulario-container">
+        <h3>🚀 ¡Casi listo! Completa tu perfil para acceder</h3>
+        <p>Solo toma un minuto y nos ayuda a mejorar tu experiencia.</p>
+        <form onsubmit="enviarFormularioProspectos(event)">
+          <div class="formulario-group">
+            <label>¿Cuál es tu mayor desafío hoy con Google Sheets?</label>
+            <textarea name="desafio" required placeholder="Ej: Automatizar mis reportes..."></textarea>
+          </div>
+          <div class="formulario-group">
+            <label>Tipo de Emprendedor:</label>
+            <select name="tipoEmprendedor" required>
+              <option value="">Selecciona...</option>
+              <option value="Servicios">Servicios</option>
+              <option value="Ecommerce">Ecommerce / Ventas</option>
+              <option value="Freelance">Freelance / Profesional</option>
+            </select>
+          </div>
+          <div class="formulario-group">
+            <label>Nivel de conocimiento:</label>
+            <select name="nivel" required>
+              <option value="Basico">Principiante</option>
+              <option value="Intermedio">Intermedio</option>
+              <option value="Avanzado">Avanzado</option>
+            </select>
+          </div>
+          <button type="submit" class="formulario-submit">Comenzar el Curso Ahora!</button>
+        </form>
+      </div>`;
+    return; // 🚩 Detenemos la ejecución aquí para que NO vea las lecciones
+  }
 
-            moduloHtml += `
-              <div class="lesson">
-                <div class="lesson-info">
-                  <h3>Lección ${item.id}: ${item.titulo}</h3>
-                  <p>${item.descripcion || ''}</p>
-                </div>
-                <div class="lesson-video-section" style="text-align:center;">
-                  ${video.url ? `<img src="${imgThumb}" onclick="verificarYVer('${video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">` : ''}
-                  <button id="btn-${item.id}" 
-                          class="btn-completar ${yaVisto ? 'visto' : ''}" 
-                          onclick="marcarLeccionManual('${item.id}')"
-                          ${yaVisto ? 'disabled' : ''}>
-                    <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
-                    <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
-                  </button>
-                </div>`;
+  // 🔹 Si ya completó el formulario, mostramos el banner y las lecciones
+  if (data.urlBanner) {
+    bannerContainer.innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
+  }
 
-            if (item.material) {
-               moduloHtml += `<a href="${item.material}" target="_blank" class="material-button"><i class="fas fa-download"></i> Descargar Material</a>`;
-            }
-            moduloHtml += `</div>`; // Cierra .lesson
-          }
-        });
-        moduloHtml += `</div>`; // Cierra .module
-        content.innerHTML += moduloHtml;
+  const completadas = data.completadas || [];
+
+  for (const modulo in data.modulos) {
+    let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
+    data.modulos[modulo].forEach(item => {
+      if (item.tipo === 'leccion') {
+        const video = item.video || {};
+        const imgThumb = (video.imgUrl && video.imgUrl !== "") ? video.imgUrl : 'https://placehold.co/400x225?text=Ver+Leccion';
+        const yaVisto = completadas.includes(String(item.id));
+
+        moduloHtml += `
+          <div class="lesson">
+            <div class="lesson-info">
+              <h3>Lección ${item.id}: ${item.titulo}</h3>
+              <p>${item.descripcion || ''}</p>
+            </div>
+            <div class="lesson-video-section" style="text-align:center;">
+              ${video.url ? `<img src="${imgThumb}" onclick="verificarYVer('${video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">` : ''}
+              <button id="btn-${item.id}" 
+                      class="btn-completar ${yaVisto ? 'visto' : ''}" 
+                      onclick="marcarLeccionManual('${item.id}')"
+                      ${yaVisto ? 'disabled' : ''}>
+                <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
+                <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
+              </button>
+            </div>`;
+
+        if (item.material) {
+           moduloHtml += `<a href="${item.material}" target="_blank" class="material-button"><i class="fas fa-download"></i> Descargar Material</a>`;
+        }
+        moduloHtml += `</div>`; // Cierra .lesson
       }
-    }
+    });
+    moduloHtml += `</div>`; // Cierra .module
+    content.innerHTML += moduloHtml;
+  }
+}
 
 async function verificarYVer(url, titulo) {
   try {
