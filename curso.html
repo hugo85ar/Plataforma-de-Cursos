@@ -111,7 +111,8 @@
         data.modulos[modulo].forEach(item => {
             if (item.tipo === 'leccion') {
                 const yaVisto = completadas.includes(String(item.id));
-                const imgThumb = item.video.imgUrl || 'https://via.placeholder.com/400x225';
+                // Imagen de respaldo si imgUrl está vacío
+                const imgThumb = (item.video && item.video.imgUrl) ? item.video.imgUrl : 'https://via.placeholder.com/400x225?text=Video+no+disponible';
 
                 moduloHtml += `
                     <div class="lesson">
@@ -120,7 +121,7 @@
                             <p>${item.descripcion || ''}</p>
                         </div>
                         <div class="lesson-video-section" style="text-align:center;">
-                            <img src="${imgThumb}" onclick="verificarYVer('${item.video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">
+                            <img src="${imgThumb}" onclick="verificarYVer('${item.video.url}', 'Leccion ${item.id}')" style="cursor:pointer; width:100%; max-width:450px; border-radius:12px;">
                             
                             <button id="btn-${item.id}" 
                                     class="btn-completar ${yaVisto ? 'visto' : ''}" 
@@ -134,10 +135,49 @@
                 if (item.material) {
                     moduloHtml += `<a href="${item.material}" target="_blank" class="material-button"><i class="fas fa-download"></i> Descargar Material</a>`;
                 }
-                moduloHtml += `</div>`; // Cierre correcto de .lesson
+                moduloHtml += `</div>`; // Cierre correcto de cada lección
             }
         });
-        content.innerHTML += moduloHtml + `</div>`; // Cierre correcto de .module
+        content.innerHTML += moduloHtml + `</div>`; // Cierre del módulo
+    }
+}
+
+async function marcarLeccionManual(leccionId) {
+    const btn = document.getElementById(`btn-${leccionId}`);
+    const icon = btn.querySelector('i');
+    const text = btn.querySelector('span');
+    
+    if (btn.classList.contains('visto')) return;
+
+    btn.disabled = true;
+    text.innerText = "Guardando...";
+
+    try {
+        const formData = new URLSearchParams({ action: 'marcarCompletada', email: userEmail, curso: cursoId, leccion: leccionId });
+        const response = await fetch(WEB_APP_URL, { 
+            method: 'POST', 
+            body: formData.toString(), 
+            headers: { "Content-Type": "application/x-www-form-urlencoded" } 
+        });
+        
+        // El _json del servidor evita que falle aquí
+        const resData = await response.json();
+
+        if (resData.status === "success") {
+            btn.classList.add('visto');
+            icon.className = "fas fa-check-circle"; // 🔹 Aparece el círculo verde con check
+            text.innerText = "Lección Completada";
+            
+            // 🔹 ESTO HACE QUE LA BARRA SE MUEVA
+            actualizarBarraProgreso(resData.nuevoPorcentaje);
+        } else {
+            throw new Error(resData.message);
+        }
+    } catch (e) {
+        console.error("Error al marcar:", e);
+        alert("No se pudo guardar el progreso: " + e.message);
+        text.innerText = "Marcar como completada";
+        btn.disabled = false;
     }
 }
     
