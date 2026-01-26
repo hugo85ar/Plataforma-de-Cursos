@@ -6,34 +6,12 @@
   <title>Mi Academia | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-    /* 🔹 ESTILOS DE PROGRESO Y BOTONES */
-    .btn-completar {
-  background-color: #f1f5f9;
-  color: #475569;
-  padding: 0.8rem;
-  border-radius: 8px;
-  border: 2px solid #e2e8f0;
-  width: 100%;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: all 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-    
-    /* 🔹 ESTADO COMPLETADO: Fondo verde claro y texto verde oscuro */
-.btn-completar.visto {
-  background-color: #dcfce7 !important;
-  color: #15803d !important;
-  border-color: #22c55e !important;
-  cursor: default;
-}
+    /* Estilos del Botón Completar */
+    .btn-completar { background-color: #f1f5f9; color: #475569; padding: 0.8rem; border-radius: 8px; border: 2px solid #e2e8f0; width: 100%; font-weight: 600; cursor: pointer; margin-top: 10px; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px; }
+    .btn-completar.visto { background-color: #dcfce7 !important; color: #15803d !important; border-color: #22c55e !important; cursor: default; }
     .btn-completar:disabled { opacity: 0.7; cursor: not-allowed; }
 
-    /* 🔹 TUS ESTILOS ORIGINALES */
+    /* Estilos Generales */
     body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #1f2559, #3b82f6); background-attachment: fixed; color: #333; line-height: 1.6; }
     .container { max-width: 960px; margin: 2.5rem auto; padding: 0 1.5rem; }
     .course-header { background-color: #0056b3; color: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
@@ -49,14 +27,11 @@
     .material-button { background-color: #28a745; color: white; padding: 0.9rem 1.8rem; border-radius: 5px; text-decoration: none; display: block; text-align: center; width: 100%; font-weight: bold; margin-top: 15px; transition: 0.3s; }
     .material-button:hover { background-color: #218838; }
     .lesson-video-section img { width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.3s; }
-    .lesson-video-section img:hover { transform: scale(1.02); }
-
-    /* Modal y Escudo */
+    
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
     .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; overflow: hidden; position: relative; }
     .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
     .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-    .video-popout-overlay { position: absolute; top: 0; right: 0; width: 100px; height: 80px; z-index: 9999 !important; background: transparent; }
     #loader { color: white; text-align: center; padding: 50px; font-size: 1.2rem; }
   </style>
 </head>
@@ -66,14 +41,13 @@
     <header class="course-header">
       <h1 id="courseTitle">Cargando...</h1>
       <div class="action-buttons">
-        <a href="https://docs.google.com/forms/..." target="_blank" class="reset-password-button">Restablecer Contraseña</a>
         <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
         <a href="dashboard.html" class="inicio-button">Volver al Inicio</a>
       </div>
     </header>
 
     <div class="module" id="progressContainer" style="padding: 15px; margin-bottom: 20px; display:none;">
-      <p style="margin: 0 0 10px 0; font-weight: bold; color:#0056b3;">Tu progreso en este curso: <span id="progressText">0%</span></p>
+      <p style="margin: 0 0 10px 0; font-weight: bold; color:#0056b3;">Tu progreso: <span id="progressText">0%</span></p>
       <div style="width: 100%; background: #e2e8f0; border-radius: 10px; height: 14px; overflow: hidden; border: 1px solid #cbd5e1;">
         <div id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #22c55e, #16a34a); transition: width 0.8s ease;"></div>
       </div>
@@ -97,7 +71,6 @@
         <span onclick="closeModal()" style="cursor:pointer; font-size:2rem; line-height: 1;">&times;</span>
       </div>
       <div class="video-container-modal">
-        <div class="video-popout-overlay" oncontextmenu="return false;"></div>
         <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
       </div>
     </div>
@@ -117,8 +90,7 @@
         const data = await response.json();
         if (data.status === "success") { 
             renderCourse(data);
-        } 
-        else { alert("Sesión no válida"); cerrarSesion(); }
+        } else { alert("Sesión no válida"); cerrarSesion(); }
       } catch (e) { console.error(e); }
     }
 
@@ -146,42 +118,37 @@
             const imgThumb = video.imgUrl || 'https://via.placeholder.com/400x225?text=Ver+Leccion';
             const yaVisto = completadas.includes(String(item.id));
 
-           moduloHtml += `
-  <div class="lesson">
-    <div class="lesson-info">
-      <h3>Lección ${item.id}: ${item.titulo}</h3>
-      <p>${item.descripcion || ''}</p>
-    </div>
-    
-    <div class="lesson-video-section" style="text-align:center;">
-      ${video.url ? `<img src="${imgThumb}" onclick="verificarYVer('${video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">` : ''}
-      
-      <button id="btn-${item.id}" 
-              class="btn-completar ${yaVisto ? 'visto' : ''}" 
-              onclick="marcarLeccionManual('${item.id}')"
-              ${yaVisto ? 'disabled' : ''}>
-        <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
-        <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
-      </button>
-    </div>`;
+            moduloHtml += `
+              <div class="lesson">
+                <div class="lesson-info">
+                  <h3>Lección ${item.id}: ${item.titulo}</h3>
+                  <p>${item.descripcion || ''}</p>
+                </div>
+                <div class="lesson-video-section" style="text-align:center;">
+                  ${video.url ? `<img src="${imgThumb}" onclick="verificarYVer('${video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">` : ''}
+                  <button id="btn-${item.id}" 
+                          class="btn-completar ${yaVisto ? 'visto' : ''}" 
+                          onclick="marcarLeccionManual('${item.id}')"
+                          ${yaVisto ? 'disabled' : ''}>
+                    <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
+                    <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
+                  </button>
                 </div>`;
 
             if (item.material) {
                moduloHtml += `<a href="${item.material}" target="_blank" class="material-button"><i class="fas fa-download"></i> Descargar Material</a>`;
             }
-            moduloHtml += `</div>`;
+            moduloHtml += `</div>`; // Cierra .lesson
           }
         });
-        moduloHtml += `</div>`;
+        moduloHtml += `</div>`; // Cierra .module
         content.innerHTML += moduloHtml;
       }
     }
 
-    // 🔹 SOLO ABRE EL VIDEO (No marca progreso)
     async function verificarYVer(url, titulo) {
       const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
       const data = await response.json();
-
       if (data.esValido) {
         const frame = document.getElementById('modalVideoFrame');
         document.getElementById('modalVideoTitle').innerText = titulo;
@@ -191,49 +158,36 @@
       } else { alert("Sesión expirada"); cerrarSesion(); }
     }
 
-    // 🔹 MARCA PROGRESO Y ACTUALIZA LA BARRA
-async function marcarLeccionManual(leccionId) {
-    const btn = document.getElementById(`btn-${leccionId}`);
-    const icon = btn.querySelector('i');
-    const text = btn.querySelector('span');
-    
-    if (btn.classList.contains('visto')) return;
+    async function marcarLeccionManual(leccionId) {
+        const btn = document.getElementById(`btn-${leccionId}`);
+        const icon = btn.querySelector('i');
+        const text = btn.querySelector('span');
+        if (btn.classList.contains('visto')) return;
 
-    btn.disabled = true;
-    text.innerText = "Guardando...";
+        btn.disabled = true;
+        text.innerText = "Guardando...";
 
-    try {
-        const formData = new URLSearchParams();
-        formData.append('action', 'marcarCompletada');
-        formData.append('email', userEmail);
-        formData.append('curso', cursoId);
-        formData.append('leccion', leccionId);
+        try {
+            const formData = new URLSearchParams();
+            formData.append('action', 'marcarCompletada');
+            formData.append('email', userEmail);
+            formData.append('curso', cursoId);
+            formData.append('leccion', leccionId);
 
-        const response = await fetch(WEB_APP_URL, {
-            method: 'POST',
-            body: formData.toString(),
-            headers: { "Content-Type": "application/x-www-form-urlencoded" }
-        });
-        const resData = await response.json();
+            const response = await fetch(WEB_APP_URL, { method: 'POST', body: formData.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+            const resData = await response.json();
 
-        if (resData.status === "success") {
-            // 1. Cambiamos el estilo del botón
-            btn.classList.add('visto');
-            icon.className = "fas fa-check-circle"; // Cambia círculo vacío por check
-            text.innerText = "Lección Completada";
-            
-            // 2. 🔹 ACTUALIZAMOS LA BARRA DE PROGRESO AL INSTANTE
-            // resData.nuevoPorcentaje viene calculado desde tu Apps Script
-            if (resData.nuevoPorcentaje !== undefined) {
+            if (resData.status === "success") {
+                btn.classList.add('visto');
+                icon.className = "fas fa-check-circle";
+                text.innerText = "Lección Completada";
                 actualizarBarraProgreso(resData.nuevoPorcentaje);
             }
+        } catch (e) {
+            text.innerText = "Marcar como completada";
+            btn.disabled = false;
         }
-    } catch (e) {
-        console.error(e);
-        text.innerText = "Marcar como completada";
-        btn.disabled = false;
     }
-}
 
     function actualizarBarraProgreso(porcentaje) {
         document.getElementById('progressBar').style.width = porcentaje + '%';
@@ -242,7 +196,6 @@ async function marcarLeccionManual(leccionId) {
 
     function closeModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('modalVideoFrame').src = ''; }
     function cerrarSesion() { localStorage.clear(); window.location.href = "index.html"; }
-
     init();
   </script>
 </body>
