@@ -194,6 +194,29 @@ async function verificarYVer(url, titulo) {
       } else if (url.includes('id=')) {
         videoId = url.split('id=')[1].split('&')[0];
       }
+
+      // 🔹 FUNCIÓN PARA ENVIAR EL FORMULARIO A GOOGLE
+async function enviarFormularioProspectos(event) {
+  event.preventDefault();
+  const btn = event.target.querySelector('button');
+  btn.innerText = "Registrando...";
+  btn.disabled = true;
+
+  const formData = new FormData(event.target);
+  const params = new URLSearchParams();
+  params.append('action', 'procesarFormulario');
+  params.append('email', userEmail);
+  formData.forEach((value, key) => params.append(key, value));
+
+  try {
+    await fetch(WEB_APP_URL, { method: 'POST', body: params.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+    alert("¡Gracias! Ahora puedes acceder a las lecciones.");
+    location.reload(); // Recargamos para que el servidor vea que ya completó
+  } catch (e) {
+    alert("Error al enviar. Inténtalo de nuevo.");
+    btn.disabled = false;
+  }
+}
       
       // 3. Cargamos el video en modo preview (sin controles de edición)
       frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
