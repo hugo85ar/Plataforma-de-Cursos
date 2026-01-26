@@ -179,9 +179,12 @@
     btn.innerText = "Guardando respuestas...";
     btn.disabled = true;
 
-    // 🔹 IMPORTANTE: Usamos URLSearchParams para que Apps Script lo reciba en e.parameter
+    // 🔹 Recuperamos el nombre real de la memoria del navegador
+    const nombreAlumno = localStorage.getItem('userName') || 'Alumno';
+
     const formData = new URLSearchParams();
     formData.append('action', 'procesarFormulario');
+    formData.append('nombre', nombreAlumno); // Enviamos el nombre real
     formData.append('email', userEmail);
     formData.append('desafio', document.getElementById('f_desafio').value);
     formData.append('nivel', document.getElementById('f_nivel').value);
@@ -189,27 +192,26 @@
     formData.append('intereses', Array.from(document.querySelectorAll('input[name="f_interes"]:checked')).map(c => c.value).join(', '));
 
     try {
-        // Usamos el método POST tradicional que Apps Script entiende mejor
         await fetch(WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors', // Evita errores de CORS de Google
+            mode: 'no-cors',
             body: formData.toString(),
             headers: { "Content-Type": "application/x-www-form-urlencoded" }
         });
 
-        // UI de éxito
         inner.style.display = 'none';
         msg.style.display = 'block';
         msg.innerText = "✅ ¡Registro exitoso! Ya puedes ver tus lecciones.";
         
-        // Recarga tras 2 segundos para actualizar el estado del formulario
+        // Recarga tras 2 segundos para que desaparezca el bloque amarillo
         setTimeout(() => { window.location.reload(); }, 2000);
     } catch (e) {
-        console.error("Error al enviar:", e);
-        alert("Hubo un problema. Inténtalo de nuevo.");
+        console.error(e);
         btn.innerText = "Enviar y Comenzar";
         btn.disabled = false;
     }
+}
+   
 }
 
     async function verificarYVer(url, titulo) {
