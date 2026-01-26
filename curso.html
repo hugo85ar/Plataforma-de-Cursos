@@ -6,88 +6,30 @@
   <title>Mi Academia | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-
-    /* 🛡️ El escudo protector */
-.video-popout-overlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100px; /* Cubre el área del botón de ventana externa en Drive */
-  height: 80px;
-  z-index: 10; /* Se asegura de estar por encima del video */
-  background: transparent;
-  cursor: default;
-}
-
- .reset-password-button { 
-  background-color: #ff9800; 
-  color: white; 
-  padding: 0.5rem 1rem; 
-  border-radius: 5px; 
-  text-decoration: none; 
-  font-weight: 600; 
-  font-size: 0.9rem; 
-  width: 150px; 
-  text-align: center; 
-}
-
-    .formulario-container { 
-  background-color: #ffffff; 
-  padding: 2rem; 
-  border-radius: 12px; 
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15); 
-  margin: 2rem 0; 
-  border: 2px solid #0056b3; 
-}
+    /* 🔹 ESTILOS DE BOTONES Y FORMULARIO */
+    .btn-completar { background-color: #f1f5f9; color: #475569; padding: 0.8rem; border-radius: 8px; border: 2px solid #e2e8f0; width: 100%; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+    .btn-completar.visto { background-color: #dcfce7 !important; color: #15803d !important; border-color: #22c55e !important; }
     
-  .formulario-submit { 
-  background-color: #28a745; 
-  color: white; 
-  border: none; 
-  padding: 1rem; 
-  width: 100%; 
-  font-weight: bold; 
-  border-radius: 8px; 
-  cursor: pointer; 
-}
+    .reset-password-button { background-color: #ff9800; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.9rem; width: 150px; text-align: center; margin-bottom: 5px; }
+    .logout-button { background-color: #dc3545; color: white; padding: 0.5rem 1rem; border-radius: 5px; border: none; font-weight: 600; width: 150px; cursor: pointer; margin-bottom: 5px; }
+    .inicio-button { background-color: #007bff; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 600; width: 150px; text-align: center; }
 
-    
+    .formulario-container { background-color: #ffffff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); border: 2px solid #0056b3; margin-top: 1rem; }
+    .formulario-submit { background-color: #28a745; color: white; border: none; padding: 1rem; width: 100%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 1.1rem; }
 
-/* Protege el contenedor contra selección de texto y clicks */
-.video-container-modal {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  background: #000;
-  -webkit-user-select: none;
-  user-select: none; /* Evita que marquen el texto del título */
-}
-    
-    /* Estilos del progreso y botones */
-    .btn-completar { background-color: #f1f5f9; color: #475569; padding: 0.8rem; border-radius: 8px; border: 2px solid #e2e8f0; width: 100%; font-weight: 600; cursor: pointer; margin-top: 10px; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px; }
-    .btn-completar.visto { background-color: #dcfce7 !important; color: #15803d !important; border-color: #22c55e !important; cursor: default; }
-    .btn-completar:disabled { opacity: 0.8; cursor: not-allowed; }
-    
-    /* Estilos Generales */
+    /* 🔹 TUS ESTILOS ORIGINALES */
     body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #1f2559, #3b82f6); background-attachment: fixed; color: #333; line-height: 1.6; }
     .container { max-width: 960px; margin: 2.5rem auto; padding: 0 1.5rem; }
-    .course-header { background-color: #0056b3; color: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-    .course-header h1 { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; margin: 0; flex-grow: 1; text-align: center; }
-    .action-buttons { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-    .logout-button, .inicio-button { color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.9rem; width: 150px; text-align: center; cursor: pointer; border: none; }
-    .logout-button { background-color: #dc3545; }
-    .inicio-button { background-color: #007bff; }
+    .course-header { background-color: #0056b3; color: white; padding: 1.5rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .action-buttons { display: flex; flex-direction: column; align-items: center; }
     .module { background-color: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    .module h2 { color: #0056b3; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 0; }
     .lesson { background: #f8fafc; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; }
-    .material-button { background-color: #28a745; color: white; padding: 0.9rem 1.8rem; border-radius: 5px; text-decoration: none; display: block; text-align: center; width: 100%; font-weight: bold; margin-top: 15px; }
-    .lesson-video-section img { width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.3s; }
-    
+    .lesson-video-section img { width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; }
+    .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
+    .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    .video-popout-overlay { position: absolute; top: 0; right: 0; width: 100px; height: 80px; z-index: 10; background: transparent; }
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
     .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; overflow: hidden; position: relative; }
-    
-    .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
     #loader { color: white; text-align: center; padding: 50px; font-size: 1.2rem; }
   </style>
 </head>
@@ -95,19 +37,15 @@
 
   <div class="container" id="mainContainer">
     <header class="course-header">
-      <h1 id="courseTitle">Cargando...</h1>
+      <h1 id="courseTitle" style="margin:0; font-size:1.8rem;">Cargando...</h1>
       <div class="action-buttons">
+        <a href="https://docs.google.com/forms/..." target="_blank" class="reset-password-button">Restablecer Contraseña</a>
         <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
         <a href="dashboard.html" class="inicio-button">Volver al Inicio</a>
       </div>
-      <div class="action-buttons">
-  <a href="https://docs.google.com/forms/..." target="_blank" class="reset-password-button">Restablecer Contraseña</a>
-  <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
-  <a href="dashboard.html" class="inicio-button">Volver al Inicio</a>
-</div>
     </header>
 
-    <div class="module" id="progressContainer" style="padding: 15px; margin-bottom: 20px; display:none;">
+    <div class="module" id="progressContainer" style="padding: 15px; margin-top: 20px; display:none;">
       <p style="margin: 0 0 10px 0; font-weight: bold; color:#0056b3;">Tu progreso: <span id="progressText">0%</span></p>
       <div style="width: 100%; background: #e2e8f0; border-radius: 10px; height: 14px; overflow: hidden; border: 1px solid #cbd5e1;">
         <div id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #22c55e, #16a34a); transition: width 0.8s ease;"></div>
@@ -116,7 +54,7 @@
 
     <div id="courseBannerContainer"></div>
 
-    <section class="welcome-message module">
+    <section class="welcome-message module" style="margin-top:20px;">
       <h2 id="welcomeUser">¡Bienvenido!</h2>
       <p id="courseDescription"></p>
     </section>
@@ -125,20 +63,18 @@
     <div id="courseContent"></div>
   </div>
 
-<div id="videoModal" class="modal">
-  <div class="modal-content">
-    <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
-      <h2 id="modalVideoTitle" style="margin:0; font-size:1.1rem;"></h2>
-      <span onclick="closeModal()" style="cursor:pointer; font-size:2rem; line-height: 1;">&times;</span>
-    </div>
-    
-    <div class="video-container-modal" oncontextmenu="return false;">
-      <div class="video-popout-overlay"></div>
-      
-      <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  <div id="videoModal" class="modal">
+    <div class="modal-content">
+      <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
+        <h2 id="modalVideoTitle" style="margin:0; font-size:1.1rem;"></h2>
+        <span onclick="closeModal()" style="cursor:pointer; font-size:2rem; line-height: 1;">&times;</span>
+      </div>
+      <div class="video-container-modal" oncontextmenu="return false;">
+        <div class="video-popout-overlay"></div>
+        <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
-</div>
 
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
@@ -153,202 +89,121 @@
         const response = await fetch(`${WEB_APP_URL}?action=getCourseData&curso=${cursoId}&email=${userEmail}&token=${userToken}`);
         const data = await response.json();
         if (data.status === "success") { renderCourse(data); } 
-        else { alert("Error de sesión: " + data.message); cerrarSesion(); }
-      } catch (e) { console.error("Error init:", e); }
+        else { alert("Sesión inválida"); cerrarSesion(); }
+      } catch (e) { console.error(e); }
     }
 
-   function renderCourse(data) {
-  document.getElementById('loader').style.display = 'none';
-  document.getElementById('courseTitle').innerText = data.nombreCurso;
-  document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
-  document.getElementById('progressContainer').style.display = 'block';
-  actualizarBarraProgreso(data.porcentajeProgreso || 0);
+    function renderCourse(data) {
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('courseTitle').innerText = data.nombreCurso;
+      document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
+      document.getElementById('progressContainer').style.display = 'block';
+      actualizarBarraProgreso(data.porcentajeProgreso || 0);
 
-  const content = document.getElementById('courseContent');
-  const bannerContainer = document.getElementById('courseBannerContainer');
-  content.innerHTML = ''; 
-  bannerContainer.innerHTML = '';
+      const content = document.getElementById('courseContent');
+      content.innerHTML = ''; 
 
-  // 🔹 1. SI NO HA COMPLETADO EL FORMULARIO, BLOQUEAMOS Y MOSTRAMOS EL FORM
-  if (data.formCompletado === false) {
-    content.innerHTML = `
-      <div class="formulario-container">
-        <h3 style="color:#0056b3;">🚀 ¡Casi listo! Completa tu perfil para acceder</h3>
-        <p>Solo toma un minuto y nos ayuda a mejorar tu experiencia.</p>
-        <form onsubmit="enviarFormularioProspectos(event)">
-          <div style="margin-bottom:15px;">
-            <label style="display:block; font-weight:bold;">¿Cuál es tu mayor desafío hoy con Google Sheets?</label>
-            <textarea name="desafio" required style="width:100%; padding:10px; border-radius:5px;" placeholder="Ej: Automatizar reportes..."></textarea>
-          </div>
-          <div style="margin-bottom:15px;">
-            <label style="display:block; font-weight:bold;">Tipo de Emprendedor:</label>
-            <select name="tipoEmprendedor" required style="width:100%; padding:10px;">
-              <option value="">Selecciona...</option>
-              <option value="Servicios">Servicios</option>
-              <option value="Ecommerce">Ecommerce / Ventas</option>
-              <option value="Freelance">Freelance</option>
-            </select>
-          </div>
-          <button type="submit" class="formulario-submit">Comenzar el Curso Ahora!</button>
-        </form>
-      </div>`;
-    return; // 🚩 Detenemos aquí para que no vea las lecciones
-  }
-
-  // 🔹 2. SI YA COMPLETÓ EL FORM, SEGUIMOS CON LAS LECCIONES
-  if (data.urlBanner) {
-    bannerContainer.innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
-  }
-
-  const completadas = data.completadas || [];
-
-  for (const modulo in data.modulos) {
-    let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
-    data.modulos[modulo].forEach(item => {
-      if (item.tipo === 'leccion') {
-        const video = item.video || {};
-        const imgThumb = (video.imgUrl && video.imgUrl !== "") ? video.imgUrl : 'https://placehold.co/400x225?text=Ver+Leccion';
-        const yaVisto = completadas.includes(String(item.id));
-
-        moduloHtml += `
-          <div class="lesson">
-            <div class="lesson-info">
-              <h3>Lección ${item.id}: ${item.titulo}</h3>
-              <p>${item.descripcion || ''}</p>
-            </div>
-            <div class="lesson-video-section" style="text-align:center;">
-              ${video.url ? `<img src="${imgThumb}" onclick="verificarYVer('${video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">` : ''}
-              <button id="btn-${item.id}" 
-                      class="btn-completar ${yaVisto ? 'visto' : ''}" 
-                      onclick="marcarLeccionManual('${item.id}')"
-                      ${yaVisto ? 'disabled' : ''}>
-                <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
-                <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
-              </button>
-            </div>`;
-
-        if (item.material) {
-           moduloHtml += `<a href="${item.material}" target="_blank" class="material-button"><i class="fas fa-download"></i> Descargar Material</a>`;
-        }
-        moduloHtml += `</div>`; // Cierre de .lesson
-      }
-    });
-    moduloHtml += `</div>`; // Cierre de .module
-    content.innerHTML += moduloHtml;
-  }
-}
-
-async function verificarYVer(url, titulo) {
-  try {
-    // 1. Validamos sesión con el servidor
-    const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${encodeURIComponent(userEmail)}&token=${userToken}`);
-    
-    // Si la respuesta no es exitosa, evitamos el error de "Unexpected token <"
-    if (!response.ok) throw new Error("Error de conexión con el servidor");
-    
-    const data = await response.json();
-    
-    if (data.status === "success" || data.esValido === true) {
-      const frame = document.getElementById('modalVideoFrame');
-      const modal = document.getElementById('videoModal');
-      
-      document.getElementById('modalVideoTitle').innerText = titulo;
-      
-      // 2. Extracción segura del ID de Google Drive
-      let videoId = "";
-      if (url.includes('d/')) {
-        videoId = url.split('d/')[1].split('/')[0];
-      } else if (url.includes('id=')) {
-        videoId = url.split('id=')[1].split('&')[0];
+      // 🔹 LÓGICA DEL FORMULARIO: Si no ha completado, mostramos form y paramos
+      if (data.formCompletado === false) {
+        content.innerHTML = `
+          <div class="formulario-container">
+            <h3 style="color:#0056b3;">🚀 ¡Casi listo! Completa tu perfil para acceder</h3>
+            <p>Necesitamos estos datos para habilitar tus lecciones.</p>
+            <form onsubmit="enviarFormularioProspectos(event)">
+              <div style="margin-bottom:15px;">
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">¿Cuál es tu mayor desafío hoy con Google Sheets?</label>
+                <textarea name="desafio" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;" placeholder="Ej: Automatizar mis ventas..."></textarea>
+              </div>
+              <div style="margin-bottom:15px;">
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">Tipo de Emprendedor:</label>
+                <select name="tipoEmprendedor" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
+                  <option value="">Selecciona...</option>
+                  <option value="Servicios">Servicios</option>
+                  <option value="Ecommerce">Ecommerce / Productos</option>
+                  <option value="Freelance">Freelance</option>
+                </select>
+              </div>
+              <button type="submit" class="formulario-submit">Comenzar el Curso Ahora!</button>
+            </form>
+          </div>`;
+        return; // 🚩 IMPORTANTE: Aquí se detiene para que no vea lecciones
       }
 
-      // 🔹 FUNCIÓN PARA ENVIAR EL FORMULARIO A GOOGLE
-async function enviarFormularioProspectos(event) {
-  event.preventDefault();
-  const btn = event.target.querySelector('button');
-  btn.innerText = "Registrando...";
-  btn.disabled = true;
+      // Si ya completó, mostramos las lecciones
+      if (data.urlBanner) {
+        document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
+      }
 
-  const params = new URLSearchParams();
-  params.append('action', 'procesarFormulario');
-  params.append('email', userEmail);
-  new FormData(event.target).forEach((value, key) => params.append(key, value));
+      const completadas = data.completadas || [];
+      for (const modulo in data.modulos) {
+        let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
+        data.modulos[modulo].forEach(item => {
+          if (item.tipo === 'leccion') {
+            const yaVisto = completadas.includes(String(item.id));
+            const imgThumb = item.video.imgUrl || 'https://placehold.co/400x225?text=Ver+Leccion';
+            moduloHtml += `
+              <div class="lesson">
+                <div class="lesson-info">
+                  <h3>Lección ${item.id}: ${item.titulo}</h3>
+                  <p>${item.descripcion || ''}</p>
+                </div>
+                <div class="lesson-video-section" style="text-align:center;">
+                  <img src="${imgThumb}" onclick="verificarYVer('${item.video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">
+                  <button id="btn-${item.id}" class="btn-completar ${yaVisto ? 'visto' : ''}" onclick="marcarLeccionManual('${item.id}')" ${yaVisto ? 'disabled' : ''}>
+                    <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
+                    <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
+                  </button>
+                </div>
+              </div>`;
+          }
+        });
+        content.innerHTML += moduloHtml + `</div>`;
+      }
+    }
 
-  try {
-    const response = await fetch(WEB_APP_URL, { 
-      method: 'POST', 
-      body: params.toString(), 
-      headers: { "Content-Type": "application/x-www-form-urlencoded" } 
-    });
-    const res = await response.json();
-    if(res.status === "success") {
-      alert("¡Registro exitoso!");
-      location.reload(); // Recarga para ocultar el form
+    async function enviarFormularioProspectos(event) {
+      event.preventDefault();
+      const btn = event.target.querySelector('button');
+      btn.innerText = "Registrando..."; btn.disabled = true;
+      const params = new URLSearchParams({ action: 'procesarFormulario', email: userEmail });
+      new FormData(event.target).forEach((value, key) => params.append(key, value));
+      try {
+        await fetch(WEB_APP_URL, { method: 'POST', body: params.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+        alert("¡Registro exitoso! Ya puedes acceder."); location.reload();
+      } catch (e) { alert("Error al enviar."); btn.disabled = false; btn.innerText = "Comenzar el Curso Ahora!"; }
     }
-  } catch (e) {
-    alert("Error al enviar. Intenta de nuevo.");
-    btn.disabled = false;
-  }
-}
-      
-      // 3. Cargamos el video en modo preview (sin controles de edición)
-      frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
-      
-      // 4. Mostramos el modal
-      modal.style.display = 'flex';
-      
-      // 🛡️ ESCUDO DE SEGURIDAD: Bloqueamos clic derecho en el modal
-      modal.oncontextmenu = function(e) {
-        e.preventDefault();
-        return false;
-      };
-      
-    } else {
-      // 🚩 Si el token no es válido, cerramos sesión por seguridad
-      alert("Tu sesión ha caducado. Por favor, ingresa nuevamente.");
-      cerrarSesion();
+
+    async function verificarYVer(url, titulo) {
+      const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${encodeURIComponent(userEmail)}&token=${userToken}`);
+      const data = await response.json();
+      if (data.status === "success" || data.esValido === true) {
+        const frame = document.getElementById('modalVideoFrame');
+        document.getElementById('modalVideoTitle').innerText = titulo;
+        let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
+        frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
+        document.getElementById('videoModal').style.display = 'flex';
+      } else { alert("Sesión expirada"); cerrarSesion(); }
     }
-  } catch (e) {
-    console.error("Error en verificarYVer:", e);
-    alert("Hubo un problema técnico. Por favor, refresca la página (Ctrl + F5).");
-  }
-}
-    
+
     async function marcarLeccionManual(leccionId) {
         const btn = document.getElementById(`btn-${leccionId}`);
-        const icon = btn.querySelector('i');
-        const text = btn.querySelector('span');
         if (btn.classList.contains('visto')) return;
-
-        btn.disabled = true;
-        text.innerText = "Guardando...";
-
+        btn.disabled = true; btn.querySelector('span').innerText = "Guardando...";
         try {
-            const formData = new URLSearchParams();
-            formData.append('action', 'marcarCompletada');
-            formData.append('email', userEmail);
-            formData.append('curso', cursoId);
-            formData.append('leccion', leccionId);
-
+            const formData = new URLSearchParams({ action: 'marcarCompletada', email: userEmail, curso: cursoId, leccion: leccionId });
             const response = await fetch(WEB_APP_URL, { method: 'POST', body: formData.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
             const resData = await response.json();
-
             if (resData.status === "success") {
-                btn.classList.add('visto');
-                icon.className = "fas fa-check-circle";
-                text.innerText = "Lección Completada";
+                btn.classList.add('visto'); btn.querySelector('i').className = "fas fa-check-circle";
+                btn.querySelector('span').innerText = "Lección Completada";
                 actualizarBarraProgreso(resData.nuevoPorcentaje);
             }
-        } catch (e) { console.error("Error progreso:", e); text.innerText = "Marcar como completada"; btn.disabled = false; }
+        } catch (e) { btn.disabled = false; btn.querySelector('span').innerText = "Marcar como completada"; }
     }
 
     function actualizarBarraProgreso(porcentaje) {
-        const bar = document.getElementById('progressBar');
-        const text = document.getElementById('progressText');
-        if (bar && text) {
-            bar.style.width = porcentaje + '%';
-            text.innerText = Math.round(porcentaje) + '%';
-        }
+        document.getElementById('progressBar').style.width = porcentaje + '%';
+        document.getElementById('progressText').innerText = Math.round(porcentaje) + '%';
     }
 
     function closeModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('modalVideoFrame').src = ''; }
