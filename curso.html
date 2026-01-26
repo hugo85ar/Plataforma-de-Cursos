@@ -86,17 +86,20 @@
     <div id="courseContent"></div>
   </div>
 
-  <div id="videoModal" class="modal">
-    <div class="modal-content">
-      <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
-        <h2 id="modalVideoTitle" style="margin:0; font-size:1.1rem;"></h2>
-        <span onclick="closeModal()" style="cursor:pointer; font-size:2rem; line-height: 1;">&times;</span>
-      </div>
-      <div class="video-container-modal">
-        <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      </div>
+<div id="videoModal" class="modal">
+  <div class="modal-content">
+    <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
+      <h2 id="modalVideoTitle" style="margin:0; font-size:1.1rem;"></h2>
+      <span onclick="closeModal()" style="cursor:pointer; font-size:2rem; line-height: 1;">&times;</span>
+    </div>
+    
+    <div class="video-container-modal" oncontextmenu="return false;">
+      <div class="video-popout-overlay"></div>
+      
+      <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
   </div>
+</div>
 
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
@@ -163,33 +166,50 @@
       }
     }
 
-  async function verificarYVer(url, titulo) {
+async function verificarYVer(url, titulo) {
   try {
+    // 1. Validamos sesión con el servidor
     const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${encodeURIComponent(userEmail)}&token=${userToken}`);
     
-    // Si la respuesta no es JSON (error '<'), lanzamos error manual
-    if (!response.ok) throw new Error("Error de conexión");
+    // Si la respuesta no es exitosa, evitamos el error de "Unexpected token <"
+    if (!response.ok) throw new Error("Error de conexión con el servidor");
     
     const data = await response.json();
     
-    if (data.esValido === true) {
+    if (data.status === "success" || data.esValido === true) {
       const frame = document.getElementById('modalVideoFrame');
+      const modal = document.getElementById('videoModal');
+      
       document.getElementById('modalVideoTitle').innerText = titulo;
       
-      // Limpieza de ID de Google Drive
+      // 2. Extracción segura del ID de Google Drive
       let videoId = "";
-      if (url.includes('d/')) videoId = url.split('d/')[1].split('/')[0];
-      else if (url.includes('id=')) videoId = url.split('id=')[1].split('&')[0];
+      if (url.includes('d/')) {
+        videoId = url.split('d/')[1].split('/')[0];
+      } else if (url.includes('id=')) {
+        videoId = url.split('id=')[1].split('&')[0];
+      }
       
+      // 3. Cargamos el video en modo preview (sin controles de edición)
       frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
-      document.getElementById('videoModal').style.display = 'flex';
+      
+      // 4. Mostramos el modal
+      modal.style.display = 'flex';
+      
+      // 🛡️ ESCUDO DE SEGURIDAD: Bloqueamos clic derecho en el modal
+      modal.oncontextmenu = function(e) {
+        e.preventDefault();
+        return false;
+      };
+      
     } else {
-      alert("Tu sesión ha caducado por seguridad. Por favor, ingresa de nuevo.");
+      // 🚩 Si el token no es válido, cerramos sesión por seguridad
+      alert("Tu sesión ha caducado. Por favor, ingresa nuevamente.");
       cerrarSesion();
     }
   } catch (e) {
-    console.error(e);
-    alert("Hubo un problema al conectar con el servidor. Intenta refrescar la página.");
+    console.error("Error en verificarYVer:", e);
+    alert("Hubo un problema técnico. Por favor, refresca la página (Ctrl + F5).");
   }
 }
     
