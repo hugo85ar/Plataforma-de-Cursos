@@ -171,7 +171,7 @@
       }
     }
 
-  async function enviarFormularioEncuesta() {
+ async function enviarFormularioEncuesta() {
     const btn = document.getElementById('btnEnviarForm');
     const msg = document.getElementById('form-mensaje');
     const inner = document.getElementById('form-inner');
@@ -179,7 +179,7 @@
     btn.innerText = "Guardando respuestas...";
     btn.disabled = true;
 
-    // 🔹 Usamos URLSearchParams para que los datos viajen como texto de formulario
+    // Enviamos como parámetros de texto para evitar errores de JSON
     const formData = new URLSearchParams();
     formData.append('action', 'procesarFormulario');
     formData.append('email', userEmail);
@@ -191,21 +191,19 @@
     try {
         await fetch(WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors', // Evita bloqueos de seguridad de Google
+            mode: 'no-cors', // Mantenemos esto para evitar bloqueos
             body: formData.toString(),
             headers: { "Content-Type": "application/x-www-form-urlencoded" }
         });
 
-        // UI de éxito
         inner.style.display = 'none';
         msg.style.display = 'block';
-        msg.innerText = "✅ ¡Registro exitoso! Refrescando lecciones...";
+        msg.innerText = "✅ ¡Registro exitoso! Ya puedes ver tus lecciones.";
         
-        // Recargamos para que el bloque de encuesta desaparezca
+        // Recarga para limpiar el bloque amarillo
         setTimeout(() => { window.location.reload(); }, 2000);
     } catch (e) {
         console.error(e);
-        alert("Error al enviar. Inténtalo de nuevo.");
         btn.innerText = "Enviar y Comenzar";
         btn.disabled = false;
     }
