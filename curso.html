@@ -19,6 +19,40 @@
   cursor: default;
 }
 
+ .reset-password-button { 
+  background-color: #ff9800; 
+  color: white; 
+  padding: 0.5rem 1rem; 
+  border-radius: 5px; 
+  text-decoration: none; 
+  font-weight: 600; 
+  font-size: 0.9rem; 
+  width: 150px; 
+  text-align: center; 
+}
+
+    .formulario-container { 
+  background-color: #ffffff; 
+  padding: 2rem; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15); 
+  margin: 2rem 0; 
+  border: 2px solid #0056b3; 
+}
+    
+  .formulario-submit { 
+  background-color: #28a745; 
+  color: white; 
+  border: none; 
+  padding: 1rem; 
+  width: 100%; 
+  font-weight: bold; 
+  border-radius: 8px; 
+  cursor: pointer; 
+}
+
+    
+
 /* Protege el contenedor contra selección de texto y clicks */
 .video-container-modal {
   position: relative;
@@ -123,55 +157,45 @@
       } catch (e) { console.error("Error init:", e); }
     }
 
-    function renderCourse(data) {
+   function renderCourse(data) {
   document.getElementById('loader').style.display = 'none';
   document.getElementById('courseTitle').innerText = data.nombreCurso;
   document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
-  
-  // 1. Mostramos la barra de progreso
   document.getElementById('progressContainer').style.display = 'block';
   actualizarBarraProgreso(data.porcentajeProgreso || 0);
 
   const content = document.getElementById('courseContent');
   const bannerContainer = document.getElementById('courseBannerContainer');
   content.innerHTML = ''; 
-  bannerContainer.innerHTML = ''; // Limpiamos banner por si acaso
+  bannerContainer.innerHTML = '';
 
-  // 🔹 BLOQUE RECUPERADO: Si NO ha completado el formulario, se lo mostramos
+  // 🔹 1. SI NO HA COMPLETADO EL FORMULARIO, BLOQUEAMOS Y MOSTRAMOS EL FORM
   if (data.formCompletado === false) {
     content.innerHTML = `
       <div class="formulario-container">
-        <h3>🚀 ¡Casi listo! Completa tu perfil para acceder</h3>
+        <h3 style="color:#0056b3;">🚀 ¡Casi listo! Completa tu perfil para acceder</h3>
         <p>Solo toma un minuto y nos ayuda a mejorar tu experiencia.</p>
         <form onsubmit="enviarFormularioProspectos(event)">
-          <div class="formulario-group">
-            <label>¿Cuál es tu mayor desafío hoy con Google Sheets?</label>
-            <textarea name="desafio" required placeholder="Ej: Automatizar mis reportes..."></textarea>
+          <div style="margin-bottom:15px;">
+            <label style="display:block; font-weight:bold;">¿Cuál es tu mayor desafío hoy con Google Sheets?</label>
+            <textarea name="desafio" required style="width:100%; padding:10px; border-radius:5px;" placeholder="Ej: Automatizar reportes..."></textarea>
           </div>
-          <div class="formulario-group">
-            <label>Tipo de Emprendedor:</label>
-            <select name="tipoEmprendedor" required>
+          <div style="margin-bottom:15px;">
+            <label style="display:block; font-weight:bold;">Tipo de Emprendedor:</label>
+            <select name="tipoEmprendedor" required style="width:100%; padding:10px;">
               <option value="">Selecciona...</option>
               <option value="Servicios">Servicios</option>
               <option value="Ecommerce">Ecommerce / Ventas</option>
-              <option value="Freelance">Freelance / Profesional</option>
-            </select>
-          </div>
-          <div class="formulario-group">
-            <label>Nivel de conocimiento:</label>
-            <select name="nivel" required>
-              <option value="Basico">Principiante</option>
-              <option value="Intermedio">Intermedio</option>
-              <option value="Avanzado">Avanzado</option>
+              <option value="Freelance">Freelance</option>
             </select>
           </div>
           <button type="submit" class="formulario-submit">Comenzar el Curso Ahora!</button>
         </form>
       </div>`;
-    return; // 🚩 Detenemos la ejecución aquí para que NO vea las lecciones
+    return; // 🚩 Detenemos aquí para que no vea las lecciones
   }
 
-  // 🔹 Si ya completó el formulario, mostramos el banner y las lecciones
+  // 🔹 2. SI YA COMPLETÓ EL FORM, SEGUIMOS CON LAS LECCIONES
   if (data.urlBanner) {
     bannerContainer.innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
   }
@@ -206,10 +230,10 @@
         if (item.material) {
            moduloHtml += `<a href="${item.material}" target="_blank" class="material-button"><i class="fas fa-download"></i> Descargar Material</a>`;
         }
-        moduloHtml += `</div>`; // Cierra .lesson
+        moduloHtml += `</div>`; // Cierre de .lesson
       }
     });
-    moduloHtml += `</div>`; // Cierra .module
+    moduloHtml += `</div>`; // Cierre de .module
     content.innerHTML += moduloHtml;
   }
 }
@@ -245,27 +269,25 @@ async function enviarFormularioProspectos(event) {
   btn.innerText = "Registrando...";
   btn.disabled = true;
 
-  const formData = new FormData(event.target);
   const params = new URLSearchParams();
   params.append('action', 'procesarFormulario');
-  params.append('email', userEmail); // userEmail ya está definido al inicio del script
-  formData.forEach((value, key) => params.append(key, value));
+  params.append('email', userEmail);
+  new FormData(event.target).forEach((value, key) => params.append(key, value));
 
   try {
     const response = await fetch(WEB_APP_URL, { 
-        method: 'POST', 
-        body: params.toString(), 
-        headers: { "Content-Type": "application/x-www-form-urlencoded" } 
+      method: 'POST', 
+      body: params.toString(), 
+      headers: { "Content-Type": "application/x-www-form-urlencoded" } 
     });
     const res = await response.json();
     if(res.status === "success") {
-        alert("¡Registro exitoso! Ya puedes acceder.");
-        location.reload(); // Recarga para ocultar el form y mostrar lecciones
+      alert("¡Registro exitoso!");
+      location.reload(); // Recarga para ocultar el form
     }
   } catch (e) {
-    alert("Error al conectar. Inténtalo de nuevo.");
+    alert("Error al enviar. Intenta de nuevo.");
     btn.disabled = false;
-    btn.innerText = "Comenzar el Curso Ahora!";
   }
 }
       
