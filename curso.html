@@ -6,6 +6,11 @@
   <title>Mi Academia | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
+    /* 🔹 ESTILOS DE PROGRESO Y BOTONES */
+    .btn-completar { background-color: #f1f5f9; color: #475569; padding: 0.6rem; border-radius: 8px; border: 2px solid #e2e8f0; width: 100%; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+    .btn-completar.visto { background-color: #dcfce7; color: #166534; border-color: #22c55e; }
+    .btn-completar:disabled { opacity: 0.7; cursor: not-allowed; }
+
     /* 🔹 TUS ESTILOS ORIGINALES */
     body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #1f2559, #3b82f6); background-attachment: fixed; color: #333; line-height: 1.6; }
     .container { max-width: 960px; margin: 2.5rem auto; padding: 0 1.5rem; }
@@ -24,14 +29,7 @@
     .lesson-video-section img { width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: 0.3s; }
     .lesson-video-section img:hover { transform: scale(1.02); }
 
-    .formulario-container { background-color: #f9f9f9; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 30px; border: 2px solid #007BFF; }
-    .formulario-group { margin-bottom: 15px; text-align: left; }
-    .formulario-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
-    .formulario-group textarea, .formulario-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-    .opciones-radio, .opciones-checkbox { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
-    .formulario-submit { width: 100%; padding: 15px; background-color: #28a745; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-    .formulario-submit:hover { background-color: #218838; transform: scale(1.01); }
-    
+    /* Modal y Escudo */
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
     .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; overflow: hidden; position: relative; }
     .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
@@ -97,7 +95,6 @@
         const data = await response.json();
         if (data.status === "success") { 
             renderCourse(data);
-            actualizarBarraProgreso(data.porcentajeProgreso || 0);
         } 
         else { alert("Sesión no válida"); cerrarSesion(); }
       } catch (e) { console.error(e); }
@@ -107,14 +104,13 @@
       document.getElementById('loader').style.display = 'none';
       document.getElementById('courseTitle').innerText = data.nombreCurso;
       document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
+      
       document.getElementById('progressContainer').style.display = 'block';
+      actualizarBarraProgreso(data.porcentajeProgreso || 0);
 
       const content = document.getElementById('courseContent');
+      const completadas = data.completadas || [];
       content.innerHTML = ''; 
-
-      if (data.formCompletado === false) {
-          // ... (bloque de formulario igual al anterior)
-      }
 
       if (data.urlBanner) {
         document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
@@ -126,21 +122,25 @@
           if (item.tipo === 'leccion') {
             const video = item.video || {};
             const imgThumb = video.imgUrl || 'https://via.placeholder.com/400x225?text=Ver+Leccion';
-            
+            const yaVisto = completadas.includes(String(item.id));
+
             moduloHtml += `
               <div class="lesson">
                 <div class="lesson-info">
                   <h3>Lección ${item.id}: ${item.titulo}</h3>
                   <p>${item.descripcion || ''}</p>
-                </div>`;
+                </div>
                 
-            if (video.url) {
-              // 🔹 PASAMOS EL ID DE LECCIÓN A LA FUNCIÓN
-              moduloHtml += `
-                  <div class="lesson-video-section" style="text-align:center;">
-                    <img src="${imgThumb}" onclick="verificarYVer('${video.url}', 'Leccion ${item.id}', '${item.id}')" style="cursor:pointer;">
-                  </div>`;
-            }
+                <div class="lesson-video-section" style="text-align:center;">
+                  ${video.url ? `<img src="${imgThumb}" onclick="verificarYVer('${video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">` : ''}
+                  
+                  <button id="btn-${item.id}" 
+                          class="btn-completar ${yaVisto ? 'visto' : ''}" 
+                          onclick="marcarLeccionManual('${item.id}')"
+                          ${yaVisto ? 'disabled' : ''}>
+                    ${yaVisto ? '✅ Completada' : 'Marcar como completada'}
+                  </button>
+                </div>`;
 
             if (item.material) {
                moduloHtml += `<a href="${item.material}" target="_blank" class="material-button"><i class="fas fa-download"></i> Descargar Material</a>`;
@@ -153,35 +153,52 @@
       }
     }
 
-    // 🔹 FUNCIÓN ACTUALIZADA CON leccionId
-    async function verificarYVer(url, titulo, leccionId) {
-      // 1. Validamos sesión
+    // 🔹 SOLO ABRE EL VIDEO (No marca progreso)
+    async function verificarYVer(url, titulo) {
       const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
       const data = await response.json();
 
       if (data.esValido) {
-        // 2. Registramos progreso en silencio
-        fetch(WEB_APP_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: new URLSearchParams({
-            action: 'marcarCompletada',
-            email: userEmail,
-            curso: cursoId,
-            leccion: leccionId
-          })
-        });
-
-        // 3. Mostramos video
         const frame = document.getElementById('modalVideoFrame');
         document.getElementById('modalVideoTitle').innerText = titulo;
         let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
         frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
         document.getElementById('videoModal').style.display = 'flex';
-      } else { 
-        alert("Sesión expirada"); 
-        cerrarSesion(); 
-      }
+      } else { alert("Sesión expirada"); cerrarSesion(); }
+    }
+
+    // 🔹 MARCA PROGRESO Y ACTUALIZA LA BARRA
+    async function marcarLeccionManual(leccionId) {
+        const btn = document.getElementById(`btn-${leccionId}`);
+        if (btn.classList.contains('visto')) return;
+
+        btn.innerText = "Guardando...";
+        btn.disabled = true;
+
+        try {
+            const formData = new URLSearchParams();
+            formData.append('action', 'marcarCompletada');
+            formData.append('email', userEmail);
+            formData.append('curso', cursoId);
+            formData.append('leccion', leccionId);
+
+            const response = await fetch(WEB_APP_URL, {
+                method: 'POST',
+                body: formData.toString(),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            });
+            const resData = await response.json();
+
+            if (resData.status === "success") {
+                btn.classList.add('visto');
+                btn.innerText = "✅ Completada";
+                actualizarBarraProgreso(resData.nuevoPorcentaje);
+            }
+        } catch (e) {
+            console.error(e);
+            btn.innerText = "Marcar como completada";
+            btn.disabled = false;
+        }
     }
 
     function actualizarBarraProgreso(porcentaje) {
