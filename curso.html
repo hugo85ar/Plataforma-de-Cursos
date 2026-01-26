@@ -76,7 +76,7 @@
     </div>
   </div>
 
-  <script>               
+  <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
     const userEmail = localStorage.getItem('userEmail');
     const userToken = localStorage.getItem('userToken');
@@ -101,7 +101,7 @@
       const content = document.getElementById('courseContent');
       content.innerHTML = ''; 
 
-      // 1. 🔹 LÓGICA DEL FORMULARIO (Si no está en PROSPECTOS)
+      // 1. Mostrar Encuesta (Si corresponde)
       if (data.formCompletado === false) {
           content.innerHTML += `
             <div class="formulario-container" id="formRegistroContainer">
@@ -141,7 +141,7 @@
             </div>`;
       }
 
-      // 2. Banner e Imágenes (Imagen 3)
+      // 2. Banner e Imágenes
       if (data.urlBanner) {
         document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
       }
@@ -171,48 +171,41 @@
       }
     }
 
- async function enviarFormularioEncuesta() {
-    const btn = document.getElementById('btnEnviarForm');
-    const msg = document.getElementById('form-mensaje');
-    const inner = document.getElementById('form-inner');
-    
-    btn.innerText = "Guardando respuestas...";
-    btn.disabled = true;
-
-    // 🔹 Recuperamos el nombre real de la memoria del navegador
-    const nombreAlumno = localStorage.getItem('userName') || 'Alumno';
-
-    const formData = new URLSearchParams();
-    formData.append('action', 'procesarFormulario');
-    formData.append('nombre', nombreAlumno); // Enviamos el nombre real
-    formData.append('email', userEmail);
-    formData.append('desafio', document.getElementById('f_desafio').value);
-    formData.append('nivel', document.getElementById('f_nivel').value);
-    formData.append('tipoEmprendedor', document.querySelector('input[name="f_problema"]:checked')?.value || 'No especificado');
-    formData.append('intereses', Array.from(document.querySelectorAll('input[name="f_interes"]:checked')).map(c => c.value).join(', '));
-
-    try {
-        await fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: formData.toString(),
-            headers: { "Content-Type": "application/x-www-form-urlencoded" }
-        });
-
-        inner.style.display = 'none';
-        msg.style.display = 'block';
-        msg.innerText = "✅ ¡Registro exitoso! Ya puedes ver tus lecciones.";
+    async function enviarFormularioEncuesta() {
+        const btn = document.getElementById('btnEnviarForm');
+        const msg = document.getElementById('form-mensaje');
+        const inner = document.getElementById('form-inner');
         
-        // Recarga tras 2 segundos para que desaparezca el bloque amarillo
-        setTimeout(() => { window.location.reload(); }, 2000);
-    } catch (e) {
-        console.error(e);
-        btn.innerText = "Enviar y Comenzar";
-        btn.disabled = false;
+        btn.innerText = "Guardando respuestas...";
+        btn.disabled = true;
+
+        const formData = new URLSearchParams();
+        formData.append('action', 'procesarFormulario');
+        formData.append('nombre', localStorage.getItem('userName') || 'Alumno');
+        formData.append('email', userEmail);
+        formData.append('desafio', document.getElementById('f_desafio').value);
+        formData.append('nivel', document.getElementById('f_nivel').value);
+        formData.append('tipoEmprendedor', document.querySelector('input[name="f_problema"]:checked')?.value || 'No especificado');
+        formData.append('intereses', Array.from(document.querySelectorAll('input[name="f_interes"]:checked')).map(c => c.value).join(', '));
+
+        try {
+            await fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData.toString(),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            });
+
+            inner.style.display = 'none';
+            msg.style.display = 'block';
+            msg.innerText = "✅ ¡Registro exitoso! Ya puedes ver tus lecciones.";
+            setTimeout(() => { window.location.reload(); }, 2000);
+        } catch (e) {
+            console.error(e);
+            btn.innerText = "Enviar y Comenzar";
+            btn.disabled = false;
+        }
     }
-}
-   
-}
 
     async function verificarYVer(url, titulo) {
       const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
