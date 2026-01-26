@@ -110,7 +110,7 @@
         data.modulos[modulo].forEach(item => {
           if (item.tipo === 'leccion') {
             const video = item.video || {};
-            // 🔹 Placeholder corregido para evitar imágenes rotas
+            // 🔹 Placeholder corregido a placehold.co
             const imgThumb = (video.imgUrl && video.imgUrl !== "") ? video.imgUrl : 'https://placehold.co/400x225?text=Ver+Leccion';
             const yaVisto = completadas.includes(String(item.id));
 
@@ -143,7 +143,6 @@
     }
 
     async function verificarYVer(url, titulo) {
-      // 🔹 Chequeo de sesión silencioso para evitar alertas molestas
       try {
         const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
         const data = await response.json();
@@ -181,8 +180,12 @@
     }
 
     function actualizarBarraProgreso(porcentaje) {
-        document.getElementById('progressBar').style.width = porcentaje + '%';
-        document.getElementById('progressText').innerText = Math.round(porcentaje) + '%';
+        const bar = document.getElementById('progressBar');
+        const text = document.getElementById('progressText');
+        if (bar && text) {
+            bar.style.width = porcentaje + '%';
+            text.innerText = Math.round(porcentaje) + '%';
+        }
     }
 
     function closeModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('modalVideoFrame').src = ''; }
