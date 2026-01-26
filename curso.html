@@ -171,7 +171,7 @@
       }
     }
 
-   async function enviarFormularioEncuesta() {
+  async function enviarFormularioEncuesta() {
     const btn = document.getElementById('btnEnviarForm');
     const msg = document.getElementById('form-mensaje');
     const inner = document.getElementById('form-inner');
@@ -179,35 +179,37 @@
     btn.innerText = "Guardando respuestas...";
     btn.disabled = true;
 
-    const payload = {
-        action: 'procesarFormulario',
-        email: userEmail, // 🔹 Solo mandamos el email, el servidor hará el resto
-        desafio: document.getElementById('f_desafio').value,
-        nivel: document.getElementById('f_nivel').value,
-        tipoEmprendedor: document.querySelector('input[name="f_problema"]:checked')?.value || 'No especificado',
-        intereses: Array.from(document.querySelectorAll('input[name="f_interes"]:checked')).map(c => c.value).join(', ')
-    };
+    // 🔹 Usamos URLSearchParams para que los datos viajen como texto de formulario
+    const formData = new URLSearchParams();
+    formData.append('action', 'procesarFormulario');
+    formData.append('email', userEmail);
+    formData.append('desafio', document.getElementById('f_desafio').value);
+    formData.append('nivel', document.getElementById('f_nivel').value);
+    formData.append('tipoEmprendedor', document.querySelector('input[name="f_problema"]:checked')?.value || 'No especificado');
+    formData.append('intereses', Array.from(document.querySelectorAll('input[name="f_interes"]:checked')).map(c => c.value).join(', '));
 
-        try {
-            await fetch(WEB_APP_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(payload)
-            });
+    try {
+        await fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Evita bloqueos de seguridad de Google
+            body: formData.toString(),
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        });
 
-            inner.style.display = 'none';
-            msg.style.display = 'block';
-            msg.innerText = "✅ ¡Registro exitoso! Refrescando lecciones...";
-            
-            // Esperamos 2 segundos y recargamos para que el bloque amarillo desaparezca
-            setTimeout(() => { window.location.reload(); }, 2000);
-        } catch (e) {
-            console.error(e);
-            alert("Error al enviar. Inténtalo de nuevo.");
-            btn.innerText = "Enviar y Comenzar";
-            btn.disabled = false;
-        }
+        // UI de éxito
+        inner.style.display = 'none';
+        msg.style.display = 'block';
+        msg.innerText = "✅ ¡Registro exitoso! Refrescando lecciones...";
+        
+        // Recargamos para que el bloque de encuesta desaparezca
+        setTimeout(() => { window.location.reload(); }, 2000);
+    } catch (e) {
+        console.error(e);
+        alert("Error al enviar. Inténtalo de nuevo.");
+        btn.innerText = "Enviar y Comenzar";
+        btn.disabled = false;
     }
+}
 
     async function verificarYVer(url, titulo) {
       const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
