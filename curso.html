@@ -139,20 +139,36 @@
       }
     }
 
-    async function verificarYVer(url, titulo) {
-      try {
-        const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${userEmail}&token=${userToken}`);
-        const data = await response.json();
-        if (data.esValido) {
-          const frame = document.getElementById('modalVideoFrame');
-          document.getElementById('modalVideoTitle').innerText = titulo;
-          let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
-          frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
-          document.getElementById('videoModal').style.display = 'flex';
-        } else { alert("Sesión expirada. Por favor, vuelve a entrar."); cerrarSesion(); }
-      } catch (e) { console.error("Error video:", e); }
+  async function verificarYVer(url, titulo) {
+  try {
+    const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${encodeURIComponent(userEmail)}&token=${userToken}`);
+    
+    // Si la respuesta no es JSON (error '<'), lanzamos error manual
+    if (!response.ok) throw new Error("Error de conexión");
+    
+    const data = await response.json();
+    
+    if (data.esValido === true) {
+      const frame = document.getElementById('modalVideoFrame');
+      document.getElementById('modalVideoTitle').innerText = titulo;
+      
+      // Limpieza de ID de Google Drive
+      let videoId = "";
+      if (url.includes('d/')) videoId = url.split('d/')[1].split('/')[0];
+      else if (url.includes('id=')) videoId = url.split('id=')[1].split('&')[0];
+      
+      frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
+      document.getElementById('videoModal').style.display = 'flex';
+    } else {
+      alert("Tu sesión ha caducado por seguridad. Por favor, ingresa de nuevo.");
+      cerrarSesion();
     }
-
+  } catch (e) {
+    console.error(e);
+    alert("Hubo un problema al conectar con el servidor. Intenta refrescar la página.");
+  }
+}
+    
     async function marcarLeccionManual(leccionId) {
         const btn = document.getElementById(`btn-${leccionId}`);
         const icon = btn.querySelector('i');
