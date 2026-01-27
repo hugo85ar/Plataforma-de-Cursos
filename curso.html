@@ -115,30 +115,54 @@
       content.innerHTML = ''; 
 
       // 🔹 LÓGICA DEL FORMULARIO: Si no ha completado, mostramos form y paramos
-      if (data.formCompletado === false) {
-        content.innerHTML = `
-          <div class="formulario-container">
-            <h3 style="color:#0056b3;">🚀 ¡Casi listo! Completa tu perfil para acceder</h3>
-            <p>Necesitamos estos datos para habilitar tus lecciones.</p>
-            <form onsubmit="enviarFormularioProspectos(event)">
-              <div style="margin-bottom:15px;">
-                <label style="display:block; font-weight:bold; margin-bottom:5px;">¿Cuál es tu mayor desafío hoy con Google Sheets?</label>
-                <textarea name="desafio" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;" placeholder="Ej: Automatizar mis ventas..."></textarea>
-              </div>
-              <div style="margin-bottom:15px;">
-                <label style="display:block; font-weight:bold; margin-bottom:5px;">Tipo de Emprendedor:</label>
-                <select name="tipoEmprendedor" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
-                  <option value="">Selecciona...</option>
-                  <option value="Servicios">Servicios</option>
-                  <option value="Ecommerce">Ecommerce / Productos</option>
-                  <option value="Freelance">Freelance</option>
-                </select>
-              </div>
-              <button type="submit" class="formulario-submit">Comenzar el Curso Ahora!</button>
-            </form>
-          </div>`;
-        return; // 🚩 IMPORTANTE: Aquí se detiene para que no vea lecciones
-      }
+if (data.formCompletado === false) {
+  content.innerHTML = `
+    <div class="formulario-container">
+      <h3 style="color:#0056b3; margin-top:0;">🚀 ¡Casi listo! Completa tu perfil para acceder</h3>
+      <p>Necesitamos estos datos para habilitar tus lecciones de inmediato.</p>
+      
+      <form onsubmit="enviarFormularioProspectos(event)">
+        <div style="margin-bottom:15px;">
+          <label style="display:block; font-weight:bold; margin-bottom:5px;">1. ¿Cuál es tu mayor desafío hoy con Google Sheets?</label>
+          <textarea name="desafio" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;" placeholder="Ej: Organizar mis ventas diarias..."></textarea>
+        </div>
+
+        <div style="margin-bottom:15px;">
+          <label style="display:block; font-weight:bold; margin-bottom:5px;">2. Tipo de Emprendedor:</label>
+          <select name="tipoEmprendedor" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
+            <option value="">Selecciona...</option>
+            <option value="Servicios">Servicios</option>
+            <option value="Ecommerce">Ecommerce / Productos Digitales</option>
+            <option value="Comercio Fisico/Local">Comercio Físico / Local 🏠</option>
+            <option value="Freelance">Freelance</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:15px;">
+          <label style="display:block; font-weight:bold; margin-bottom:5px;">3. ¿Cuál es tu nivel actual con la herramienta?</label>
+          <select name="nivel" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
+            <option value="">Selecciona...</option>
+            <option value="Basico">Básico (Solo sumas y escribir datos)</option>
+            <option value="Intermedio">Intermedio (Uso fórmulas como BUSCARV)</option>
+            <option value="Avanzado">Avanzado (Hago Macros o Dashboards)</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:15px;">
+          <label style="display:block; font-weight:bold; margin-bottom:5px;">4. ¿Qué te gustaría lograr principalmente?</label>
+          <select name="objetivo" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
+            <option value="">Selecciona...</option>
+            <option value="Automatizar">Automatizar tareas para ahorrar tiempo</option>
+            <option value="Controlar Finanzas">Llevar un control claro de mis finanzas</option>
+            <option value="Analizar Datos">Crear reportes visuales para decidir mejor</option>
+          </select>
+        </div>
+
+        <button type="submit" class="formulario-submit">¡Comenzar el Curso Ahora!</button>
+      </form>
+    </div>`;
+  return; 
+}
 
       // Si ya completó, mostramos las lecciones
       if (data.urlBanner) {
