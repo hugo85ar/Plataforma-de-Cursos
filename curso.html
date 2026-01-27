@@ -18,6 +18,31 @@
 }
     
     /* 🔹 ESTILOS DE BOTONES Y FORMULARIO */
+
+    /* 📥 Estilo para el botón de material descargable */
+.material-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #0d6efd; /* Azul profesional */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 15px;
+  transition: 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.material-button:hover {
+  background-color: #0b5ed7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+    
     .btn-completar { background-color: #f1f5f9; color: #475569; padding: 0.8rem; border-radius: 8px; border: 2px solid #e2e8f0; width: 100%; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; }
     .btn-completar.visto { background-color: #dcfce7 !important; color: #15803d !important; border-color: #22c55e !important; }
     
@@ -194,6 +219,15 @@ if (data.formCompletado === false) {
         });
         content.innerHTML += moduloHtml + `</div>`;
       }
+
+      ${item.material && item.material.trim() !== "" && item.material !== "#" ? `
+                <div style="margin-top: 15px;">
+                  <a href="${item.material}" target="_blank" class="material-button">
+                    <i class="fas fa-file-download"></i> Descargar Material de Apoyo
+                  </a>
+                </div>
+              ` : ''}
+      
     }
 
     async function enviarFormularioProspectos(event) {
