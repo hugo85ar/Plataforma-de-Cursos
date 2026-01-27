@@ -194,42 +194,41 @@ if (data.formCompletado === false) {
         document.getElementById('courseBannerContainer').innerHTML = `<img src="${data.urlBanner}" style="width:100%; max-height:250px; object-fit:contain; border-radius:8px; margin-bottom:1rem;">`;
       }
 
-      const completadas = data.completadas || [];
-      for (const modulo in data.modulos) {
+  const completadas = data.completadas || [];
+    for (const modulo in data.modulos) {
         let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
         data.modulos[modulo].forEach(item => {
-          if (item.tipo === 'leccion') {
-            const yaVisto = completadas.includes(String(item.id));
-            const imgThumb = item.video.imgUrl || 'https://placehold.co/400x225?text=Ver+Leccion';
-            moduloHtml += `
-              <div class="lesson">
-                <div class="lesson-info">
-                  <h3>Lección ${item.id}: ${item.titulo}</h3>
-                  <p>${item.descripcion || ''}</p>
-                </div>
-                <div class="lesson-video-section" style="text-align:center;">
-                  <img src="${imgThumb}" onclick="verificarYVer('${item.video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">
-                  <button id="btn-${item.id}" class="btn-completar ${yaVisto ? 'visto' : ''}" onclick="marcarLeccionManual('${item.id}')" ${yaVisto ? 'disabled' : ''}>
-                    <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
-                    <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
-                  </button>
-                </div>
-              </div>`;
-          }
+            if (item.tipo === 'leccion') {
+                const yaVisto = completadas.includes(String(item.id));
+                const imgThumb = item.video.imgUrl || 'https://placehold.co/400x225?text=Ver+Leccion';
+                
+                moduloHtml += `
+                    <div class="lesson">
+                        <div class="lesson-info">
+                            <h3>Lección ${item.id}: ${item.titulo}</h3>
+                            <p>${item.descripcion || ''}</p>
+                        </div>
+                        <div class="lesson-video-section" style="text-align:center;">
+                            <img src="${imgThumb}" onclick="verificarYVer('${item.video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">
+                            <button id="btn-${item.id}" class="btn-completar ${yaVisto ? 'visto' : ''}" onclick="marcarLeccionManual('${item.id}')" ${yaVisto ? 'disabled' : ''}>
+                                <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
+                                <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
+                            </button>
+
+                            ${item.material && item.material.trim() !== "" && item.material !== "#" ? `
+                                <div style="margin-top: 15px;">
+                                    <a href="${item.material}" target="_blank" class="material-button">
+                                        <i class="fas fa-file-download"></i> Descargar Material de Apoyo
+                                    </a>
+                                </div>
+                            ` : ''}
+
+                        </div>
+                    </div>`;
+            }
         });
         content.innerHTML += moduloHtml + `</div>`;
-      }
-
-      ${item.material && item.material.trim() !== "" && item.material !== "#" ? `
-                <div style="margin-top: 15px;">
-                  <a href="${item.material}" target="_blank" class="material-button">
-                    <i class="fas fa-file-download"></i> Descargar Material de Apoyo
-                  </a>
-                </div>
-              ` : ''}
-      
     }
-
     async function enviarFormularioProspectos(event) {
       event.preventDefault();
       const btn = event.target.querySelector('button');
