@@ -227,8 +227,10 @@ if (data.formCompletado === false) {
                     </div>`;
             }
         });
-        content.innerHTML += moduloHtml + `</div>`;
+        moduloHtml += `</div>`;
+        content.innerHTML += moduloHtml;
     }
+}
     async function enviarFormularioProspectos(event) {
       event.preventDefault();
       const btn = event.target.querySelector('button');
