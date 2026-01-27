@@ -1,12 +1,20 @@
+Tu código para el Dashboard (donde se listan los cursos) ya tiene una base excelente, pero detecté que tienes estilos duplicados y algunas clases cruzadas (como .course-grid y .courses-grid) que pueden causar conflictos.
+
+Aquí tienes la versión limpia y optimizada de ese archivo (que te recomiendo guardar como dashboard.html para no confundirlo con la página de las lecciones). He ajustado las dimensiones para que tus banners de Canva luzcan perfectos: más anchos, menos altos y con formato de "cuadradito" horizontal.
+
+🎨 Dashboard Optimizado (dashboard.html)
+Reemplaza todo tu código con este para asegurar que la visual sea profesional y uniforme:
+
+HTML
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mis Cursos - Plataforma</title>
+  <title>Mis Cursos | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-    /* 🔹 TUS ESTILOS ORIGINALES */
+    /* 🔹 ESTILOS BASE */
     body {
       font-family: 'Open Sans', sans-serif;
       margin: 0; padding: 0;
@@ -14,6 +22,8 @@
       color: #333; line-height: 1.6; min-height: 100vh;
     }
     .container { max-width: 1200px; margin: 2.5rem auto; padding: 0 1.5rem 3rem; }
+
+    /* 🔹 HEADER */
     .header {
       background: rgba(15, 23, 42, 0.96); color: #f9fafb;
       padding: 1.25rem 1.5rem; border-radius: 18px;
@@ -23,28 +33,62 @@
     .logout-button {
       background: linear-gradient(135deg, #f97373, #ef4444); color: white;
       padding: 0.65rem 1.4rem; border-radius: 999px; text-decoration: none;
-      font-weight: 600; cursor: pointer; border: none;
+      font-weight: 600; cursor: pointer; border: none; transition: 0.3s;
     }
+    .logout-button:hover { transform: scale(1.05); opacity: 0.9; }
+
     .welcome-message {
       background: rgba(248, 250, 252, 0.98); padding: 1.5rem;
-      margin-bottom: 1.8rem; border-radius: 16px;
+      margin-bottom: 1.8rem; border-radius: 16px; border-left: 5px solid #22c55e;
     }
+
+    /* 🔹 GRID DE CURSOS (EFECTO CUADRADITOS HORIZONTALES) */
     .course-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.8rem;
+      display: grid; 
+      /* Hacemos las tarjetas más anchas para que parezcan banners */
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); 
+      gap: 2rem;
     }
+
+    /* 🔹 TARJETA DE CURSO */
     .course-card {
       background: white; border-radius: 16px; overflow: hidden;
-      display: flex; flex-direction: column; height: 100%; min-height: 400px;
+      display: flex; flex-direction: column; 
+      /* Eliminamos el min-height excesivo para que no sea tan alta */
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      transition: 0.3s;
     }
-    .course-card-image { width: 100%; height: 200px; object-fit: cover; }
-    .course-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+    .course-card:hover { transform: translateY(-10px); }
+
+    /* 🔹 IMAGEN (BANNER CANVA) */
+    .course-card-image { 
+      width: 100%; 
+      height: 160px; /* Altura reducida para formato apaisado */
+      object-fit: cover; 
+      border-bottom: 1px solid #eee;
+    }
+
+    .course-card-content { 
+      padding: 1.5rem; flex-grow: 1; 
+      display: flex; flex-direction: column; 
+      justify-content: space-between;
+    }
+
+    .course-card-content h3 { margin: 0 0 10px 0; color: #1f2559; font-size: 1.3rem; }
+    
+    .course-card-content p { 
+      font-size: 0.95rem; color: #64748b; margin-bottom: 1.5rem;
+      /* Limitamos a 2 líneas para que todas las tarjetas midan igual */
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+
     .course-card-button {
       background: linear-gradient(135deg, #22c55e, #16a34a); color: white;
       padding: 0.8rem; border-radius: 12px; text-align: center; font-weight: 600;
-      border: none; cursor: pointer; margin-top: auto;
+      border: none; cursor: pointer; transition: 0.3s;
     }
+    .course-card-button:hover { filter: brightness(1.1); }
+
     #loader { color: white; text-align: center; font-size: 1.2rem; margin-top: 50px; }
   </style>
 </head>
@@ -52,13 +96,13 @@
 
   <div class="container">
     <header class="header">
-      <h1>Mis Cursos</h1>
+      <h1 style="margin:0; font-size: 1.5rem;">Mis Cursos</h1>
       <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
     </header>
 
     <section class="welcome-message">
-      <h2 id="welcomeText">Cargando...</h2>
-      <p>Aquí tienes los cursos a los que tienes acceso. ¡Aprende a tu ritmo!</p>
+      <h2 id="welcomeText" style="margin:0 0 5px 0;">Cargando...</h2>
+      <p style="margin:0;">Aquí tienes tus herramientas de automatización. ¡Aprende a tu ritmo!</p>
     </section>
 
     <div id="loader">Conectando con la academia...</div>
@@ -66,29 +110,20 @@
   </div>
 
 <script>
-    // 1. CONFIGURACIÓN ÚNICA (Verifica que sea la misma en index.html)
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
 
-    // 2. CAPTURAR DATOS DEL LOGIN (Vienen en la URL)
+    // Manejo de sesión (se mantiene igual)
     const params = new URLSearchParams(window.location.search);
-    const tokenUrl = params.get('token');
-    const emailUrl = params.get('email');
-    const nombreUrl = params.get('nombre');
-
-    if (tokenUrl && emailUrl) {
-        localStorage.setItem('userToken', tokenUrl);
-        localStorage.setItem('userEmail', emailUrl);
-        localStorage.setItem('userName', nombreUrl || 'Emprendedor');
-        
-        // Limpiamos la URL para seguridad
+    if (params.get('token')) {
+        localStorage.setItem('userToken', params.get('token'));
+        localStorage.setItem('userEmail', params.get('email'));
+        localStorage.setItem('userName', params.get('nombre') || 'Emprendedor');
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    // 3. RECUPERAR DE MEMORIA
     const userEmail = localStorage.getItem('userEmail');
     const userToken = localStorage.getItem('userToken');
 
-    // 4. SEGURIDAD: SI NO HAY SESIÓN, AL LOGIN. SI HAY, CARGAR.
     if (!userEmail || !userToken) {
         window.location.href = "index.html";
     } else {
@@ -96,51 +131,38 @@
     }
 
     async function cargarDashboard() {
-        const grid = document.getElementById('courseGrid');
         const loader = document.getElementById('loader');
         const welcome = document.getElementById('welcomeText');
-
         try {
-            // Llamada al "Cerebro" de Google Apps Script
             const response = await fetch(`${WEB_APP_URL}?action=getDashboard&email=${userEmail}&token=${userToken}`);
             const data = await response.json();
-
             if (data.status === "success") {
                 loader.style.display = 'none';
                 welcome.innerText = "¡Bienvenido, " + (data.nombre || localStorage.getItem('userName')) + "!";
                 renderizarCursos(data.cursos);
             } else {
-                alert("Sesión inválida o expirada");
                 cerrarSesion();
             }
         } catch (e) {
-            console.error("Error:", e);
-            loader.innerText = "Error al conectar con el servidor. Revisa tu conexión.";
+            loader.innerText = "Error de conexión. Reintenta en unos momentos.";
         }
     }
 
     function renderizarCursos(cursos) {
         const grid = document.getElementById('courseGrid');
-        grid.innerHTML = ''; // Limpiamos
-
-        if (!cursos || cursos.length === 0) {
-            grid.innerHTML = '<p style="color:white; grid-column: 1/-1; text-align:center;">No tienes cursos asignados aún.</p>';
-            return;
-        }
-
-        cursos.forEach(curso => {
-            grid.innerHTML += `
+        grid.innerHTML = cursos && cursos.length > 0 
+            ? cursos.map(curso => `
                 <div class="course-card">
-                    <img src="${curso.urlBanner || 'https://via.placeholder.com/400x180'}" class="course-card-image">
+                    <img src="${curso.urlBanner || 'https://via.placeholder.com/400x160?text=Curso+Pro'}" class="course-card-image">
                     <div class="course-card-content">
                         <h3>${curso.nombre}</h3>
-                        <p>${curso.descripcion || ''}</p>
+                        <p>${curso.descripcion || 'Sin descripción disponible.'}</p>
                         <button class="course-card-button" onclick="irAlCurso('${curso.id}')">
                             Acceder al Curso
                         </button>
                     </div>
-                </div>`;
-        });
+                </div>`).join('')
+            : '<p style="color:white; grid-column: 1/-1; text-align:center;">No tienes cursos asignados aún.</p>';
     }
 
     function irAlCurso(id) {
