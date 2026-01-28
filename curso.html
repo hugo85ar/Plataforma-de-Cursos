@@ -8,6 +8,15 @@
   <style>
 
 
+    /* 📲 BURBUJA DE ESCALABILIDAD PROFESIONAL */
+    .whatsapp-bubble { 
+      position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; 
+      background-color: #25D366; border-radius: 50%; display: flex; 
+      justify-content: center; align-items: center; z-index: 1000; border: 3px solid white; 
+      transition: 0.3s; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .whatsapp-bubble:hover { transform: scale(1.15); }
+
     /* Ajuste para que todos midan lo mismo en el header */
 .reset-password-button, .logout-button, .inicio-button {
     width: 180px;      /* Ancho fijo para igualdad total */
@@ -112,6 +121,10 @@
     </div>
   </div>
 
+  <a id="waLinkCursos" href="#" class="whatsapp-bubble" target="_blank" rel="noopener" aria-label="Consultar por cursos premium o consultoría">
+    <i class="fab fa-whatsapp" style="color: white; font-size: 32px;"></i>
+  </a>
+  
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
     const userEmail = localStorage.getItem('userEmail');
@@ -130,6 +143,11 @@
     }
 
     function renderCourse(data) {
+
+      const nombre = data.nombreUsuario || 'Emprendedor';
+        const msgCursos = `Hola Hugo! Soy ${nombre} (${userEmail}). Estoy viendo el curso "${data.nombreCurso}" y me interesa subir mi nivel. ¿Me das info sobre la consultoría o los cursos de Investigación de Mercado, Landings o Clientes en Orden?`;
+        document.getElementById('waLinkCursos').href = `https://wa.me/5491136151754?text=${encodeURIComponent(msgCursos)}`;
+      
       document.getElementById('loader').style.display = 'none';
       document.getElementById('courseTitle').innerText = data.nombreCurso;
       document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
@@ -280,6 +298,7 @@ if (data.formCompletado === false) {
     function cerrarSesion() { localStorage.clear(); window.location.href = "index.html"; }
     init();
   </script>
+  
 </body>
 </html>
 
