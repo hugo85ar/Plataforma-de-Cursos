@@ -1,37 +1,21 @@
 
-
-HTML
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mis Cursos | Hugo Alvigini</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
   <style>
-
-    /* 📲 BURBUJA WHATSAPP ESTRATÉGICA */
-    .whatsapp-bubble { 
-      position: fixed; bottom: 25px; right: 25px; 
-      width: 65px; height: 65px; 
-      background-color: #25D366; border-radius: 50%; 
-      display: flex; justify-content: center; align-items: center; 
-      z-index: 1000; border: 3px solid white; transition: 0.3s;
-      text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
-    .whatsapp-bubble:hover { transform: scale(1.15); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
-    
-    @media (max-width: 768px) {
-      .whatsapp-bubble { width: 55px; height: 55px; bottom: 15px; right: 15px; }
-    }
-
-    
     /* 🔹 ESTILOS BASE */
     body {
-      font-family: 'Open Sans', sans-serif;
-      margin: 0; padding: 0;
-      background: linear-gradient(135deg, #1f2559, #3b82f6);
-      color: #333; line-height: 1.6; min-height: 100vh;
+      font-family: 'Open Sans', sans-serif; margin: 0; padding: 0;
+      background: linear-gradient(135deg, #1f2559, #3b82f6); color: #333; line-height: 1.6; min-height: 100vh;
     }
     .container { max-width: 1200px; margin: 2.5rem auto; padding: 0 1.5rem 3rem; }
 
@@ -47,61 +31,49 @@ HTML
       padding: 0.65rem 1.4rem; border-radius: 999px; text-decoration: none;
       font-weight: 600; cursor: pointer; border: none; transition: 0.3s;
     }
-    .logout-button:hover { transform: scale(1.05); opacity: 0.9; }
+
+    /* 💼 TARJETA DE CONSULTORÍA (PROYECTO EMPRENDEDOR) */
+    .consultoria-banner {
+      background: #ffffff; padding: 2rem; border-radius: 20px;
+      margin-bottom: 2.5rem; border-left: 8px solid #3b82f6;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+    .consultoria-content h2 { margin: 0; color: #1f2559; font-size: 1.6rem; }
+    .consultoria-content p { margin: 10px 0 0; color: #4b5563; font-weight: 600; }
+    .consultoria-btn {
+      background: #1f2559; color: white; padding: 1rem 2rem; border-radius: 12px;
+      text-decoration: none; font-weight: 700; transition: 0.3s;
+    }
+    .consultoria-btn:hover { background: #3b82f6; transform: scale(1.05); }
 
     .welcome-message {
       background: rgba(248, 250, 252, 0.98); padding: 1.5rem;
       margin-bottom: 1.8rem; border-radius: 16px; border-left: 5px solid #22c55e;
     }
 
-    /* 🔹 GRID DE CURSOS (EFECTO CUADRADITOS HORIZONTALES) */
-    .course-grid {
-      display: grid; 
-      /* Hacemos las tarjetas más anchas para que parezcan banners */
-      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); 
-      gap: 2rem;
-    }
-
-    /* 🔹 TARJETA DE CURSO */
-    .course-card {
-      background: white; border-radius: 16px; overflow: hidden;
-      display: flex; flex-direction: column; 
-      /* Eliminamos el min-height excesivo para que no sea tan alta */
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      transition: 0.3s;
-    }
+    /* 🔹 GRID DE CURSOS */
+    .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 2rem; }
+    .course-card { background: white; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s; }
     .course-card:hover { transform: translateY(-10px); }
-
-    /* 🔹 IMAGEN (BANNER CANVA) */
-    .course-card-image { 
-      width: 100%; 
-      height: 160px; /* Altura reducida para formato apaisado */
-      object-fit: cover; 
-      border-bottom: 1px solid #eee;
-    }
-
-    .course-card-content { 
-      padding: 1.5rem; flex-grow: 1; 
-      display: flex; flex-direction: column; 
-      justify-content: space-between;
-    }
-
+    .course-card-image { width: 100%; height: 160px; object-fit: cover; border-bottom: 1px solid #eee; }
+    .course-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .course-card-content h3 { margin: 0 0 10px 0; color: #1f2559; font-size: 1.3rem; }
-    
-    .course-card-content p { 
-      font-size: 0.95rem; color: #64748b; margin-bottom: 1.5rem;
-      /* Limitamos a 2 líneas para que todas las tarjetas midan igual */
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-    }
+    .course-card-button { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 0.8rem; border-radius: 12px; text-align: center; font-weight: 600; border: none; cursor: pointer; transition: 0.3s; }
 
-    .course-card-button {
-      background: linear-gradient(135deg, #22c55e, #16a34a); color: white;
-      padding: 0.8rem; border-radius: 12px; text-align: center; font-weight: 600;
-      border: none; cursor: pointer; transition: 0.3s;
+    /* 📲 WHATSAPP BURBUJA */
+    .whatsapp-bubble { 
+      position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; 
+      background-color: #25D366; border-radius: 50%; display: flex; 
+      justify-content: center; align-items: center; z-index: 1000; border: 3px solid white; 
+      transition: 0.3s; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
-    .course-card-button:hover { filter: brightness(1.1); }
 
     #loader { color: white; text-align: center; font-size: 1.2rem; margin-top: 50px; }
+    @media (max-width: 768px) { 
+      .consultoria-banner { flex-direction: column; text-align: center; gap: 20px; } 
+      .course-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -112,6 +84,14 @@ HTML
       <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
     </header>
 
+    <div class="consultoria-banner">
+      <div class="consultoria-content">
+        <h2>¿Quieres implementar esto en tu negocio?</h2>
+        <p>Agenda una consultoría personalizada conmigo para automatizar tus procesos.</p>
+      </div>
+      <a href="#" id="consultoriaBtn" class="consultoria-btn">Consultar Asesoría</a>
+    </div>
+
     <section class="welcome-message">
       <h2 id="welcomeText" style="margin:0 0 5px 0;">Cargando...</h2>
       <p style="margin:0;">Aquí tienes tus herramientas de automatización. ¡Aprende a tu ritmo!</p>
@@ -121,17 +101,12 @@ HTML
     <div class="course-grid" id="courseGrid"></div>
   </div>
 
+  <a id="waLink" href="#" class="whatsapp-bubble" target="_blank" rel="noopener" aria-label="Contactar a Hugo por WhatsApp">
+    <i class="fab fa-whatsapp" style="color: white; font-size: 30px;"></i>
+  </a>
+
 <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
-
-    // Manejo de sesión (se mantiene igual)
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('token')) {
-        localStorage.setItem('userToken', params.get('token'));
-        localStorage.setItem('userEmail', params.get('email'));
-        localStorage.setItem('userName', params.get('nombre') || 'Emprendedor');
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
 
     const userEmail = localStorage.getItem('userEmail');
     const userToken = localStorage.getItem('userToken');
@@ -151,16 +126,16 @@ HTML
             
             if (data.status === "success") {
                 loader.style.display = 'none';
+                const nombre = data.nombre || localStorage.getItem('userName') || 'Emprendedor';
+                welcome.innerText = "¡Bienvenido, " + nombre + "!";
                 
-                // 🔹 Obtenemos los datos
-                const nombreAlumno = data.nombre || localStorage.getItem('userName') || 'Emprendedor';
-                const emailAlumno = userEmail; // Ya lo tenemos definido arriba
+                // 🚀 PERSONALIZACIÓN DINÁMICA DEL MENSAJE
+                const msg = `Hola Hugo! Soy ${nombre} (${userEmail}), vengo desde mi Panel de Cursos y me gustaría consultarte por una asesoría personalizada`;
+                const finalUrl = `https://wa.me/5491136151754?text=${encodeURIComponent(msg)}`;
                 
-                welcome.innerText = "¡Bienvenido, " + nombreAlumno + "!";
-                
-                // 🚀 ACTUALIZAMOS WHATSAPP CON NOMBRE (EMAIL)
-                const mensajeCompleto = `Hola Hugo! Soy ${nombreAlumno} (${emailAlumno}), vengo desde mi Panel de Cursos y me gustaría consultarte por una asesoría personalizada`;
-                document.getElementById('waLink').href = `https://wa.me/5491136151754?text=${encodeURIComponent(mensajeCompleto)}`;
+                // Actualizamos ambos botones (Burbuja y Banner)
+                document.getElementById('waLink').href = finalUrl;
+                document.getElementById('consultoriaBtn').href = finalUrl;
                 
                 renderizarCursos(data.cursos);
             } else {
@@ -180,9 +155,7 @@ HTML
                     <div class="course-card-content">
                         <h3>${curso.nombre}</h3>
                         <p>${curso.descripcion || 'Sin descripción disponible.'}</p>
-                        <button class="course-card-button" onclick="irAlCurso('${curso.id}')">
-                            Acceder al Curso
-                        </button>
+                        <button class="course-card-button" onclick="irAlCurso('${curso.id}')">Acceder al Curso</button>
                     </div>
                 </div>`).join('')
             : '<p style="color:white; grid-column: 1/-1; text-align:center;">No tienes cursos asignados aún.</p>';
@@ -198,9 +171,5 @@ HTML
         window.location.href = "index.html";
     }
 </script>
-
- <a id="waLink" href="#" class="whatsapp-bubble" target="_blank" rel="noopener" aria-label="Contactar a Hugo por WhatsApp">
-    <i class="fab fa-whatsapp" style="color: white; font-size: 30px;"></i>
-</a>
 </body>
 </html>
