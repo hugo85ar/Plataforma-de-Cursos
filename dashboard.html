@@ -9,6 +9,23 @@ HTML
   <title>Mis Cursos | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
+
+    /* 📲 BURBUJA WHATSAPP ESTRATÉGICA */
+    .whatsapp-bubble { 
+      position: fixed; bottom: 25px; right: 25px; 
+      width: 65px; height: 65px; 
+      background-color: #25D366; border-radius: 50%; 
+      display: flex; justify-content: center; align-items: center; 
+      z-index: 1000; border: 3px solid white; transition: 0.3s;
+      text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .whatsapp-bubble:hover { transform: scale(1.15); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+    
+    @media (max-width: 768px) {
+      .whatsapp-bubble { width: 55px; height: 55px; bottom: 15px; right: 15px; }
+    }
+
+    
     /* 🔹 ESTILOS BASE */
     body {
       font-family: 'Open Sans', sans-serif;
@@ -170,5 +187,13 @@ HTML
         window.location.href = "index.html";
     }
 </script>
+
+  <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20mi%20Panel%20de%20Cursos%20y%20me%20gustaria%20consultarte%20por%20una%20asesoria%20personalizada" 
+     class="whatsapp-bubble" 
+     target="_blank" 
+     rel="noopener" 
+     aria-label="Contactar a Hugo por WhatsApp para consultoría">
+    <i class="fab fa-whatsapp" style="color: white; font-size: 30px;"></i>
+  </a>
 </body>
 </html>
