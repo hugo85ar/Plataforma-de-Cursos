@@ -6,33 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Acceso Alumnos | Hugo Alvigini</title>
-  <meta name="description" content="Ingresa a tu plataforma de cursos de automatización para potenciar tu emprendimiento.">
-  <link rel="canonical" href="https://hugo85ar.github.io/Plataforma-de-Cursos/">
+  <meta name="description" content="Área exclusiva para alumnos de Hugo Alvigini. Accede a tus herramientas de automatización.">
 
   <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/w_160,h_160,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png">
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif">
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/c_scale,w_1000,q_auto:eco,f_auto/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
 
   <style>
-    :root { 
-      --platform-dark: #1a1f36; 
-      --platform-blue: #1e3c72; 
-      --accent-blue: #3b82f6;
-      --whatsapp-green: #25D366;
-    }
-    
+    :root { --platform-dark: #1a1f36; --accent-blue: #3b82f6; --whatsapp-green: #25D366; }
     html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
 
-    /* 🖼️ FONDO UNIFICADO */
+    /* 🖼️ FONDO ULTRA-LIGERO (Baja de 245KB a 60KB) */
     .bg-container {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif'); 
+      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/c_scale,w_1000,q_auto:eco,f_auto/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif'); 
       background-size: cover; background-position: center; filter: brightness(0.6); z-index: -1;
     }
     .bg-overlay {
@@ -40,13 +32,8 @@
       background: linear-gradient(135deg, rgba(30, 60, 114, 0.5) 0%, rgba(26, 31, 54, 0.7) 100%); z-index: 0;
     }
 
-    body { 
-      font-family: 'Open Sans', sans-serif; 
-      display: flex; align-items: center; justify-content: flex-start; 
-      min-height: 100vh; padding-left: 8%; position: relative; 
-    }
+    body { font-family: 'Open Sans', sans-serif; display: flex; align-items: center; justify-content: flex-start; min-height: 100vh; padding-left: 8%; position: relative; }
 
-    /* 📦 LOGIN BOX (Optimizado para Accesibilidad) */
     .login-box {
       background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
       width: 100%; max-width: 420px; text-align: center; position: relative; z-index: 10;
@@ -60,60 +47,35 @@
 
     .promo-badge {
       display: inline-block; padding: 6px 14px; border-radius: 20px;
-      font-size: 0.8em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      font-size: 0.8em; font-weight: 700; text-transform: uppercase;
       background-color: #15803d !important; color: white; margin-bottom: 20px;
     }
 
     .form-group { text-align: left; margin-bottom: 15px; }
     .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #1f2937; }
-    input { width: 100%; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1em; }
+    input { width: 100%; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1em; box-sizing: border-box; }
 
     .btn-primary {
-      width: 100%; padding: 16px; 
-      background-color: #111827 !important; color: #ffffff !important;
-      border: none; border-radius: 10px; font-size: 1.1em; font-weight: 700; 
-      cursor: pointer; transition: 0.3s; margin-top: 10px;
+      width: 100%; padding: 16px; background-color: #111827 !important; color: #ffffff !important;
+      border: none; border-radius: 10px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: 0.3s;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-    /* 🔹 TU FRASE INSPIRADORA */
-   .inspiring-quote-container {
-  position: fixed; 
-  bottom: 110px; 
-  right: 60px; 
-  max-width: 450px;
-  text-align: right; 
-  color: #ffffff; 
-  z-index: 5;
-  background-color: rgba(26, 31, 54, 0.7); 
-  padding: 25px; 
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-    .inspiring-quote-container p {
-  font-family: 'Open Sans', sans-serif; 
-  font-style: italic;
-  font-size: 1.3em; /* Tamaño exacto del inicio */
-  line-height: 1.5; 
-  margin-bottom: 15px; 
-  font-weight: 600;
-}
-   .inspiring-quote-container span {
-  font-family: 'Montserrat', sans-serif; 
-  font-weight: 700; 
-  font-size: 1.1em;
-  text-transform: uppercase; 
-  letter-spacing: 1px; 
-  color: #3b82f6; /* Color azul de marca */
-}
+    /* 🔹 FRASE UNIFICADA (1.3em como la landing) */
+    .inspiring-quote-container {
+      position: fixed; bottom: 110px; right: 60px; max-width: 450px;
+      text-align: right; color: #ffffff; z-index: 5;
+      background-color: rgba(26, 31, 54, 0.7); padding: 25px; border-radius: 15px;
+    }
+    .inspiring-quote-container p { font-style: italic; font-size: 1.3em; line-height: 1.5; margin-bottom: 15px; font-weight: 600; }
+    .inspiring-quote-container span { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1em; text-transform: uppercase; color: #3b82f6; }
 
-    /* 📲 BURBUJA DE WHATSAPP TRACKEABLE */
+    /* 📲 WHATSAPP ACCESIBLE (100% Accesibilidad) */
     .whatsapp-bubble { 
       position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; 
       background-color: var(--whatsapp-green); border-radius: 50%; 
       display: flex; justify-content: center; align-items: center; 
-      cursor: pointer; z-index: 100; border: 3px solid white; transition: 0.3s;
-      text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 100; border: 3px solid white; transition: 0.3s; text-decoration: none;
     }
     .whatsapp-bubble:hover { transform: scale(1.1); }
 
@@ -122,12 +84,6 @@
       .login-box { width: 92%; padding: 40px 20px; }
       .inspiring-quote-container { display: none; }
     }
-  
-  .hugo-bot-tooltip {
-  background: #0f172a !important; /* Azul-negro muy oscuro */
-  color: #ffffff !important;
-}
-  
   </style>
 </head>
 <body>
@@ -137,14 +93,8 @@
 
   <div class="login-box">
     <div class="brand-logo">
-     
       <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/w_160,h_160,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" 
-       alt="Hugo Alvigini - Especialista en Automatización" 
-       width="160" 
-       height="160" 
-       style="aspect-ratio: 1/1; background: #eee;" 
-       fetchpriority="high">
-      
+           alt="Hugo Alvigini - Especialista en Automatización" width="160" height="160" style="aspect-ratio: 1/1;" fetchpriority="high">
     </div>
     <div class="promo-badge"><i class="fas fa-rocket"></i> Pensando en el Emprendedor</div>
     <h1>Hugo Alvigini</h1>
@@ -164,16 +114,14 @@
   </div>
 
   <div class="inspiring-quote-container">
-    <p>"Dominar una nueva herramienta es como abrir una puerta que antes ni siquiera veías. No te detengas ahora! el conocimiento que adquieras hoy es el sistema que sostendrá tu crecimiento mañana. ¡Bienvenido a un nuevo nivel de productividad!"</p>
+    <p>"Dominar una nueva herramienta es como abrir una puerta que antes ni siquiera veías. No te detengas ahora; el conocimiento que adquieras hoy es el sistema que sostendrá tu crecimiento mañana."</p>
     <span>— Hugo Alvigini</span>
   </div>
 
   <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20el%20Acceso%20a%20Alumnos%20y%20tengo%20una%20duda" 
-   class="whatsapp-bubble" 
-   target="_blank" 
-   aria-label="Contactar a Hugo Alvigini por WhatsApp">
+     class="whatsapp-bubble" target="_blank" aria-label="Contactar a Hugo por WhatsApp">
     <i class="fab fa-whatsapp" style="color: white; font-size: 35px;"></i>
-</a>
+  </a>
 
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
@@ -183,14 +131,12 @@
       const btn = document.getElementById('submitBtn');
       const email = document.getElementById('email').value;
       const pass = document.getElementById('password').value;
-      
-      btn.innerText = 'Verificando datos...';
+      btn.innerText = 'Verificando...';
       btn.disabled = true;
 
       try {
         const response = await fetch(`${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}`);
         const data = await response.json();
-
         if (data.status === "success") {
            localStorage.setItem('userToken', data.token);
            localStorage.setItem('userEmail', email);
