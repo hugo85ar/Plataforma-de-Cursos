@@ -61,13 +61,7 @@
     .course-card-content h3 { margin: 0 0 10px 0; color: #1f2559; font-size: 1.3rem; }
     .course-card-button { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 0.8rem; border-radius: 12px; text-align: center; font-weight: 600; border: none; cursor: pointer; transition: 0.3s; }
 
-    /* 📲 WHATSAPP BURBUJA */
-    .whatsapp-bubble { 
-      position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; 
-      background-color: #25D366; border-radius: 50%; display: flex; 
-      justify-content: center; align-items: center; z-index: 1000; border: 3px solid white; 
-      transition: 0.3s; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
+    
 
     #loader { color: white; text-align: center; font-size: 1.2rem; margin-top: 50px; }
     @media (max-width: 768px) { 
@@ -101,9 +95,6 @@
     <div class="course-grid" id="courseGrid"></div>
   </div>
  
-  <a id="waLink" href="#" class="whatsapp-bubble" target="_blank" rel="noopener" aria-label="Contactar a Hugo por WhatsApp">
-    <i class="fab fa-whatsapp" style="color: white; font-size: 30px;"></i>
-  </a> 
  
 
 <script>
@@ -130,15 +121,14 @@
                 const nombre = data.nombre || localStorage.getItem('userName') || 'Emprendedor';
                 welcome.innerText = "¡Bienvenido, " + nombre + "!";
                 
-                // 🚀 PERSONALIZACIÓN DINÁMICA DEL MENSAJE
-                const msg = `Hola Hugo! Soy ${nombre} (${userEmail}), vengo desde mi Panel de Cursos y me gustaría consultarte por una asesoría personalizada`;
-                const finalUrl = `https://wa.me/5491136151754?text=${encodeURIComponent(msg)}`;
-                
-                // Actualizamos ambos botones (Burbuja y Banner)
-                document.getElementById('waLink').href = finalUrl;
-                document.getElementById('consultoriaBtn').href = finalUrl;
-                
-                renderizarCursos(data.cursos);
+               // 🚀 PERSONALIZACIÓN DINÁMICA DEL MENSAJE
+            const msg = `Hola Hugo! Soy ${nombre} (${userEmail}), vengo desde mi Panel de Cursos y me gustaría consultarte por una asesoría personalizada`;
+            const finalUrl = `https://wa.me/5491136151754?text=${encodeURIComponent(msg)}`;
+            
+            // ✅ ACTUALIZAMOS ÚNICAMENTE EL BANNER (Quitamos la línea de 'waLink')
+            document.getElementById('consultoriaBtn').href = finalUrl;
+            
+            renderizarCursos(data.cursos);
             } else {
                 cerrarSesion();
             }
