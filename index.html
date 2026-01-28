@@ -1,36 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+  <base target="_top">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acceso | Hugo Alvigini</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
+  <title>Acceso Alumnos | Hugo Alvigini</title>
+  <meta name="description" content="Ingresa a tu plataforma de cursos de automatización para potenciar tu emprendimiento.">
+  <link rel="canonical" href="https://hugo85ar.github.io/Plataforma-de-Cursos/">
+
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
   <style>
-    /* Mantenemos tu diseño original intacto */
-    :root { --platform-dark: #1a1f36; --platform-blue: #1e3c72; --accent-green: #5cb85c; }
-    html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
-    .bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif'); background-size: cover; background-position: center; filter: brightness(0.8); z-index: -1; }
-    .bg-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(30, 60, 114, 0.4) 0%, rgba(26, 31, 54, 0.6) 100%); z-index: 0; }
-    body { font-family: 'Open Sans', sans-serif; display: flex; align-items: center; justify-content: flex-start; min-height: 100vh; padding-left: 8%; position: relative; }
-    .login-box { background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); width: 100%; max-width: 450px; text-align: center; position: relative; z-index: 10; animation: slideIn 0.8s ease-out; }
-    @keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+    :root { 
+      --platform-dark: #1a1f36; 
+      --platform-blue: #1e3c72; 
+      --accent-blue: #3b82f6;
+      --whatsapp-green: #25D366;
+    }
+    
+    html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
+
+    /* 🖼️ FONDO UNIFICADO */
+    .bg-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1767020899/FOTO_LOGIN_PLATAFORMA_ok3et0.avif'); 
+      background-size: cover; background-position: center; filter: brightness(0.6); z-index: -1;
+    }
+    .bg-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(30, 60, 114, 0.5) 0%, rgba(26, 31, 54, 0.7) 100%); z-index: 0;
+    }
+
+    body { 
+      font-family: 'Open Sans', sans-serif; 
+      display: flex; align-items: center; justify-content: flex-start; 
+      min-height: 100vh; padding-left: 8%; position: relative; 
+    }
+
+    /* 📦 LOGIN BOX (Optimizado para Accesibilidad) */
+    .login-box {
+      background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
+      width: 100%; max-width: 420px; text-align: center; position: relative; z-index: 10;
+    }
+
     .brand-logo { margin-top: -115px; margin-bottom: 20px; }
     .brand-logo img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; border: 6px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-    h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 2.2em; margin-bottom: 5px; }
-    h2 { font-size: 1em; color: #666; margin-bottom: 30px; font-weight: 400; line-height: 1.4; }
-    .promo-badge { display: inline-block; background: var(--accent-green); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.85em; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; }
+
+    h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 2em; margin-bottom: 5px; }
+    h2 { font-size: 1em; color: #4b5563; margin-bottom: 25px; font-weight: 400; line-height: 1.4; }
+
+    .promo-badge {
+      display: inline-block; padding: 6px 14px; border-radius: 20px;
+      font-size: 0.8em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      background-color: #15803d !important; color: white; margin-bottom: 20px;
+    }
+
     .form-group { text-align: left; margin-bottom: 15px; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9em; color: #444; }
-    input { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1em; background: #fdfdfd; }
-    .btn-primary { width: 100%; padding: 16px; background: var(--platform-dark); color: white; border: none; border-radius: 10px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 15px; }
-    .btn-primary:hover { background: var(--platform-blue); transform: scale(1.02); }
-    .hugo-bot-bubble { position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; background: linear-gradient(135deg, #30D5C8, #00b894); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 3px solid white; z-index: 100; }
-    .hugo-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; justify-content: center; align-items: center; background: rgba(26, 31, 54, 0.85); backdrop-filter: blur(10px); }
-    .hugo-modal.active { display: flex; }
-    .hugo-content { width: 90%; max-width: 1000px; height: 85vh; background: white; border-radius: 25px; overflow: hidden; }
-    @media (max-width: 768px) { body { padding-left: 0; justify-content: center; } .login-box { width: 92%; padding: 40px 25px; } }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #1f2937; }
+    input { width: 100%; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1em; }
+
+    .btn-primary {
+      width: 100%; padding: 16px; 
+      background-color: #111827 !important; color: #ffffff !important;
+      border: none; border-radius: 10px; font-size: 1.1em; font-weight: 700; 
+      cursor: pointer; transition: 0.3s; margin-top: 10px;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+    /* 🔹 TU FRASE INSPIRADORA */
+    .inspiring-quote-container {
+      position: fixed; bottom: 110px; right: 60px; max-width: 450px;
+      text-align: right; color: #ffffff; z-index: 5;
+      background-color: rgba(26, 31, 54, 0.75); padding: 25px; border-radius: 15px;
+    }
+    .inspiring-quote-container p { font-style: italic; font-size: 1.15em; line-height: 1.5; margin-bottom: 10px; font-weight: 600; }
+    .inspiring-quote-container span { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--accent-blue); }
+
+    /* 📲 BURBUJA DE WHATSAPP TRACKEABLE */
+    .whatsapp-bubble { 
+      position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; 
+      background-color: var(--whatsapp-green); border-radius: 50%; 
+      display: flex; justify-content: center; align-items: center; 
+      cursor: pointer; z-index: 100; border: 3px solid white; transition: 0.3s;
+      text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .whatsapp-bubble:hover { transform: scale(1.1); }
+
+    @media (max-width: 900px) {
+      body { padding-left: 0; justify-content: center; }
+      .login-box { width: 92%; padding: 40px 20px; }
+      .inspiring-quote-container { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -40,43 +108,41 @@
 
   <div class="login-box">
     <div class="brand-logo">
-      <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" alt="Hugo">
+      <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/w_280,h_280,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" 
+           alt="Hugo Alvigini - Especialista en Automatización" fetchpriority="high">
     </div>
     <div class="promo-badge"><i class="fas fa-rocket"></i> Pensando en el Emprendedor</div>
     <h1>Hugo Alvigini</h1>
-    <h2>Lleva tu emprendimiento al siguiente nivel con nuestras herramientas.</h2>
+    <h2>Ingresa a tu academia</h2>
     
-   <form id="loginForm" method="POST" action="https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec">
-  <input type="hidden" name="action" value="login">
-  <input type="hidden" name="redirectUrl" value="https://hugo85ar.github.io/cursos-hugo-alvigini/dashboard.html">
-
-  <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email" required>
-  </div>
-  <div class="form-group">
-      <label for="password">Contraseña</label>
-      <input type="password" name="pass" id="password" required> </div>
-  <button type="submit" class="btn-primary" id="submitBtn">Entrar a mis Cursos</button>
-</form>
+    <form id="loginForm">
+      <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required placeholder="tu@email.com">
+      </div>
+      <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" required placeholder="••••••••"> 
+      </div>
+      <button type="submit" class="btn-primary" id="submitBtn">Entrar a mis Cursos</button>
+    </form>
   </div>
 
-  <div class="hugo-bot-bubble" onclick="toggleHugo()">
-    <i class="fas fa-comments" style="color: white; font-size: 30px;"></i>
+  <div class="inspiring-quote-container">
+    <p>"Dominar una nueva herramienta es como abrir una puerta que antes ni siquiera veías. No te detengas ahora; el conocimiento que adquieras hoy es el sistema que sostendrá tu crecimiento mañana. ¡Bienvenido a un nuevo nivel de productividad!"</p>
+    <span>— Hugo Alvigini</span>
   </div>
 
-  <div id="hugoModal" class="hugo-modal">
-    <div class="hugo-content">
-      <iframe src="https://hugo85ar.github.io/HugoBot/" style="width:100%; height:100%; border:none;"></iframe>
-    </div>
-  </div>
+  <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20el%20Acceso%20a%20Alumnos%20y%20tengo%20una%20duda" 
+     class="whatsapp-bubble" target="_blank">
+    <i class="fab fa-whatsapp" style="color: white; font-size: 35px;"></i>
+  </a>
 
   <script>
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
 
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
-      e.preventDefault(); // Detenemos el envío tradicional para evitar el error de Google
-      
+      e.preventDefault();
       const btn = document.getElementById('submitBtn');
       const email = document.getElementById('email').value;
       const pass = document.getElementById('password').value;
@@ -85,17 +151,13 @@
       btn.disabled = true;
 
       try {
-        // Llamada silenciosa al Cerebro
         const response = await fetch(`${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}`);
         const data = await response.json();
 
         if (data.status === "success") {
-           // Guardamos en memoria local (esto lo leerá el Dashboard)
            localStorage.setItem('userToken', data.token);
            localStorage.setItem('userEmail', email);
            localStorage.setItem('userName', data.nombre);
-           
-           // Redirección local (Cero problemas de seguridad)
            window.location.href = "dashboard.html";
         } else {
            alert("Error: " + data.message);
@@ -103,17 +165,11 @@
            btn.disabled = false;
         }
       } catch (err) {
-         console.error(err);
-         alert("Error de conexión con la academia. Inténtalo de nuevo.");
+         alert("Error de conexión. Inténtalo de nuevo.");
          btn.innerText = 'Entrar a mis Cursos';
          btn.disabled = false;
       }
     });
-
-    function toggleHugo() {
-      const modal = document.getElementById('hugoModal');
-      modal.classList.toggle('active');
-    }
   </script>
 </body>
 </html>
