@@ -148,9 +148,20 @@ HTML
         try {
             const response = await fetch(`${WEB_APP_URL}?action=getDashboard&email=${userEmail}&token=${userToken}`);
             const data = await response.json();
+            
             if (data.status === "success") {
                 loader.style.display = 'none';
-                welcome.innerText = "¡Bienvenido, " + (data.nombre || localStorage.getItem('userName')) + "!";
+                
+                // 🔹 Obtenemos los datos
+                const nombreAlumno = data.nombre || localStorage.getItem('userName') || 'Emprendedor';
+                const emailAlumno = userEmail; // Ya lo tenemos definido arriba
+                
+                welcome.innerText = "¡Bienvenido, " + nombreAlumno + "!";
+                
+                // 🚀 ACTUALIZAMOS WHATSAPP CON NOMBRE (EMAIL)
+                const mensajeCompleto = `Hola Hugo! Soy ${nombreAlumno} (${emailAlumno}), vengo desde mi Panel de Cursos y me gustaría consultarte por una asesoría personalizada`;
+                document.getElementById('waLink').href = `https://wa.me/5491136151754?text=${encodeURIComponent(mensajeCompleto)}`;
+                
                 renderizarCursos(data.cursos);
             } else {
                 cerrarSesion();
@@ -188,12 +199,8 @@ HTML
     }
 </script>
 
-  <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20mi%20Panel%20de%20Cursos%20y%20me%20gustaria%20consultarte%20por%20una%20asesoria%20personalizada" 
-     class="whatsapp-bubble" 
-     target="_blank" 
-     rel="noopener" 
-     aria-label="Contactar a Hugo por WhatsApp para consultoría">
+ <a id="waLink" href="#" class="whatsapp-bubble" target="_blank" rel="noopener" aria-label="Contactar a Hugo por WhatsApp">
     <i class="fab fa-whatsapp" style="color: white; font-size: 30px;"></i>
-  </a>
+</a>
 </body>
 </html>
