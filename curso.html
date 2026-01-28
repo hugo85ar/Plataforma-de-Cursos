@@ -10,37 +10,19 @@
   <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/w_160,h_160,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" fetchpriority="high">
   
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <style>
-
-    /* 📲 BURBUJA DE CRECIMIENTO */
-    .whatsapp-bubble { 
-      position: fixed; bottom: 25px; right: 25px; 
-      width: 65px; height: 65px; 
-      background-color: #25D366; border-radius: 50%; 
-      display: flex; justify-content: center; align-items: center; 
-      z-index: 1000; border: 3px solid white; transition: 0.3s;
-      text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
-    .whatsapp-bubble:hover { transform: scale(1.1); }
-
-    
-    /* 🔹 ESTILOS BASE COHERENTES */
     body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background: #f8fafc; color: #1e293b; line-height: 1.6; }
     .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
-    
     .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
     .back-link { text-decoration: none; color: #3b82f6; font-weight: 700; font-family: 'Montserrat', sans-serif; display: flex; align-items: center; gap: 8px; }
-
-    /* 📺 CONTENEDOR DE VIDEO */
     .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1); background: #000; margin-bottom: 2rem; }
     .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
     .lesson-info { background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
     h1 { font-family: 'Montserrat', sans-serif; color: #1a1f36; font-size: 1.8rem; margin-top: 0; }
     
-    /* 📲 WHATSAPP BURBUJA */
+    /* 📲 BURBUJA DE WHATSAPP */
     .whatsapp-bubble { 
       position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; 
       background-color: #25D366; border-radius: 50%; display: flex; 
@@ -48,7 +30,6 @@
       transition: 0.3s; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
     .whatsapp-bubble:hover { transform: scale(1.1); }
-
     #loader { text-align: center; margin-top: 100px; font-size: 1.2rem; color: #64748b; }
   </style>
 </head>
@@ -59,31 +40,31 @@
   <div class="container" id="mainContent" style="display:none;">
     <nav class="header-nav">
       <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver al Panel</a>
-      <span id="courseBadge" style="background:#e2e8f0; padding:5px 12px; border-radius:20px; font-size:0.8rem; font-weight:700; color:#475569;">CURSO PRO</span>
+      <span id="courseBadge" style="background:#e2e8f0; padding:5px 12px; border-radius:20px; font-size:0.8rem; font-weight:700; color:#475569;">CURSO ACTIVO</span>
     </nav>
 
-    <div class="video-wrapper" id="videoContainer">
-      </div>
+    <div class="video-wrapper" id="videoContainer"></div>
 
     <div class="lesson-info">
       <h1 id="lessonTitle">Título de la Lección</h1>
-      <p id="lessonDesc">Descripción detallada de lo que aprenderás en este módulo.</p>
+      <p id="lessonDesc">Descripción de la lección.</p>
     </div>
   </div>
 
-  <a id="waLink" href="#" class="whatsapp-bubble" target="_blank" rel="noopener" aria-label="Consultar duda por WhatsApp">
+  <a id="waLink" href="#" class="whatsapp-bubble" target="_blank" rel="noopener" aria-label="Consultar cómo escalar mi negocio">
     <i class="fab fa-whatsapp" style="color: white; font-size: 32px;"></i>
   </a>
 
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
     
-    // 🛡️ SEGURIDAD Y DATOS
+    // Recuperamos datos de sesión
     const userEmail = localStorage.getItem('userEmail');
     const userToken = localStorage.getItem('userToken');
     const cursoId = localStorage.getItem('cursoActual');
-    const userName = localStorage.getItem('userName') || 'Alumno';
+    const userName = localStorage.getItem('userName') || 'Emprendedor';
 
+    // Si falta algo vital, volvemos al login para seguridad
     if (!userEmail || !cursoId) { window.location.href = "index.html"; }
 
     async function cargarLeccion() {
@@ -99,27 +80,27 @@
                 document.getElementById('lessonTitle').innerText = data.nombre;
                 document.getElementById('lessonDesc').innerText = data.descripcion || "Sin descripción.";
                 
-                // Inyectamos el video (Youtube/Vimeo)
                 if(data.urlVideo) {
                     document.getElementById('videoContainer').innerHTML = `<iframe src="${data.urlVideo}" allowfullscreen></iframe>`;
                 }
 
                 // 🚀 WHATSAPP DE CRECIMIENTO EMPRENDEDOR
-                // Cambiamos el mensaje para fomentar la escalabilidad y la venta de más cursos
                 const mensajeEscalar = `Hola Hugo! Soy ${userName} (${userEmail}), te escribo desde mi curso porque me interesa subir mi nivel como emprendedor y conocer qué otros cursos tienes disponibles para escalar mi negocio.`;
-                
                 document.getElementById('waLink').href = `https://wa.me/5491136151754?text=${encodeURIComponent(mensajeEscalar)}`;
 
             } else {
-                alert("No tienes acceso a este curso.");
-                window.location.href = "dashboard.html";
+                // Falló la verificación en el servidor
+                console.error("Error de acceso:", data.message);
+                alert("Sesión expirada o sin acceso. Por favor, reingresa.");
+                window.location.href = "index.html";
             }
+        } catch (e) {
+            console.error("Fallo de conexión:", e);
+            document.getElementById('loader').innerText = "Error de conexión. Reintenta ingresando desde el Dashboard.";
+        }
+    }
 
     cargarLeccion();
   </script>
-
-  <a id="waLink" href="#" class="whatsapp-bubble" target="_blank" rel="noopener" aria-label="Consultar sobre otros cursos para escalar mi negocio">
-    <i class="fab fa-whatsapp" style="color: white; font-size: 32px;"></i>
-  </a>
 </body>
 </html>
