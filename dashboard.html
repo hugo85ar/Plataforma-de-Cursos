@@ -56,7 +56,13 @@
     .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 2rem; }
     .course-card { background: white; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s; }
     .course-card:hover { transform: translateY(-10px); }
-    .course-card-image { width: 100%; height: 160px; object-fit: cover; border-bottom: 1px solid #eee; }
+    .course-card-image { 
+      width: 100%; 
+      height: auto; /* Quitamos el alto fijo de 160px */
+      aspect-ratio: 16 / 7; /* Mantiene la proporción de banner perfecta */
+      object-fit: cover; 
+      border-bottom: 1px solid #eee; 
+    }
     .course-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .course-card-content h3 { margin: 0 0 10px 0; color: #1f2559; font-size: 1.3rem; }
     .course-card-button { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 0.8rem; border-radius: 12px; text-align: center; font-weight: 600; border: none; cursor: pointer; transition: 0.3s; }
@@ -64,9 +70,30 @@
     
 
     #loader { color: white; text-align: center; font-size: 1.2rem; margin-top: 50px; }
+    /* 📱 OPTIMIZACIÓN MÓVIL TOTAL */
     @media (max-width: 768px) { 
-      .consultoria-banner { flex-direction: column; text-align: center; gap: 20px; } 
-      .course-grid { grid-template-columns: 1fr; }
+      .container { margin: 1rem auto; padding: 0 1rem 2rem; }
+      
+      .header { padding: 1rem; flex-direction: column; gap: 15px; text-align: center; }
+      
+      .consultoria-banner { 
+        flex-direction: column; 
+        text-align: center; 
+        gap: 20px; 
+        padding: 1.5rem;
+      }
+
+      /* Ajustamos el grid para que no se vea 'gigante' */
+      .course-grid { 
+        grid-template-columns: 1fr; 
+        gap: 1.5rem; 
+      }
+
+      .course-card-image {
+        aspect-ratio: 16 / 8; /* Un poquito más alta en móvil para que luzca el diseño */
+      }
+
+      .course-card-content h3 { font-size: 1.2rem; }
     }
   </style>
 </head>
