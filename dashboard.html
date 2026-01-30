@@ -56,13 +56,15 @@
     .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 2rem; }
     .course-card { background: white; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s; }
     .course-card:hover { transform: translateY(-10px); }
+    
     /* 🖼️ IMÁGENES TIPO BANNER (Ajuste preciso) */
-    .course-card-image { 
+.course-card-image { 
   width: 100%; 
-  height: 200px; /* Altura perfecta para monitores */
-  object-fit: cover; 
+  height: 200px; /* Altura fija para que todas las tarjetas midan igual en PC */
+  object-fit: cover; /* Esto elimina los espacios blancos de los costados */
   object-position: center; 
   border-bottom: 1px solid #eee; 
+  display: block;
 }
     .course-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .course-card-content h3 { margin: 0 0 10px 0; color: #1f2559; font-size: 1.3rem; }
@@ -75,27 +77,35 @@
     /* 📱 MÓVIL: Aquí "flaqueamos" la imagen para que parezca banner */
 /* 📱 OPTIMIZACIÓN MÓVIL FINAL */
 @media (max-width: 768px) { 
-  /* 1. Centramos y separamos la tarjeta de los bordes */
+  body { overflow-x: hidden; } /* Evita cualquier movimiento lateral raro */
+
   .container { 
-    padding: 0 1.5rem 3rem !important; /* El 1.5rem crea ese margen derecho e izquierdo que faltaba */
-    margin: 1rem auto !important;
-  }
-  
-  /* 2. Header más compacto */
-  .header { padding: 1rem; flex-direction: column; gap: 10px; }
-  
-  /* 3. Banner más fino para que luzca como en la PC */
-  .course-card-image {
-    height: 95px !important; /* Altura reducida para máxima elegancia en móvil */
-    object-fit: cover;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 20px 3rem !important; /* El 20px genera el margen IZQUIERDO y DERECHO simétrico */
+    margin: 1.5rem 0 !important;
+    box-sizing: border-box; /* 🛡️ Clave para que el margen no empuje la caja afuera */
   }
 
-  /* 4. Ajuste de textos para ganar espacio vertical */
-  .course-card-content { padding: 1rem !important; }
-  .course-card-content h3 { font-size: 1.05rem !important; margin-bottom: 5px !important; }
-  .course-card-content p { font-size: 0.8rem !important; margin-bottom: 12px !important; }
-  
-  .course-card-button { padding: 0.55rem !important; font-size: 0.85rem !important; }
+  .course-grid { 
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+  }
+
+  .course-card { 
+    width: 100% !important; 
+    margin: 0 auto !important;
+  }
+
+  /* Banner fino y elegante para el celular */
+  .course-card-image {
+    height: 115px !important; /* Altura ideal para que no parezca gigante */
+    object-fit: cover !important; /* Asegura que cubra todo el ancho de la tarjeta */
+  }
+
+  .course-card-content h3 { font-size: 1.15rem !important; }
 }
     
   </style>
