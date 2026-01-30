@@ -64,7 +64,7 @@
     /* 🖼️ IMÁGENES TIPO BANNER (Ajuste preciso) */
 .course-card-image { 
   width: 100% !important; 
-  height: 180px !important; /* Reducido de 220px para que se vea más estilizado */
+  height: 155px !important; /* Bajamos de 180px a 155px para que sea más fino */
   object-fit: cover !important; 
   object-position: center;
   border-bottom: 1px solid #eee; 
@@ -81,10 +81,11 @@
     /* 📱 MÓVIL: Aquí "flaqueamos" la imagen para que parezca banner */
 /* 📱 OPTIMIZACIÓN MÓVIL FINAL */
 @media (max-width: 768px) { 
-  .container { 
+  
+   .container { 
     width: 100% !important;
     max-width: 100% !important;
-    padding: 0 20px 3rem !important; /* Margen simétrico de 20px a cada lado */
+    padding: 0 20px 3rem !important; /* Mantenemos tus márgenes simétricos exitosos */
     margin: 1rem 0 !important;
     box-sizing: border-box !important;
   }
@@ -96,12 +97,13 @@
   }
 
   .course-card-image {
-    height: 100px !important; /* Reducido de 125px: Ideal para pantallas de celular */
+    height: 85px !important; /* Bajamos de 100px a 85px: El tamaño perfecto de banner móvil */
     width: 100% !important;
     object-fit: cover !important;
   }
 
   /* Ajuste sutil de títulos para acompañar el cambio */
+  .course-card-content { padding: 1.2rem !important; }
   .course-card-content h3 { font-size: 1.1rem !important; margin-bottom: 8px !important; }
   .course-card-content p { font-size: 0.85rem !important; margin-bottom: 12px !important; }
 }
