@@ -64,8 +64,8 @@
     /* 🖼️ IMÁGENES TIPO BANNER (Ajuste preciso) */
 .course-card-image { 
   width: 100% !important; 
-  height: 220px !important; /* Altura fija para que todas las tarjetas sean iguales */
-  object-fit: cover !important; /* Clave: Llena todo el espacio sin deformar */
+  height: 180px !important; /* Reducido de 220px para que se vea más estilizado */
+  object-fit: cover !important; 
   object-position: center;
   border-bottom: 1px solid #eee; 
   display: block;
@@ -84,9 +84,9 @@
   .container { 
     width: 100% !important;
     max-width: 100% !important;
-    padding: 0 20px 3rem !important; /* 20px parejos a IZQUIERDA y DERECHA */
+    padding: 0 20px 3rem !important; /* Margen simétrico de 20px a cada lado */
     margin: 1rem 0 !important;
-    box-sizing: border-box !important; /* Mantiene el margen dentro del ancho del cel */
+    box-sizing: border-box !important;
   }
 
   .course-grid { 
@@ -95,14 +95,15 @@
     gap: 1.5rem !important;
   }
 
-  /* Evitamos que la imagen se 'achique' hacia adentro */
   .course-card-image {
-    height: 125px !important; /* Altura ideal para móvil */
+    height: 100px !important; /* Reducido de 125px: Ideal para pantallas de celular */
     width: 100% !important;
     object-fit: cover !important;
   }
 
-  .course-card-content h3 { font-size: 1.1rem !important; }
+  /* Ajuste sutil de títulos para acompañar el cambio */
+  .course-card-content h3 { font-size: 1.1rem !important; margin-bottom: 8px !important; }
+  .course-card-content p { font-size: 0.85rem !important; margin-bottom: 12px !important; }
 }
     
   </style>
