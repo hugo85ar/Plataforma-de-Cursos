@@ -53,16 +53,20 @@
     }
 
     /* 🔹 GRID DE CURSOS */
-    .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 2rem; }
+.course-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); 
+  gap: 2rem; 
+}
     .course-card { background: white; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s; }
     .course-card:hover { transform: translateY(-10px); }
     
     /* 🖼️ IMÁGENES TIPO BANNER (Ajuste preciso) */
 .course-card-image { 
-  width: 100%; 
-  height: 200px; /* Altura fija para que todas las tarjetas midan igual en PC */
-  object-fit: cover; /* Esto elimina los espacios blancos de los costados */
-  object-position: center; 
+  width: 100% !important; 
+  height: 220px !important; /* Altura fija para que todas las tarjetas sean iguales */
+  object-fit: cover !important; /* Clave: Llena todo el espacio sin deformar */
+  object-position: center;
   border-bottom: 1px solid #eee; 
   display: block;
 }
@@ -77,35 +81,28 @@
     /* 📱 MÓVIL: Aquí "flaqueamos" la imagen para que parezca banner */
 /* 📱 OPTIMIZACIÓN MÓVIL FINAL */
 @media (max-width: 768px) { 
-  body { overflow-x: hidden; } /* Evita cualquier movimiento lateral raro */
-
   .container { 
     width: 100% !important;
     max-width: 100% !important;
-    padding: 0 20px 3rem !important; /* El 20px genera el margen IZQUIERDO y DERECHO simétrico */
-    margin: 1.5rem 0 !important;
-    box-sizing: border-box; /* 🛡️ Clave para que el margen no empuje la caja afuera */
+    padding: 0 20px 3rem !important; /* 20px parejos a IZQUIERDA y DERECHA */
+    margin: 1rem 0 !important;
+    box-sizing: border-box !important; /* Mantiene el margen dentro del ancho del cel */
   }
 
   .course-grid { 
     display: flex !important;
     flex-direction: column !important;
     gap: 1.5rem !important;
-    width: 100% !important;
   }
 
-  .course-card { 
-    width: 100% !important; 
-    margin: 0 auto !important;
-  }
-
-  /* Banner fino y elegante para el celular */
+  /* Evitamos que la imagen se 'achique' hacia adentro */
   .course-card-image {
-    height: 115px !important; /* Altura ideal para que no parezca gigante */
-    object-fit: cover !important; /* Asegura que cubra todo el ancho de la tarjeta */
+    height: 125px !important; /* Altura ideal para móvil */
+    width: 100% !important;
+    object-fit: cover !important;
   }
 
-  .course-card-content h3 { font-size: 1.15rem !important; }
+  .course-card-content h3 { font-size: 1.1rem !important; }
 }
     
   </style>
