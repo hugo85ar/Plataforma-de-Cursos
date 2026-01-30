@@ -73,32 +73,29 @@
     #loader { color: white; text-align: center; font-size: 1.2rem; margin-top: 50px; }
 
     /* 📱 MÓVIL: Aquí "flaqueamos" la imagen para que parezca banner */
-@media (max-width: 768px) {
+/* 📱 OPTIMIZACIÓN MÓVIL FINAL */
+@media (max-width: 768px) { 
+  /* 1. Centramos y separamos la tarjeta de los bordes */
   .container { 
-    padding: 0 1rem 2rem !important; /* Más margen lateral para que la tarjeta no sea gigante */
+    padding: 0 1.5rem 3rem !important; /* El 1.5rem crea ese margen derecho e izquierdo que faltaba */
+    margin: 1rem auto !important;
   }
-
+  
+  /* 2. Header más compacto */
+  .header { padding: 1rem; flex-direction: column; gap: 10px; }
+  
+  /* 3. Banner más fino para que luzca como en la PC */
   .course-card-image {
-    height: 110px !important; /* Reducimos la altura para recuperar la forma de banner */
+    height: 95px !important; /* Altura reducida para máxima elegancia en móvil */
     object-fit: cover;
   }
 
-  /* Ajuste de los títulos para que no ocupen tanto espacio */
-  .course-card-content h3 { 
-    font-size: 1.1rem !important; 
-    margin-bottom: 8px !important;
-  }
+  /* 4. Ajuste de textos para ganar espacio vertical */
+  .course-card-content { padding: 1rem !important; }
+  .course-card-content h3 { font-size: 1.05rem !important; margin-bottom: 5px !important; }
+  .course-card-content p { font-size: 0.8rem !important; margin-bottom: 12px !important; }
   
-  .course-card-content p { 
-    font-size: 0.85rem !important; 
-    line-height: 1.3 !important;
-    margin-bottom: 15px !important;
-  }
-
-  .course-card-button {
-    padding: 0.6rem !important;
-    font-size: 0.9rem !important;
-  }
+  .course-card-button { padding: 0.55rem !important; font-size: 0.85rem !important; }
 }
     
   </style>
