@@ -54,19 +54,20 @@
 
     /* 🔹 GRID DE CURSOS */
 .course-grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); 
-  gap: 2rem; 
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 2.5rem !important;
+  justify-content: center !important; /* Mantiene todo centrado si hay uno o muchos */
 }
 .course-card { 
-  max-width: 450px; /* 🛡️ Clave: Evita que la tarjeta se estire al infinito en PC */
-  margin: 0 auto; /* La mantiene centrada si es la única */
-  display: flex !important;
-  flex-direction: column !important;
+  width: 550px !important; /* "Un poquito más ancho" y SIEMPRE igual */
   background: white !important;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  display: flex !important;
+  flex-direction: column !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  transition: 0.3s;
 }
 
     /* 🎀 CINTA "GRATIS" (Ahora es un sticker flotante) */
@@ -76,17 +77,20 @@
     /* 🖼️ IMÁGENES TIPO BANNER (Ajuste preciso) */
 .course-card-image { 
   width: 100% !important; 
-  height: 250px !important; /* Aumentamos la altura para que se vea el "Gratis" sin zoom */
+  height: 160px !important; /* Altura de banner real para PC */
   object-fit: cover !important; 
   display: block !important;
+  border-bottom: 1px solid #eee;
 }
- .course-card-content {
+.course-card-content {
   padding: 1.5rem !important;
-  margin-top: 0 !important; 
-  background: white !important;
   flex-grow: 1;
 }
-    .course-card-content h3 { margin: 0 0 10px 0; color: #1f2559; font-size: 1.3rem; }
+   .course-card-content h3 { 
+  font-size: 1.4rem !important; 
+  margin-bottom: 10px !important;
+  color: #1f2559;
+}
     .course-card-button { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 0.8rem; border-radius: 12px; text-align: center; font-weight: 600; border: none; cursor: pointer; transition: 0.3s; }
 
     
