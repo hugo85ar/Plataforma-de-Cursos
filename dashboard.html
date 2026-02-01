@@ -59,13 +59,14 @@
   gap: 2rem; 
 }
 .course-card { 
+  max-width: 450px; /* 🛡️ Clave: Evita que la tarjeta se estire al infinito en PC */
+  margin: 0 auto; /* La mantiene centrada si es la única */
   display: flex !important;
-  flex-direction: column !important; /* Fuerza el orden: Imagen arriba, Texto abajo */
+  flex-direction: column !important;
   background: white !important;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  text-decoration: none; /* Por si la tarjeta es un link */
 }
 
     /* 🎀 CINTA "GRATIS" (Ahora es un sticker flotante) */
@@ -75,18 +76,14 @@
     /* 🖼️ IMÁGENES TIPO BANNER (Ajuste preciso) */
 .course-card-image { 
   width: 100% !important; 
-  height: 180px !important; /* Altura para PC (ajustala a gusto) */
+  height: 250px !important; /* Aumentamos la altura para que se vea el "Gratis" sin zoom */
   object-fit: cover !important; 
   display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
 }
-  .course-card-content {
+ .course-card-content {
   padding: 1.5rem !important;
-  margin-top: 0 !important; /* Esto elimina el solapamiento */
+  margin-top: 0 !important; 
   background: white !important;
-  position: relative !important;
-  top: 0 !important; /* Asegura que no tenga desplazamientos extraños */
   flex-grow: 1;
 }
     .course-card-content h3 { margin: 0 0 10px 0; color: #1f2559; font-size: 1.3rem; }
