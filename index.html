@@ -22,31 +22,30 @@
     :root { --platform-dark: #1a1f36; --accent-blue: #3b82f6; --whatsapp-green: #25D366; }
     html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
 
-    /* FONDO CON BRILLO CALIBRADO */
+    /* FONDO REPARADO CON LA URL CORRECTA WEBP */
     .bg-container {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/q_auto,f_auto/v1778884479/organic_integration_e3g66o.webp'); 
+      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1778806879/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li_1_1_uos6ak.webp'); 
       background-size: cover; background-position: center; 
       filter: brightness(0.95);
       z-index: -1;
     }
     
-    /* OVERLAY SUAVE */
+    /* OVERLAY AJUSTADO */
     .bg-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(30, 60, 114, 0.1) 0%, rgba(26, 31, 54, 0.3) 100%); 
+      background: linear-gradient(135deg, rgba(30, 60, 114, 0.15) 0%, rgba(26, 31, 54, 0.35) 100%); 
       z-index: 0;
     }
 
-    /* 🔄 REUBICACIÓN: Cambiamos flex-start por flex-end y movemos el padding a la derecha */
+    /* ALINEACIÓN A LA IZQUIERDA PARA DESPEJAR EL LOGO DE LA NOTEBOOK DE LA DERECHA */
     body { 
       font-family: 'Open Sans', sans-serif; 
       display: flex; 
       align-items: center; 
-      justify-content: flex-end; /* Mueve la caja de login a la derecha */
+      justify-content: flex-start; 
       min-height: 100vh; 
-      padding-right: 8%; /* Margen derecho para la caja */
-      padding-left: 0;
+      padding-left: 8%; 
       position: relative; 
     }
 
@@ -76,13 +75,13 @@
     }
     .btn-primary:hover { background-color: #1f2937 !important; }
 
-    /* 🔄 REUBICACIÓN DE FRASE: Pasa abajo a la izquierda */
+    /* FRASE UBICADA ABAJO A LA DERECHA (ZONA OSCURA DESPEJADA) */
     .inspiring-quote-container {
       position: fixed; 
-      bottom: 50px; 
-      left: 60px; /* Cambiado de right a left */
-      max-width: 450px;
-      text-align: left; /* Alineación de texto a la izquierda acorde a su posición */
+      bottom: 120px; 
+      right: 60px; 
+      max-width: 420px;
+      text-align: right; 
       color: #ffffff; 
       z-index: 5;
       background-color: rgba(26, 31, 54, 0.75); padding: 25px; border-radius: 15px;
@@ -91,7 +90,13 @@
     .inspiring-quote-container p { font-style: italic; font-size: 1.2em; line-height: 1.5; margin-bottom: 15px; font-weight: 600; }
     .inspiring-quote-container span { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.05em; text-transform: uppercase; color: #3b82f6; }
 
-    /* WHATSAPP */
+    /* ENLACE ADICIONAL PARA VER PACKS COMERCIALES ABAJO DE LA CAJA O JUNTO AL CONTACTO */
+    .packs-link {
+      display: block; margin-top: 15px; color: var(--accent-blue); font-weight: 600; text-decoration: none; font-size: 0.95em;
+    }
+    .packs-link:hover { text-decoration: underline; }
+
+    /* WHATSAPP BUBBLE */
     .whatsapp-bubble { 
       position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; 
       background-color: var(--whatsapp-green); border-radius: 50%; 
@@ -101,9 +106,8 @@
     }
     .whatsapp-bubble:hover { transform: scale(1.05); }
 
-    /* RESPONSIVE */
     @media (max-width: 900px) {
-      body { padding-right: 0; justify-content: center; }
+      body { padding-left: 0; justify-content: center; }
       .login-box { width: 92%; padding: 40px 20px; }
       .inspiring-quote-container { display: none; }
     }
@@ -134,6 +138,10 @@
       </div>
       <button type="submit" class="btn-primary" id="submitBtn">Entrar a mis Cursos</button>
     </form>
+
+    <a href="https://hugo85ar.github.io/formulario-curso-sheets/" class="packs-link">
+      <i class="fas fa-layer-group"></i> Ver Packs de Automatización e IA
+    </a>
   </div>
 
   <div class="inspiring-quote-container">
