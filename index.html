@@ -10,12 +10,13 @@
 
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dlnrsadbc/image/upload/w_32,h_32,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png">
 
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/v1741368500/background_inicio_hugo_alvigini_luminoso.jpg" fetchpriority="high">
   <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/v1778806879/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li_1_1_uos6ak.webp" fetchpriority="high">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
   
   <style>
@@ -29,63 +30,62 @@
       height: 100%; 
       margin: 0; 
       padding: 0; 
-      overflow-x: hidden; 
+      overflow: hidden; 
     }
 
-    /* 🖼️ FONDO: OFICINA MODERNA ILUMINADA */
+    /* 🖼️ FONDO EN ALTA DEFINICIÓN: LA OFICINA LUMINOSA */
     .bg-container {
       position: fixed; 
       top: 0; 
       left: 0; 
       width: 100%; 
       height: 100%;
-      /* Reemplazá aquí con la URL final de Cloudinary de tu imagen de la oficina si cambia */
       background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1741368500/background_inicio_hugo_alvigini_luminoso.jpg'); 
       background-size: cover; 
       background-position: center center; 
       z-index: -2;
     }
     
-    /* Capa de oscurecimiento o contraste sutil para el fondo */
+    /* Overlay sutil para garantizar legibilidad de los campos de texto */
     .bg-overlay {
       position: fixed; 
       top: 0; 
       left: 0; 
       width: 100%; 
       height: 100%;
-      background: rgba(0, 0, 0, 0.15); 
+      background: rgba(255, 255, 255, 0.05); 
       z-index: -1;
     }
 
-    /* 📍 ALINEACIÓN: Caja dispuesta a la izquierda para mantener la composición limpia */
+    /* 📍 DISPOSICIÓN: Alineado perfectamente a la izquierda, igual que la página de inicio */
     body { 
       font-family: 'Open Sans', sans-serif; 
       display: flex; 
       align-items: center; 
       justify-content: flex-start; 
       min-height: 100vh; 
-      padding-left: 8%; 
+      padding-left: 10%; /* Espacio exacto para equilibrar visualmente con el logo de fondo */
       position: relative; 
+      box-sizing: border-box;
     }
 
-    /* TARJETA DE LOGIN CON ESPACIO SUPERIOR PARA LA FOTO FLOTANTE */
+    /* TARJETA BLANCA DE LOGIN INTEGRAL */
     .login-box {
       background: #ffffff; 
-      padding: 60px 35px 40px 35px; /* Más padding arriba para dar espacio al avatar */
+      padding: 65px 35px 35px 35px; /* Más espacio arriba para que el círculo calce natural */
       border-radius: 24px; 
-      box-shadow: 0 30px 60px rgba(0,0,0,0.3); 
+      box-shadow: 0 20px 50px rgba(26, 31, 54, 0.25); 
       width: 100%; 
       max-width: 360px; 
       text-align: center; 
       position: relative; 
       z-index: 10;
-      margin-top: 40px; /* Margen para balancear el avatar que sobresale */
     }
 
-    /* 📸 AVATAR CIRCULAR FLOTANTE CORREGIDO */
+    /* 📸 FOTO DE PERFIL CIRCULAR IDÉNTICA A LA DE INICIO */
     .avatar-profile {
       position: absolute;
-      top: -55px; /* Hace que sobresalga la mitad hacia arriba de la tarjeta */
+      top: -55px; /* Sobresale la mitad exacta */
       left: 50%;
       transform: translateX(-50%);
       width: 110px;
@@ -95,30 +95,48 @@
       background-size: cover;
       background-position: center;
       border: 4px solid #ffffff;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     }
 
+    /* Distintivo verde superior */
     .promo-badge {
       display: inline-block; 
-      padding: 6px 14px; 
+      padding: 5px 14px; 
       border-radius: 20px; 
-      font-size: 0.75em; 
+      font-size: 0.72em; 
       font-weight: 700; 
       text-transform: uppercase;
       background-color: #15803d !important; 
       color: white; 
-      margin-bottom: 18px; 
+      margin-bottom: 22px; 
       letter-spacing: 0.5px;
     }
 
-    h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 1.8em; margin-bottom: 6px; margin-top: 0; }
-    h2 { font-size: 0.95em; color: #4b5563; margin-bottom: 25px; font-weight: 400; }
+    h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 1.8em; margin-bottom: 4px; margin-top: 0; }
+    h2 { font-size: 0.9em; color: #4b5563; margin-bottom: 25px; font-weight: 400; margin-top: 0; }
 
-    .form-group { text-align: left; margin-bottom: 18px; }
-    .form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: #111827; font-size: 0.9em; }
-    input { width: 100%; padding: 12px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95em; box-sizing: border-box; transition: 0.2s; }
-    input:focus { border-color: var(--accent-blue); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+    /* Estilos del formulario e Inputs con enfoque moderno */
+    .form-group { text-align: left; margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: #1f2937; font-size: 0.88em; }
+    
+    input { 
+      width: 100%; 
+      padding: 12px 14px; 
+      border: 1px solid #d1d5db; 
+      border-radius: 10px; 
+      font-size: 0.95em; 
+      box-sizing: border-box; 
+      transition: all 0.2s ease; 
+      background-color: #f9fafb;
+    }
+    input:focus { 
+      border-color: var(--accent-blue); 
+      background-color: #ffffff;
+      outline: none; 
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12); 
+    }
 
+    /* Botón Principal */
     .btn-primary {
       width: 100%; 
       padding: 14px; 
@@ -129,38 +147,40 @@
       font-size: 1em; 
       font-weight: 700; 
       cursor: pointer; 
-      transition: 0.2s;
+      transition: background-color 0.2s ease;
+      margin-top: 5px;
     }
     .btn-primary:hover { background-color: #2e3554 !important; }
 
-    /* Enlace de Packs inferior */
+    /* Enlace Inferior */
     .btn-packs-link {
       display: inline-flex; 
       align-items: center; 
-      gap: 8px; 
-      margin-top: 20px;
+      gap: 6px; 
+      margin-top: 22px;
       color: #2563eb !important; 
       font-size: 0.85em; 
       font-weight: 600; 
       text-decoration: none; 
-      transition: 0.2s;
+      transition: color 0.2s ease;
     }
     .btn-packs-link:hover { color: #1d4ed8 !important; text-decoration: underline; }
 
-    /* Burbuja flotante de WhatsApp */
+    /* Botón flotante de WhatsApp */
     .whatsapp-bubble { 
       position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
       background-color: var(--whatsapp-green); border-radius: 50%; 
       display: flex; justify-content: center; align-items: center; 
-      z-index: 100; border: 3px solid white; transition: 0.3s; text-decoration: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 100; border: 3px solid white; transition: transform 0.3s ease; text-decoration: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }
-    .whatsapp-bubble:hover { transform: scale(1.06); }
+    .whatsapp-bubble:hover { transform: scale(1.08); }
 
-    /* RESPONSIVE EXACTO */
+    /* RESPONSIVE: Ajuste milimétrico para pantallas pequeñas */
     @media (max-width: 900px) {
-      body { padding-left: 0; justify-content: center; background-position: 35% center; }
-      .login-box { width: 90%; padding: 55px 20px 35px 20px; }
+      body { padding-left: 0; justify-content: center; }
+      .bg-container { background-position: 25% center; } /* Mueve el fondo para centrar la acción de la oficina en móviles */
+      .login-box { width: 88%; padding: 60px 22px 30px 22px; }
     }
   </style>
 </head>
@@ -194,8 +214,8 @@
     </a>
   </div>
 
-  <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20el%20Acceso%20a%20Alumnos%20y%20tengo%20una%20duda" 
-     class="whatsapp-bubble" target="_blank" aria-label="Contactar a Hugo Alvigini por WhatsApp">
+  <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20la%20Plataforma%20de%20Cursos%20y%20necesito%20ayuda" 
+     class="whatsapp-bubble" target="_blank" aria-label="Soporte por WhatsApp">
     <i class="fab fa-whatsapp" style="color: white; font-size: 32px;"></i>
   </a>
 
