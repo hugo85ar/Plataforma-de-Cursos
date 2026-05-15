@@ -22,23 +22,33 @@
     :root { --platform-dark: #1a1f36; --accent-blue: #3b82f6; --whatsapp-green: #25D366; }
     html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
 
-    /* 💡 FONDO CON BRILLO CALIBRADO */
+    /* FONDO CON BRILLO CALIBRADO */
     .bg-container {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/q_auto,f_auto/v1778884479/organic_integration_e3g66o.webp'); 
       background-size: cover; background-position: center; 
-      filter: brightness(0.95); /* Subido para que no quede oscuro y luzca tu logo */
+      filter: brightness(0.95);
       z-index: -1;
     }
     
-    /* OVERLAY AJUSTADO: Más sutil para dar claridad */
+    /* OVERLAY SUAVE */
     .bg-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(30, 60, 114, 0.2) 0%, rgba(26, 31, 54, 0.4) 100%); 
+      background: linear-gradient(135deg, rgba(30, 60, 114, 0.1) 0%, rgba(26, 31, 54, 0.3) 100%); 
       z-index: 0;
     }
 
-    body { font-family: 'Open Sans', sans-serif; display: flex; align-items: center; justify-content: flex-start; min-height: 100vh; padding-left: 8%; position: relative; }
+    /* 🔄 REUBICACIÓN: Cambiamos flex-start por flex-end y movemos el padding a la derecha */
+    body { 
+      font-family: 'Open Sans', sans-serif; 
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-end; /* Mueve la caja de login a la derecha */
+      min-height: 100vh; 
+      padding-right: 8%; /* Margen derecho para la caja */
+      padding-left: 0;
+      position: relative; 
+    }
 
     .login-box {
       background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); 
@@ -66,15 +76,20 @@
     }
     .btn-primary:hover { background-color: #1f2937 !important; }
 
-    /* FRASE UNIFICADA */
+    /* 🔄 REUBICACIÓN DE FRASE: Pasa abajo a la izquierda */
     .inspiring-quote-container {
-      position: fixed; bottom: 110px; right: 60px; max-width: 450px;
-      text-align: right; color: #ffffff; z-index: 5;
-      background-color: rgba(26, 31, 54, 0.7); padding: 25px; border-radius: 15px;
+      position: fixed; 
+      bottom: 50px; 
+      left: 60px; /* Cambiado de right a left */
+      max-width: 450px;
+      text-align: left; /* Alineación de texto a la izquierda acorde a su posición */
+      color: #ffffff; 
+      z-index: 5;
+      background-color: rgba(26, 31, 54, 0.75); padding: 25px; border-radius: 15px;
       backdrop-filter: blur(5px);
     }
-    .inspiring-quote-container p { font-style: italic; font-size: 1.3em; line-height: 1.5; margin-bottom: 15px; font-weight: 600; }
-    .inspiring-quote-container span { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1em; text-transform: uppercase; color: #3b82f6; }
+    .inspiring-quote-container p { font-style: italic; font-size: 1.2em; line-height: 1.5; margin-bottom: 15px; font-weight: 600; }
+    .inspiring-quote-container span { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.05em; text-transform: uppercase; color: #3b82f6; }
 
     /* WHATSAPP */
     .whatsapp-bubble { 
@@ -86,8 +101,9 @@
     }
     .whatsapp-bubble:hover { transform: scale(1.05); }
 
+    /* RESPONSIVE */
     @media (max-width: 900px) {
-      body { padding-left: 0; justify-content: center; }
+      body { padding-right: 0; justify-content: center; }
       .login-box { width: 92%; padding: 40px 20px; }
       .inspiring-quote-container { display: none; }
     }
@@ -125,7 +141,7 @@
     <span>— Hugo Alvigini</span>
   </div>
 
-  <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20el%20Acceso%20a%20Alumnos%20y%20tengo%20una%20dula" 
+  <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20el%20Acceso%20a%20Alumnos%20y%20tengo%20una%20duda" 
      class="whatsapp-bubble" target="_blank" aria-label="Contactar a Hugo Alvigini por WhatsApp">
     <i class="fab fa-whatsapp" style="color: white; font-size: 35px;"></i>
   </a>
