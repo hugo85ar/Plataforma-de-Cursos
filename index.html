@@ -40,31 +40,31 @@
       left: 0; 
       width: 100%; 
       height: 100%;
-      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/q_auto,f_auto/v1778884479/organic_integration_e3g66o.webp'); 
+      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1741368500/background_inicio_hugo_alvigini_luminoso.jpg'); 
       background-size: cover; 
       background-position: center center; 
       z-index: -2;
     }
     
-    /* Overlay sutil para garantizar legibilidad de los campos de texto */
+    /* Capa de contraste sutil para equilibrar los tonos de la oficina */
     .bg-overlay {
       position: fixed; 
       top: 0; 
       left: 0; 
       width: 100%; 
       height: 100%;
-      background: rgba(255, 255, 255, 0.05); 
+      background: rgba(0, 0, 0, 0.05); 
       z-index: -1;
     }
 
-    /* 📍 DISPOSICIÓN: Alineado perfectamente a la izquierda, igual que la página de inicio */
+    /* 📍 DISPOSICIÓN GLOBAL: Login a la izquierda, Frase abajo a la derecha */
     body { 
       font-family: 'Open Sans', sans-serif; 
       display: flex; 
       align-items: center; 
-      justify-content: flex-start; 
+      justify-content: space-between; /* Distribuye login a la izquierda y frase a la derecha */
       min-height: 100vh; 
-      padding-left: 10%; /* Espacio exacto para equilibrar visualmente con el logo de fondo */
+      padding: 0 8%; /* Margen equilibrado en ambos lados */
       position: relative; 
       box-sizing: border-box;
     }
@@ -72,7 +72,7 @@
     /* TARJETA BLANCA DE LOGIN INTEGRAL */
     .login-box {
       background: #ffffff; 
-      padding: 65px 35px 35px 35px; /* Más espacio arriba para que el círculo calce natural */
+      padding: 65px 35px 35px 35px; 
       border-radius: 24px; 
       box-shadow: 0 20px 50px rgba(26, 31, 54, 0.25); 
       width: 100%; 
@@ -82,10 +82,10 @@
       z-index: 10;
     }
 
-    /* 📸 FOTO DE PERFIL CIRCULAR IDÉNTICA A LA DE INICIO */
+    /* 📸 FOTO DE PERFIL CIRCULAR FLOTANTE CORREGIDA */
     .avatar-profile {
       position: absolute;
-      top: -55px; /* Sobresale la mitad exacta */
+      top: -55px; 
       left: 50%;
       transform: translateX(-50%);
       width: 110px;
@@ -115,7 +115,7 @@
     h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 1.8em; margin-bottom: 4px; margin-top: 0; }
     h2 { font-size: 0.9em; color: #4b5563; margin-bottom: 25px; font-weight: 400; margin-top: 0; }
 
-    /* Estilos del formulario e Inputs con enfoque moderno */
+    /* Formulario e Inputs */
     .form-group { text-align: left; margin-bottom: 20px; }
     .form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: #1f2937; font-size: 0.88em; }
     
@@ -166,21 +166,67 @@
     }
     .btn-packs-link:hover { color: #1d4ed8 !important; text-decoration: underline; }
 
+    /* 📝 TARJETA RECUPERADA CON LA FRASE PERSUASIVA */
+    .persuasive-quote-box {
+      align-self: flex-end; /* La ancla a la parte inferior del contenedor flex */
+      margin-bottom: 40px; /* Separación del borde inferior de la pantalla */
+      background: rgba(26, 31, 54, 0.88); 
+      padding: 24px; 
+      border-radius: 16px;
+      backdrop-filter: blur(8px); 
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      max-width: 380px;
+      text-align: right;
+      z-index: 10;
+      border-left: 4px solid var(--accent-blue);
+    }
+    .persuasive-quote-box p { 
+      font-style: italic; 
+      color: #ffffff; 
+      font-size: 0.95em; 
+      line-height: 1.5; 
+      margin: 0 0 10px 0; 
+      font-weight: 400; 
+    }
+    .persuasive-quote-box span { 
+      font-family: 'Montserrat', sans-serif; 
+      font-weight: 700; 
+      font-size: 0.8em; 
+      text-transform: uppercase; 
+      color: var(--accent-blue); 
+      letter-spacing: 1px;
+    }
+
     /* Botón flotante de WhatsApp */
     .whatsapp-bubble { 
-      position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
-      background-color: var(--whatsapp-green); border-radius: 50%; 
-      display: flex; justify-content: center; align-items: center; 
-      z-index: 100; border: 3px solid white; transition: transform 0.3s ease; text-decoration: none;
+      position: fixed; 
+      bottom: 30px; 
+      right: 30px; 
+      width: 60px; 
+      height: 60px; 
+      background-color: var(--whatsapp-green); 
+      border-radius: 50%; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 100; 
+      border: 3px solid white; 
+      transition: transform 0.3s ease; 
+      text-decoration: none;
       box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }
     .whatsapp-bubble:hover { transform: scale(1.08); }
 
-    /* RESPONSIVE: Ajuste milimétrico para pantallas pequeñas */
-    @media (max-width: 900px) {
-      body { padding-left: 0; justify-content: center; }
-      .bg-container { background-position: 25% center; } /* Mueve el fondo para centrar la acción de la oficina en móviles */
+    /* RESPONSIVE */
+    @media (max-width: 950px) {
+      body { 
+        justify-content: center; 
+        padding: 0; 
+      }
+      .bg-container { background-position: 25% center; }
       .login-box { width: 88%; padding: 60px 22px 30px 22px; }
+      .persuasive-quote-box { display: none; } /* Se oculta en móviles para mantener limpio el login */
     }
   </style>
 </head>
@@ -190,9 +236,7 @@
   <div class="bg-overlay"></div>
 
   <div class="login-box">
-    
     <div class="avatar-profile"></div>
-
     <div class="promo-badge"><i class="fas fa-rocket"></i> Pensando en el Emprendedor</div>
     <h1>Hugo Alvigini</h1>
     <h2>Ingresa a tu academia</h2>
@@ -212,6 +256,11 @@
     <a href="https://hugo85ar.github.io/formulario-curso-sheets/" class="btn-packs-link" target="_blank">
       <i class="fas fa-layer-group"></i> Ver Packs de Automatización e IA
     </a>
+  </div>
+
+  <div class="persuasive-quote-box">
+    <p>"Dominar una nueva herramienta es como abrir una puerta que antes ni siquiera veías. No te detengas ahora; el conocimiento que adquieras hoy es el sistema que sostendrá tu crecimiento mañana."</p>
+    <span>— Hugo Alvigini</span>
   </div>
 
   <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20la%20Plataforma%20de%20Cursos%20y%20necesito%20ayuda" 
