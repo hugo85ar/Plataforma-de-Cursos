@@ -19,97 +19,122 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
   
   <style>
-    :root { --platform-dark: #1a1f36; --accent-blue: #3b82f6; --whatsapp-green: #25D366; }
+    :root { 
+      --platform-dark: #1a1f36; 
+      --accent-blue: #3b82f6; 
+      --whatsapp-green: #25D366; 
+      --packs-orange: #f97316;
+    }
     html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
 
-    /* FONDO REPARADO CON LA URL CORRECTA WEBP */
+    /* 🖼️ FONDO DEFINITIVO CON TU LOGO EN LA NOTEBOOK */
     .bg-container {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1778806879/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li_1_1_uos6ak.webp'); 
-      background-size: cover; background-position: center; 
-      filter: brightness(0.95);
+      background-size: cover; 
+      background-position: center center; 
+      filter: brightness(0.90); /* Un toque de contraste para que resalte tu logo y los textos */
       z-index: -1;
     }
     
-    /* OVERLAY AJUSTADO */
+    /* OVERLAY CONFIGURADO PARA EQUILIBRAR LUZ */
     .bg-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(30, 60, 114, 0.15) 0%, rgba(26, 31, 54, 0.35) 100%); 
+      background: linear-gradient(90deg, rgba(26, 31, 54, 0.4) 0%, rgba(26, 31, 54, 0.1) 100%); 
       z-index: 0;
     }
 
-    /* ALINEACIÓN A LA IZQUIERDA PARA DESPEJAR EL LOGO DE LA NOTEBOOK DE LA DERECHA */
+    /* 📍 ALINEACIÓN ALINEADA A LA IZQUIERDA (Cubre el espacio vacío y libera el logo de la PC derecha) */
     body { 
       font-family: 'Open Sans', sans-serif; 
       display: flex; 
       align-items: center; 
       justify-content: flex-start; 
       min-height: 100vh; 
-      padding-left: 8%; 
+      padding-left: 6%; /* Ajustado para pantallas grandes */
       position: relative; 
     }
 
     .login-box {
-      background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); 
-      width: 100%; max-width: 420px; text-align: center; position: relative; z-index: 10;
+      background: #ffffff; padding: 45px 40px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); 
+      width: 100%; max-width: 380px; text-align: center; position: relative; z-index: 10;
     }
 
-    .brand-logo { margin-top: -115px; margin-bottom: 20px; }
-    .brand-logo img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; border: 6px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.2); background: white; }
+    .brand-logo { margin-top: -110px; margin-bottom: 15px; }
+    .brand-logo img { width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 5px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.15); background: white; }
 
-    h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 2em; margin-bottom: 5px; }
-    h2 { font-size: 1em; color: #4b5563; margin-bottom: 25px; font-weight: 400; line-height: 1.4; }
+    h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 1.8em; margin-bottom: 5px; margin-top: 0; }
+    h2 { font-size: 0.95em; color: #4b5563; margin-bottom: 25px; font-weight: 400; line-height: 1.4; }
 
     .promo-badge {
-      display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.8em; font-weight: 700; text-transform: uppercase;
-      background-color: #15803d !important; color: white; margin-bottom: 20px;
+      display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 0.75em; font-weight: 700; text-transform: uppercase;
+      background-color: #15803d !important; color: white; margin-bottom: 15px;
     }
 
     .form-group { text-align: left; margin-bottom: 15px; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #111827; }
-    input { width: 100%; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1em; box-sizing: border-box; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #111827; font-size: 0.9em; }
+    input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 0.95em; box-sizing: border-box; }
 
     .btn-primary {
-      width: 100%; padding: 16px; background-color: #111827 !important; color: #ffffff !important;
-      border: none; border-radius: 10px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: 0.3s;
+      width: 100%; padding: 14px; background-color: #111827 !important; color: #ffffff !important;
+      border: none; border-radius: 10px; font-size: 1em; font-weight: 700; cursor: pointer; transition: 0.3s;
     }
     .btn-primary:hover { background-color: #1f2937 !important; }
 
-    /* FRASE UBICADA ABAJO A LA DERECHA (ZONA OSCURA DESPEJADA) */
+    /* 💬 FRASE POSICIONADA ABAJO A LA DERECHA (Discreta y compacta) */
     .inspiring-quote-container {
       position: fixed; 
-      bottom: 120px; 
-      right: 60px; 
-      max-width: 420px;
+      bottom: 30px; 
+      right: 120px; /* Desplazada a la izquierda para no pisar los botones flotantes */
+      max-width: 380px;
       text-align: right; 
       color: #ffffff; 
       z-index: 5;
-      background-color: rgba(26, 31, 54, 0.75); padding: 25px; border-radius: 15px;
-      backdrop-filter: blur(5px);
+      background-color: rgba(26, 31, 54, 0.8); padding: 20px; border-radius: 12px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
-    .inspiring-quote-container p { font-style: italic; font-size: 1.2em; line-height: 1.5; margin-bottom: 15px; font-weight: 600; }
-    .inspiring-quote-container span { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.05em; text-transform: uppercase; color: #3b82f6; }
+    .inspiring-quote-container p { font-style: italic; font-size: 1.05em; line-height: 1.4; margin-bottom: 8px; font-weight: 600; margin-top: 0; }
+    .inspiring-quote-container span { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9em; text-transform: uppercase; color: #3b82f6; }
 
-    /* ENLACE ADICIONAL PARA VER PACKS COMERCIALES ABAJO DE LA CAJA O JUNTO AL CONTACTO */
-    .packs-link {
-      display: block; margin-top: 15px; color: var(--accent-blue); font-weight: 600; text-decoration: none; font-size: 0.95em;
+    /* 🚀 BOTONES FLOTANTES DE ACCIÓN (Esquina inferior derecha) */
+    .floating-actions {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 100;
     }
-    .packs-link:hover { text-decoration: underline; }
 
-    /* WHATSAPP BUBBLE */
-    .whatsapp-bubble { 
-      position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; 
-      background-color: var(--whatsapp-green); border-radius: 50%; 
+    .floating-btn {
+      width: 60px; height: 60px; border-radius: 50%; 
       display: flex; justify-content: center; align-items: center; 
-      z-index: 100; border: 3px solid white; transition: 0.3s; text-decoration: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      border: 3px solid white; transition: transform 0.3s; text-decoration: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3); position: relative;
     }
-    .whatsapp-bubble:hover { transform: scale(1.05); }
+    .floating-btn:hover { transform: scale(1.08); }
+    
+    .btn-whatsapp { background-color: var(--whatsapp-green); }
+    .btn-packs { background-color: var(--packs-orange); }
 
+    /* Tooltip de texto al pasar el mouse por los botones flotantes */
+    .floating-btn::after {
+      content: attr(data-label);
+      position: absolute; right: 75px; background: rgba(26, 31, 54, 0.9);
+      color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.8em;
+      white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.3s;
+      font-weight: 600; font-family: 'Open Sans', sans-serif;
+    }
+    .floating-btn:hover::after { opacity: 1; }
+
+    /* RESPONSIVE */
     @media (max-width: 900px) {
       body { padding-left: 0; justify-content: center; }
       .login-box { width: 92%; padding: 40px 20px; }
       .inspiring-quote-container { display: none; }
+      .floating-actions { bottom: 20px; right: 20px; }
     }
   </style>
 </head>
@@ -121,7 +146,7 @@
   <div class="login-box">
     <div class="brand-logo">
       <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/w_160,h_160,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" 
-           alt="Hugo Alvigini - Especialista en Automatización" width="160" height="160" style="aspect-ratio: 1/1;" fetchpriority="high">
+           alt="Hugo Alvigini - Especialista en Automatización" width="140" height="140" style="aspect-ratio: 1/1;" fetchpriority="high">
     </div>
     <div class="promo-badge"><i class="fas fa-rocket"></i> Pensando en el Emprendedor</div>
     <h1>Hugo Alvigini</h1>
@@ -138,21 +163,29 @@
       </div>
       <button type="submit" class="btn-primary" id="submitBtn">Entrar a mis Cursos</button>
     </form>
-
-    <a href="https://hugo85ar.github.io/formulario-curso-sheets/" class="packs-link">
-      <i class="fas fa-layer-group"></i> Ver Packs de Automatización e IA
-    </a>
   </div>
 
   <div class="inspiring-quote-container">
-    <p>"Dominar una nueva herramienta es como abrir una puerta que antes ni siquiera veías. No te detengas ahora; el conocimiento que adquieras hoy es el sistema que sostendrá tu crecimiento mañana."</p>
+    <p>"Dominar una nueva herramienta es como abrir una puerta que antes ni siquiera veías. No te detengas ahora."</p>
     <span>— Hugo Alvigini</span>
   </div>
 
-  <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20el%20Acceso%20a%20Alumnos%20y%20tengo%20una%20duda" 
-     class="whatsapp-bubble" target="_blank" aria-label="Contactar a Hugo Alvigini por WhatsApp">
-    <i class="fab fa-whatsapp" style="color: white; font-size: 35px;"></i>
-  </a>
+  <div class="floating-actions">
+    <a href="https://hugo85ar.github.io/formulario-curso-sheets/" 
+       class="floating-btn btn-packs" 
+       data-label="Ver Packs de Automatización e IA"
+       target="_blank">
+      <i class="fas fa-layer-group" style="color: white; font-size: 26px;"></i>
+    </a>
+
+    <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20el%20Acceso%20a%20Alumnos%20y%20tengo%20una%20duda" 
+       class="floating-btn btn-whatsapp" 
+       data-label="Soporte por WhatsApp"
+       target="_blank" 
+       aria-label="Contactar a Hugo Alvigini por WhatsApp">
+      <i class="fab fa-whatsapp" style="color: white; font-size: 32px;"></i>
+    </a>
+  </div>
 
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
