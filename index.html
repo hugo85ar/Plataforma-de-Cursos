@@ -10,7 +10,7 @@
 
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dlnrsadbc/image/upload/w_32,h_32,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png">
 
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/v1741368500/background_inicio_hugo_alvigini_luminoso.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/v1741364500/FOTO_LOGIN_PLATAFORMA_ok3et0_1_prky3q_2_usiyrh.jpg" fetchpriority="high">
   <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/v1778806879/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li_1_1_uos6ak.webp" fetchpriority="high">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,38 +33,38 @@
       overflow: hidden; 
     }
 
-    /* 🖼️ FONDO EN ALTA DEFINICIÓN: LA OFICINA LUMINOSA */
+    /* 🖼️ FONDO EN ALTA DEFINICIÓN: TRES PERSONAS EN LA MESA DE MADERA */
     .bg-container {
       position: fixed; 
       top: 0; 
       left: 0; 
       width: 100%; 
       height: 100%;
-      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1741368500/background_inicio_hugo_alvigini_luminoso.jpg'); 
+      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1741364500/FOTO_LOGIN_PLATAFORMA_ok3et0_1_prky3q_2_usiyrh.jpg'); 
       background-size: cover; 
       background-position: center center; 
       z-index: -2;
     }
     
-    /* Capa de contraste sutil para equilibrar los tonos de la oficina */
+    /* Capa de contraste sutil para balancear la luminosidad de la foto */
     .bg-overlay {
       position: fixed; 
       top: 0; 
       left: 0; 
       width: 100%; 
       height: 100%;
-      background: rgba(0, 0, 0, 0.05); 
+      background: rgba(0, 0, 0, 0.03); 
       z-index: -1;
     }
 
-    /* 📍 DISPOSICIÓN GLOBAL: Login a la izquierda, Frase abajo a la derecha */
+    /* 📍 CONFIGURACIÓN FLEXBOX: Login desplazado levemente para no tapar rostros */
     body { 
       font-family: 'Open Sans', sans-serif; 
       display: flex; 
       align-items: center; 
-      justify-content: space-between; /* Distribuye login a la izquierda y frase a la derecha */
+      justify-content: space-between; 
       min-height: 100vh; 
-      padding: 0 8%; /* Margen equilibrado en ambos lados */
+      padding: 0 5%; /* Ajustado al 5% para posicionar la caja sobre la espalda limpia de la primera chica */
       position: relative; 
       box-sizing: border-box;
     }
@@ -74,15 +74,15 @@
       background: #ffffff; 
       padding: 65px 35px 35px 35px; 
       border-radius: 24px; 
-      box-shadow: 0 20px 50px rgba(26, 31, 54, 0.25); 
+      box-shadow: 0 20px 50px rgba(26, 31, 54, 0.2); 
       width: 100%; 
-      max-width: 360px; 
+      max-width: 350px; 
       text-align: center; 
       position: relative; 
       z-index: 10;
     }
 
-    /* 📸 FOTO DE PERFIL CIRCULAR FLOTANTE CORREGIDA */
+    /* 📸 FOTO DE PERFIL CIRCULAR FLOTANTE DE HUGO */
     .avatar-profile {
       position: absolute;
       top: -55px; 
@@ -166,17 +166,18 @@
     }
     .btn-packs-link:hover { color: #1d4ed8 !important; text-decoration: underline; }
 
-    /* 📝 TARJETA RECUPERADA CON LA FRASE PERSUASIVA */
+    /* 📝 TARJETA DE LA FRASE PERSUASIVA (UBICACIÓN EN BASE A TU IMAGEN 3) */
     .persuasive-quote-box {
-      align-self: flex-end; /* La ancla a la parte inferior del contenedor flex */
-      margin-bottom: 40px; /* Separación del borde inferior de la pantalla */
-      background: rgba(26, 31, 54, 0.88); 
-      padding: 24px; 
+      align-self: flex-end; /* Alineada en la zona inferior de la mesa */
+      margin-bottom: 35px; 
+      margin-right: 4%; /* Margen extra para que no pise la notebook del logo HA */
+      background: rgba(26, 31, 54, 0.85); 
+      padding: 20px; 
       border-radius: 16px;
       backdrop-filter: blur(8px); 
       -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-      max-width: 380px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+      max-width: 320px; /* Un poco más compacta para que calce perfecto abajo a la derecha */
       text-align: right;
       z-index: 10;
       border-left: 4px solid var(--accent-blue);
@@ -184,15 +185,15 @@
     .persuasive-quote-box p { 
       font-style: italic; 
       color: #ffffff; 
-      font-size: 0.95em; 
-      line-height: 1.5; 
-      margin: 0 0 10px 0; 
+      font-size: 0.9em; 
+      line-height: 1.4; 
+      margin: 0 0 8px 0; 
       font-weight: 400; 
     }
     .persuasive-quote-box span { 
       font-family: 'Montserrat', sans-serif; 
       font-weight: 700; 
-      font-size: 0.8em; 
+      font-size: 0.78em; 
       text-transform: uppercase; 
       color: var(--accent-blue); 
       letter-spacing: 1px;
@@ -201,10 +202,10 @@
     /* Botón flotante de WhatsApp */
     .whatsapp-bubble { 
       position: fixed; 
-      bottom: 30px; 
-      right: 30px; 
-      width: 60px; 
-      height: 60px; 
+      bottom: 35px; 
+      right: 25px; 
+      width: 55px; 
+      height: 55px; 
       background-color: var(--whatsapp-green); 
       border-radius: 50%; 
       display: flex; 
@@ -224,9 +225,9 @@
         justify-content: center; 
         padding: 0; 
       }
-      .bg-container { background-position: 25% center; }
+      .bg-container { background-position: 30% center; } /* Reacomoda el fondo en móviles */
       .login-box { width: 88%; padding: 60px 22px 30px 22px; }
-      .persuasive-quote-box { display: none; } /* Se oculta en móviles para mantener limpio el login */
+      .persuasive-quote-box { display: none; } /* Oculto en móviles para no colapsar la vista */
     }
   </style>
 </head>
@@ -265,7 +266,7 @@
 
   <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20la%20Plataforma%20de%20Cursos%20y%20necesito%20ayuda" 
      class="whatsapp-bubble" target="_blank" aria-label="Soporte por WhatsApp">
-    <i class="fab fa-whatsapp" style="color: white; font-size: 32px;"></i>
+    <i class="fab fa-whatsapp" style="color: white; font-size: 30px;"></i>
   </a>
 
   <script>
