@@ -8,7 +8,9 @@
   <title>Acceso Alumnos | Hugo Alvigini</title>
   <meta name="description" content="Área de alumnos de Hugo Alvigini. Accede a tus herramientas de automatización.">
 
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/q_auto,f_auto/v1778806879/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li_1_1_uos6ak.webp" fetchpriority="high">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dlnrsadbc/image/upload/w_32,h_32,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png">
+
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/w_160,h_160,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" fetchpriority="high">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,25 +22,31 @@
     :root { --platform-dark: #1a1f36; --accent-blue: #3b82f6; --whatsapp-green: #25D366; }
     html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
 
+    /* 💡 FONDO CON BRILLO CALIBRADO */
     .bg-container {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/q_auto,f_auto/v1778884479/organic_integration_e3g66o.webp'); 
-      background-size: cover; background-position: center; filter: brightness(0.6); z-index: -1;
+      background-size: cover; background-position: center; 
+      filter: brightness(0.95); /* Subido para que no quede oscuro y luzca tu logo */
+      z-index: -1;
     }
+    
+    /* OVERLAY AJUSTADO: Más sutil para dar claridad */
     .bg-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(30, 60, 114, 0.5) 0%, rgba(26, 31, 54, 0.7) 100%); z-index: 0;
+      background: linear-gradient(135deg, rgba(30, 60, 114, 0.2) 0%, rgba(26, 31, 54, 0.4) 100%); 
+      z-index: 0;
     }
 
     body { font-family: 'Open Sans', sans-serif; display: flex; align-items: center; justify-content: flex-start; min-height: 100vh; padding-left: 8%; position: relative; }
 
     .login-box {
-      background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
+      background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); 
       width: 100%; max-width: 420px; text-align: center; position: relative; z-index: 10;
     }
 
     .brand-logo { margin-top: -115px; margin-bottom: 20px; }
-    .brand-logo img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; border: 6px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+    .brand-logo img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; border: 6px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.2); background: white; }
 
     h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 2em; margin-bottom: 5px; }
     h2 { font-size: 1em; color: #4b5563; margin-bottom: 25px; font-weight: 400; line-height: 1.4; }
@@ -56,23 +64,27 @@
       width: 100%; padding: 16px; background-color: #111827 !important; color: #ffffff !important;
       border: none; border-radius: 10px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: 0.3s;
     }
+    .btn-primary:hover { background-color: #1f2937 !important; }
 
-    /* 🔹 FRASE UNIFICADA */
+    /* FRASE UNIFICADA */
     .inspiring-quote-container {
       position: fixed; bottom: 110px; right: 60px; max-width: 450px;
       text-align: right; color: #ffffff; z-index: 5;
       background-color: rgba(26, 31, 54, 0.7); padding: 25px; border-radius: 15px;
+      backdrop-filter: blur(5px);
     }
     .inspiring-quote-container p { font-style: italic; font-size: 1.3em; line-height: 1.5; margin-bottom: 15px; font-weight: 600; }
     .inspiring-quote-container span { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1em; text-transform: uppercase; color: #3b82f6; }
 
-    /* 📲 WHATSAPP 100% ACCESIBLE */
+    /* WHATSAPP */
     .whatsapp-bubble { 
       position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; 
       background-color: var(--whatsapp-green); border-radius: 50%; 
       display: flex; justify-content: center; align-items: center; 
       z-index: 100; border: 3px solid white; transition: 0.3s; text-decoration: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
+    .whatsapp-bubble:hover { transform: scale(1.05); }
 
     @media (max-width: 900px) {
       body { padding-left: 0; justify-content: center; }
@@ -94,7 +106,7 @@
     <div class="promo-badge"><i class="fas fa-rocket"></i> Pensando en el Emprendedor</div>
     <h1>Hugo Alvigini</h1>
     <h2>Ingresa a tu academia</h2>
-    
+     
     <form id="loginForm">
       <div class="form-group">
           <label for="email">Email</label>
@@ -113,7 +125,7 @@
     <span>— Hugo Alvigini</span>
   </div>
 
-  <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20el%20Acceso%20a%20Alumnos%20y%20tengo%20una%20duda" 
+  <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20el%20Acceso%20a%20Alumnos%20y%20tengo%20una%20dula" 
      class="whatsapp-bubble" target="_blank" aria-label="Contactar a Hugo Alvigini por WhatsApp">
     <i class="fab fa-whatsapp" style="color: white; font-size: 35px;"></i>
   </a>
