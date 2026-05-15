@@ -1,234 +1,398 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
   <base target="_top">
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   
+
   <title>Acceso Alumnos | Hugo Alvigini</title>
+
   <meta name="description" content="Área de alumnos de Hugo Alvigini. Accede a tus herramientas de automatización.">
+
+
 
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dlnrsadbc/image/upload/w_32,h_32,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png">
 
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/v1778806879/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li_1_1_uos6ak.webp" fetchpriority="high">
+
+
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dlnrsadbc/image/upload/w_160,h_160,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" fetchpriority="high">
+
+
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+
+
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+
   
+
   <style>
+
     :root { 
+
       --platform-dark: #1a1f36; 
+
       --accent-blue: #3b82f6; 
-      --whatsapp-green: #25D366; 
-    }
-    
-    html, body { 
-      height: 100%; 
-      margin: 0; 
-      padding: 0; 
-      overflow-x: hidden; 
+
+      --whatsapp-green: #25D366;
+
+      
+
+      /* 🖼️ CONFIGURACIÓN DE IMAGEN DE FONDO (Intercambiá las URLs acá si querés probar la otra) */
+
+      --fondo-elegido: url('https://res.cloudinary.com/dlnrsadbc/image/upload/q_auto,f_auto/v1778884479/organic_integration_e3g66o.webp');
+
+      /* Si quisieras la del Dashboard Luminoso en el futuro, usarías esta: */
+
+      /* --fondo-elegido: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1741364500/background_inicio_hugo_alvigini_luminoso.jpg'); */
+
     }
 
-    /* 🖼️ FONDO: OFICINA MODERNA ILUMINADA */
+    
+
+    html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
+
+
+
+    /* Contenedor del Fondo */
+
     .bg-container {
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%;
-      /* Reemplazá aquí con la URL final de Cloudinary de tu imagen de la oficina si cambia */
-      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1741368500/background_inicio_hugo_alvigini_luminoso.jpg'); 
+
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+
+      background-image: var(--fondo-elegido); 
+
       background-size: cover; 
+
       background-position: center center; 
-      z-index: -2;
-    }
-    
-    /* Capa de oscurecimiento o contraste sutil para el fondo */
-    .bg-overlay {
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%;
-      background: rgba(0, 0, 0, 0.15); 
+
+      filter: brightness(0.92);
+
       z-index: -1;
+
     }
 
-    /* 📍 ALINEACIÓN: Caja dispuesta a la izquierda para mantener la composición limpia */
+    
+
+    /* Capa de contraste */
+
+    .bg-overlay {
+
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+
+      background: linear-gradient(90deg, rgba(26, 31, 54, 0.4) 0%, rgba(26, 31, 54, 0.1) 100%); 
+
+      z-index: 0;
+
+    }
+
+
+
+    /* Alineación del Login a la Izquierda para despejar el resto de la mesa */
+
     body { 
+
       font-family: 'Open Sans', sans-serif; 
+
       display: flex; 
+
       align-items: center; 
+
       justify-content: flex-start; 
+
       min-height: 100vh; 
-      padding-left: 8%; 
+
+      padding-left: 6%; 
+
       position: relative; 
+
     }
 
-    /* TARJETA DE LOGIN CON ESPACIO SUPERIOR PARA LA FOTO FLOTANTE */
+
+
     .login-box {
-      background: #ffffff; 
-      padding: 60px 35px 40px 35px; /* Más padding arriba para dar espacio al avatar */
-      border-radius: 24px; 
-      box-shadow: 0 30px 60px rgba(0,0,0,0.3); 
-      width: 100%; 
-      max-width: 360px; 
-      text-align: center; 
-      position: relative; 
-      z-index: 10;
-      margin-top: 40px; /* Margen para balancear el avatar que sobresale */
+
+      background: #ffffff; padding: 45px 40px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); 
+
+      width: 100%; max-width: 380px; text-align: center; position: relative; z-index: 10;
+
     }
 
-    /* 📸 AVATAR CIRCULAR FLOTANTE CORREGIDO */
-    .avatar-profile {
-      position: absolute;
-      top: -55px; /* Hace que sobresalga la mitad hacia arriba de la tarjeta */
-      left: 50%;
-      transform: translateX(-50%);
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      background-image: url('https://res.cloudinary.com/dlnrsadbc/image/upload/v1778806879/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li_1_1_uos6ak.webp');
-      background-size: cover;
-      background-position: center;
-      border: 4px solid #ffffff;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
+
+
+    .brand-logo { margin-top: -110px; margin-bottom: 15px; }
+
+    .brand-logo img { width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 5px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.15); background: white; }
+
+
+
+    h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 1.8em; margin-bottom: 5px; margin-top: 0; }
+
+    h2 { font-size: 0.95em; color: #4b5563; margin-bottom: 25px; font-weight: 400; line-height: 1.4; }
+
+
 
     .promo-badge {
-      display: inline-block; 
-      padding: 6px 14px; 
-      border-radius: 20px; 
-      font-size: 0.75em; 
-      font-weight: 700; 
-      text-transform: uppercase;
-      background-color: #15803d !important; 
-      color: white; 
-      margin-bottom: 18px; 
-      letter-spacing: 0.5px;
+
+      display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 0.75em; font-weight: 700; text-transform: uppercase;
+
+      background-color: #15803d !important; color: white; margin-bottom: 15px;
+
     }
 
-    h1 { font-family: 'Montserrat', sans-serif; color: var(--platform-dark); font-size: 1.8em; margin-bottom: 6px; margin-top: 0; }
-    h2 { font-size: 0.95em; color: #4b5563; margin-bottom: 25px; font-weight: 400; }
 
-    .form-group { text-align: left; margin-bottom: 18px; }
-    .form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: #111827; font-size: 0.9em; }
-    input { width: 100%; padding: 12px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95em; box-sizing: border-box; transition: 0.2s; }
-    input:focus { border-color: var(--accent-blue); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+
+    .form-group { text-align: left; margin-bottom: 15px; }
+
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #111827; font-size: 0.9em; }
+
+    input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 0.95em; box-sizing: border-box; }
+
+
 
     .btn-primary {
-      width: 100%; 
-      padding: 14px; 
-      background-color: #1a1f36 !important; 
-      color: #ffffff !important;
-      border: none; 
-      border-radius: 10px; 
-      font-size: 1em; 
-      font-weight: 700; 
-      cursor: pointer; 
-      transition: 0.2s;
-    }
-    .btn-primary:hover { background-color: #2e3554 !important; }
 
-    /* Enlace de Packs inferior */
-    .btn-packs-link {
-      display: inline-flex; 
-      align-items: center; 
-      gap: 8px; 
-      margin-top: 20px;
-      color: #2563eb !important; 
-      font-size: 0.85em; 
-      font-weight: 600; 
-      text-decoration: none; 
-      transition: 0.2s;
-    }
-    .btn-packs-link:hover { color: #1d4ed8 !important; text-decoration: underline; }
+      width: 100%; padding: 14px; background-color: #111827 !important; color: #ffffff !important;
 
-    /* Burbuja flotante de WhatsApp */
+      border: none; border-radius: 10px; font-size: 1em; font-weight: 700; cursor: pointer; transition: 0.3s;
+
+    }
+
+    .btn-primary:hover { background-color: #1f2937 !important; }
+
+
+
+    /* Botón Comercial para Ofrecer los Packs (Landing Page) */
+
+    .btn-secondary-packs {
+
+      display: block; width: 100%; padding: 12px; margin-top: 12px;
+
+      background-color: transparent !important; color: #4b5563 !important;
+
+      border: 2px solid #d1d5db; border-radius: 10px; font-size: 0.9em; font-weight: 600;
+
+      cursor: pointer; text-decoration: none; box-sizing: border-box; transition: 0.3s;
+
+    }
+
+    .btn-secondary-packs:hover { background-color: #f3f4f6 !important; color: #111827 !important; border-color: #111827; }
+
+
+
+    /* Frase inspiracional abajo a la derecha */
+
+    .inspiring-quote-container {
+
+      position: fixed; bottom: 30px; right: 120px; max-width: 380px;
+
+      text-align: right; color: #ffffff; z-index: 5;
+
+      background-color: rgba(26, 31, 54, 0.8); padding: 20px; border-radius: 12px;
+
+      backdrop-filter: blur(4px); box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+    }
+
+    .inspiring-quote-container p { font-style: italic; font-size: 1.05em; line-height: 1.4; margin-bottom: 8px; font-weight: 600; margin-top: 0; }
+
+    .inspiring-quote-container span { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9em; text-transform: uppercase; color: #3b82f6; }
+
+
+
+    /* WhatsApp Flotante */
+
     .whatsapp-bubble { 
-      position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
-      background-color: var(--whatsapp-green); border-radius: 50%; 
-      display: flex; justify-content: center; align-items: center; 
-      z-index: 100; border: 3px solid white; transition: 0.3s; text-decoration: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
-    .whatsapp-bubble:hover { transform: scale(1.06); }
 
-    /* RESPONSIVE EXACTO */
-    @media (max-width: 900px) {
-      body { padding-left: 0; justify-content: center; background-position: 35% center; }
-      .login-box { width: 90%; padding: 55px 20px 35px 20px; }
+      position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
+
+      background-color: var(--whatsapp-green); border-radius: 50%; 
+
+      display: flex; justify-content: center; align-items: center; 
+
+      z-index: 100; border: 3px solid white; transition: 0.3s; text-decoration: none;
+
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+
     }
+
+    .whatsapp-bubble:hover { transform: scale(1.05); }
+
+
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+
+      body { padding-left: 0; justify-content: center; }
+
+      .login-box { width: 92%; padding: 40px 20px; }
+
+      .inspiring-quote-container { display: none; }
+
+    }
+
   </style>
+
 </head>
+
 <body>
 
+
+
   <div class="bg-container"></div>
+
   <div class="bg-overlay"></div>
 
+
+
   <div class="login-box">
-    
-    <div class="avatar-profile"></div>
+
+    <div class="brand-logo">
+
+      <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/w_160,h_160,c_fill,q_auto,f_auto/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" 
+
+           alt="Hugo Alvigini - Especialista en Automatización" width="140" height="140" style="aspect-ratio: 1/1;" fetchpriority="high">
+
+    </div>
 
     <div class="promo-badge"><i class="fas fa-rocket"></i> Pensando en el Emprendedor</div>
+
     <h1>Hugo Alvigini</h1>
+
     <h2>Ingresa a tu academia</h2>
+
      
+
     <form id="loginForm">
+
       <div class="form-group">
+
           <label for="email">Email</label>
+
           <input type="email" id="email" required placeholder="tu@email.com">
+
       </div>
+
       <div class="form-group">
+
           <label for="password">Contraseña</label>
+
           <input type="password" id="password" required placeholder="••••••••"> 
+
       </div>
+
       <button type="submit" class="btn-primary" id="submitBtn">Entrar a mis Cursos</button>
+
     </form>
 
-    <a href="https://hugo85ar.github.io/formulario-curso-sheets/" class="btn-packs-link" target="_blank">
+
+
+    <a href="https://hugo85ar.github.io/formulario-curso-sheets/" class="btn-secondary-packs">
+
       <i class="fas fa-layer-group"></i> Ver Packs de Automatización e IA
+
     </a>
+
   </div>
 
+
+
+  <div class="inspiring-quote-container">
+
+    <p>"Dominar una nueva herramienta es como abrir una puerta que antes ni siquiera veías. No te detengas ahora; el conocimiento que adquieras hoy es el sistema que sostendrá tu crecimiento mañana."</p>
+
+    <span>— Hugo Alvigini</span>
+
+  </div>
+
+
+
   <a href="https://wa.me/5491136151754?text=Hola%20Hugo!%20Vengo%20desde%20el%20Acceso%20a%20Alumnos%20y%20tengo%20una%20duda" 
+
      class="whatsapp-bubble" target="_blank" aria-label="Contactar a Hugo Alvigini por WhatsApp">
+
     <i class="fab fa-whatsapp" style="color: white; font-size: 32px;"></i>
+
   </a>
 
+
+
   <script>
+
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
 
+
+
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
+
       e.preventDefault();
+
       const btn = document.getElementById('submitBtn');
+
       const email = document.getElementById('email').value;
+
       const pass = document.getElementById('password').value;
+
       btn.innerText = 'Verificando...';
+
       btn.disabled = true;
 
+
+
       try {
+
         const response = await fetch(`${WEB_APP_URL}?action=login&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}`);
+
         const data = await response.json();
+
         if (data.status === "success") {
+
            localStorage.setItem('userToken', data.token);
+
            localStorage.setItem('userEmail', email);
+
            localStorage.setItem('userName', data.nombre);
+
            window.location.href = "dashboard.html";
+
         } else {
+
            alert("Error: " + data.message);
+
            btn.innerText = 'Entrar a mis Cursos';
+
            btn.disabled = false;
+
         }
+
       } catch (err) {
+
          alert("Error de conexión. Inténtalo de nuevo.");
+
          btn.innerText = 'Entrar a mis Cursos';
+
          btn.disabled = false;
+
       }
+
     });
+
   </script>
+
 </body>
+
 </html>
+
