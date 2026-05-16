@@ -158,10 +158,13 @@
     }
     .btn-packs-link:hover { color: #1d4ed8 !important; text-decoration: underline; }
 
+    /* 📝 TARJETA DE LA FRASE PERSUASIVA REUBICADA HACIA LA IZQUIERDA Y CENTRADA */
     .persuasive-quote-box {
-      align-self: flex-end; 
-      margin-bottom: 35px; 
-      margin-right: 4%; 
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%); /* Centrado vertical exacto */
+      margin-right: 28%; /* Desplazado a la izquierda para liberar la notebook entera */
       background: rgba(26, 31, 54, 0.85); 
       padding: 20px; 
       border-radius: 16px;
@@ -216,7 +219,7 @@
       }
       .bg-container { background-position: 30% center; } 
       .login-box { width: 88%; padding: 60px 22px 30px 22px; }
-      .persuasive-quote-box { display: none; } 
+      .persuasive-quote-box { display: none; } /* Oculto en móviles para mantener limpio el login */
     }
   </style>
 </head>
