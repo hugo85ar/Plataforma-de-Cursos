@@ -158,13 +158,11 @@
     }
     .btn-packs-link:hover { color: #1d4ed8 !important; text-decoration: underline; }
 
-    /* 📝 TARJETA AJUSTADA PARA LIBERAR EL LOGO DE LA NOTEBOOK */
+    /* 📝 REUBICACIÓN EN LA BASE DE LA MESA Y DESPLAZADA A LA IZQUIERDA */
     .persuasive-quote-box {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%); /* Centrado vertical exacto */
-      margin-right: 38%; /* Ajustado de 28% a 38% para mover un poquito más a la izquierda y despejar la notebook */
+      align-self: flex-end; /* Vuelve abajo de todo, apoyada sobre la mesa */
+      margin-bottom: 35px; /* Misma distancia vertical exacta del diseño original */
+      margin-right: 36%; /* Desplazada a la izquierda para dejar libre el logo de la laptop */
       background: rgba(26, 31, 54, 0.85); 
       padding: 20px; 
       border-radius: 16px;
@@ -219,7 +217,7 @@
       }
       .bg-container { background-position: 30% center; } 
       .login-box { width: 88%; padding: 60px 22px 30px 22px; }
-      .persuasive-quote-box { display: none; } /* Oculto en móviles para mantener limpio el login */
+      .persuasive-quote-box { display: none; } 
     }
   </style>
 </head>
