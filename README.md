@@ -24,12 +24,14 @@ La academia impulsa el crecimiento de los negocios digitales a través de un mod
 * **Curso 100% Gratis de Google Sheets para Emprendedores:** Una primera impronta práctica para aprender a dominar los datos, ordenar la estructura interna del negocio y dejar de trabajar a mano.
 * **Formaciones Avanzadas y Soluciones de Pago:** Programas enfocados en la implementación de ecosistemas automatizados complejos, desarrollo en Apps Script, integración de Inteligencia Artificial aplicable a ventas y gestión de plataformas educativas.
 
-## 💻 Detalles Técnicos del Repositorio
 
-Este repositorio contiene el script y la arquitectura frontend para el funcionamiento integral de la plataforma de cursos:
+## 💻 Componentes Técnicos del Repositorio
 
-* `index.html` / `curso.html`: Interfaces de usuario optimizadas para una navegación fluida (UX/UI).
-* `dashboard.html`: Panel de control para la gestión y seguimiento del progreso de los alumnos.
-* `formulario_prospectos`: Conexión de flujos de datos entrantes para el embudo de marketing automation.
+Este repositorio contiene la arquitectura frontend y la estructura esencial para el funcionamiento integral de la plataforma de cursos de la academia:
 
-*Desarrollado con criterio estratégico. Porque el orden puertas adentro es lo que sostiene el crecimiento puertas afuera.*
+* `índice.html` / `curso.html`: Interfaces de usuario principales, optimizadas para ofrecer una navegación fluida, ágil y de alta conversión (UX/UI).
+* `panel.html`: Interfaz del panel de control (Dashboard) diseñado para la gestión interna y el seguimiento interactivo del progreso de los alumnos.
+* `formulario_prospectos/`: Carpeta/Módulo técnico que procesa la captura y conexión de flujos de datos entrantes para el embudo automatizado de marketing.
+* `LÉAME.md`: Este archivo, que detalla la descripción estratégica, los objetivos del ecosistema y la organización técnica del proyecto.
+
+*Desarrollado con criterio estratégico en la rama `principal`. Porque el orden puertas adentro es lo que sostiene el crecimiento puertas afuera.*
