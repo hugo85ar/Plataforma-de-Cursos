@@ -208,7 +208,7 @@
       
       document.getElementById('loader').style.display = 'none';
       document.getElementById('courseTitle').innerText = data.nombreCurso;
-      document.getElementById('welcomeUser').innerText = `¡Bienvenido, ${data.nombreUsuario}!`;
+      document.getElementById('welcomeUser').innerText = `¡Bienvenido/a, ${data.nombreUsuario}!`;
       document.getElementById('progressContainer').style.display = 'block';
       actualizarBarraProgreso(data.porcentajeProgreso || 0);
 
