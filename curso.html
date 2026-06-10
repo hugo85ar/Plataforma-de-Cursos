@@ -70,8 +70,24 @@
     .module { background-color: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
     .lesson { background: #f8fafc; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; }
     .lesson-video-section img { width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; }
-    .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
-    .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    
+    .video-container-modal { 
+      position: relative; 
+      padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+      height: 0; 
+      overflow: hidden; 
+      background: #000;
+      width: 100%;
+    }
+    
+    .video-container-modal iframe { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      border: 0;
+    }
     .video-popout-overlay { position: absolute; top: 0; right: 0; width: 100px; height: 80px; z-index: 10; background: transparent; }
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
     .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; overflow: hidden; position: relative; }
@@ -107,6 +123,11 @@
         font-size: 1.4rem !important; /* Título más humano para el celular */
       }
     }
+
+    .modal-content {
+        width: 95% !important; /* Un poco más de ancho en celular */
+        margin: auto;
+      }
   
   </style>
 </head>
@@ -141,15 +162,20 @@
   </div>
 
   <div id="videoModal" class="modal">
-    <div class="modal-content">
-      <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
-        <h2 id="modalVideoTitle" style="margin:0; font-size:1.1rem;"></h2>
-        <span onclick="closeModal()" style="cursor:pointer; font-size:2rem; line-height: 1;">&times;</span>
-      </div>
-      <div class="video-container-modal" oncontextmenu="return false;">
-        <div class="video-popout-overlay"></div>
-        <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      </div>
+  <div class="modal-content">
+    <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
+      <h2 id="modalVideoTitle" style="margin:0; font-size:1.1rem;"></h2>
+      <span onclick="closeModal()" style="cursor:pointer; font-size:2rem; line-height: 1;">&times;</span>
+    </div>
+    
+    <!-- Aviso de optimización -->
+    <div style="background: #fff9c4; color: #856404; padding: 10px; text-align: center; font-size: 0.85rem; border-bottom: 1px solid #ffeeba;">
+      <i class="fas fa-desktop"></i> Por experiencia educativa, recomendamos el uso de <b>PC</b> para optimizar el aprendizaje y realizar los ejercicios en Sheets.
+    </div>
+
+    <div class="video-container-modal" oncontextmenu="return false;">
+      <div class="video-popout-overlay"></div>
+      <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
   </div>
 
