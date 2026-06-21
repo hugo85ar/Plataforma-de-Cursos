@@ -25,8 +25,8 @@
 </style>
 
 <div class="formulario-container">
-    <h3>¡Ayúdanos a conocerte mejor!</h3>
-    <p>Completa este breve formulario para que podamos preparar contenido exclusivo para ti.</p>
+    <h3>¡Personalizá tu acceso al curso!</h3>
+   <p>Respondé estas 4 preguntas rápidas para que te enviemos contenido, plantillas y automatizaciones específicas para el tipo de negocio que gestionas.</p>
     
     <div id="formulario-contenido">
         <div class="formulario-group">
