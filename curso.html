@@ -217,11 +217,10 @@
     }
 
     function renderCourse(data) {
-
-      function renderCourse(data) {
-    // 1. Aseguramos que el contenido principal sea visible y el mensaje de espera oculto
-    document.getElementById('courseContent').style.display = 'block';
-    document.getElementById('statusMessage').style.display = 'none';
+      // 1. Limpiamos cualquier estado de carga o mensaje
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('statusMessage').style.display = 'none';
+      document.getElementById('courseContent').style.display = 'block';
         
       const nombre = data.nombreUsuario || 'Emprendedor';
         const msgCursos = `Hola Hugo! Soy ${nombre} (${userEmail}). Estoy viendo el curso "${data.nombreCurso}" y me interesa subir mi nivel. ¿Me das info sobre la consultoría o los cursos de Investigación de Mercado, Landings o Clientes en Orden?`;
