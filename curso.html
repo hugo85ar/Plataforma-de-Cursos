@@ -158,7 +158,7 @@
       </div>
     </div>
 
-    <div id="courseBannerContainer"></div>
+   <div id="courseBannerContainer"></div>
 
     <section class="welcome-message module" style="margin-top:20px;">
       <h2 id="welcomeUser">¡Bienvenido/a!</h2>
@@ -166,12 +166,14 @@
     </section>
 
     <div id="loader">Cargando lecciones...</div>
+
     <div id="courseContent"></div>
-    <!-- En tu HTML, donde está <div id="courseContent"></div> -->
-<div id="statusMessage" style="text-align: center; display: none; padding: 40px; color: #0056b3; font-weight: bold; font-size: 1.2rem; background: #ffffff; border-radius: 12px; margin: 20px 0;">
-  <i class="fas fa-spinner fa-spin" style="font-size: 2rem; display: block; margin-bottom: 15px;"></i>
-  <span id="statusText">Activando tu acceso personalizado...</span>
-</div>
+
+    <div id="statusMessage" style="text-align: center; display: none; padding: 40px; color: #0056b3; font-weight: bold; font-size: 1.2rem; background: #ffffff; border-radius: 12px; margin: 20px 0; border: 2px solid #e2e8f0;">
+      <i class="fas fa-spinner fa-spin" style="font-size: 2.5rem; display: block; margin-bottom: 15px; color: #3b82f6;"></i>
+      <span id="statusText">Activando tu acceso personalizado...</span>
+    </div>
+
 </div>
   
 
@@ -334,21 +336,19 @@ if (data.formCompletado === false) {
         content.innerHTML += moduloHtml;
     }
 }
- async function enviarFormularioProspectos(event) {
+async function enviarFormularioProspectos(event) {
   event.preventDefault();
 
-  // 1. Elementos de la interfaz
   const btn = event.target.querySelector('button');
-
-  // 🛡️ PROTECCIÓN ANTI-CLIC MÚLTIPLE
   if (btn.disabled) return;
 
   const contentDiv = document.getElementById('courseContent');
   const statusMsg = document.getElementById('statusMessage');
 
-  // 2. Transición visual: ocultamos formulario y mostramos mensaje de espera
   btn.disabled = true;
   btn.innerText = "Procesando...";
+
+  // Ocultamos el formulario y mostramos el status de "activación"
   contentDiv.style.display = 'none';
   statusMsg.style.display = 'block';
 
@@ -356,32 +356,23 @@ if (data.formCompletado === false) {
   new FormData(event.target).forEach((value, key) => params.append(key, value));
 
   try {
-    // Primero: Enviamos el formulario
-    await fetch(WEB_APP_URL, {
+    const response = await fetch(WEB_APP_URL, {
       method: 'POST',
       body: params.toString(),
       headers: { "Content-Type": "application/x-www-form-urlencoded" }
     });
-
-    // Segundo: Intentamos recargar el curso
-    try {
-      await init();
-    } catch (initError) {
-      console.error("Error al refrescar el curso:", initError);
-      // Si falla la carga, forzamos la recarga de la página como plan B profesional
-      window.location.reload(); 
-      return; 
-    }
-
-    // Si todo salió bien, ocultamos el mensaje
+    
+    // Al recibir respuesta, recargamos el contenido
+    await init(); 
+    
+    // Si init() tiene éxito, el contenido se vuelve a mostrar 
+    // (renderCourse lo maneja al limpiar el formulario)
     statusMsg.style.display = 'none';
-    contentDiv.style.display = 'block';
 
   } catch (e) {
-    // Si falla el envío del formulario
     statusMsg.style.display = 'none';
-    contentDiv.style.display = 'block';
-    alert("Error al enviar el formulario. Por favor, intenta de nuevo.");
+    contentDiv.style.display = 'block'; // Mostramos de nuevo si falla
+    alert("Hubo un error de conexión. Por favor, intenta de nuevo.");
     btn.disabled = false;
     btn.innerText = "¡Comenzar el Curso Ahora!";
   }
