@@ -169,9 +169,11 @@
     <div id="courseContent"></div>
     <!-- En tu HTML, donde está <div id="courseContent"></div> -->
 <div id="statusMessage" style="text-align: center; display: none; padding: 40px; color: #0056b3; font-weight: bold; font-size: 1.2rem;">
-  <i class="fas fa-spinner fa-spin"></i> Activando tu acceso personalizado...
+ <i class="fas fa-spinner fa-spin"></i> 
+  <span id="statusText">Activando tu acceso personalizado...</span>
 </div>
-  </div>
+</div>
+  
 
   <div id="videoModal" class="modal">
   <div class="modal-content">
@@ -332,48 +334,59 @@ if (data.formCompletado === false) {
         content.innerHTML += moduloHtml;
     }
 }
-  async function enviarFormularioProspectos(event) {
-      event.preventDefault();
-      
-      // 1. Elementos de la interfaz
-      const btn = event.target.querySelector('button');
-      
-      // 🛡️ PROTECCIÓN ANTI-CLIC MÚLTIPLE
-      if (btn.disabled) return;
-      
-      const contentDiv = document.getElementById('courseContent');
-      const statusMsg = document.getElementById('statusMessage');
+ async function enviarFormularioProspectos(event) {
+  event.preventDefault();
 
-      // 2. Transición visual: ocultamos formulario y mostramos mensaje de espera
-      btn.disabled = true; // Deshabilitamos el botón para evitar doble envío
-      btn.innerText = "Procesando..."; // Feedback visual adicional
-      contentDiv.style.display = 'none';
-      statusMsg.style.display = 'block';
+  // 1. Elementos de la interfaz
+  const btn = event.target.querySelector('button');
 
-      const params = new URLSearchParams({ action: 'procesarFormulario', email: userEmail });
-      new FormData(event.target).forEach((value, key) => params.append(key, value));
+  // 🛡️ PROTECCIÓN ANTI-CLIC MÚLTIPLE
+  if (btn.disabled) return;
 
-      try {
-        await fetch(WEB_APP_URL, { 
-            method: 'POST', 
-            body: params.toString(), 
-            headers: { "Content-Type": "application/x-www-form-urlencoded" } 
-        });
-        
-        await init(); // Recargamos el curso
-        
-        statusMsg.style.display = 'none';
-        contentDiv.style.display = 'block';
-        
-      } catch (e) {
-        statusMsg.style.display = 'none';
-        contentDiv.style.display = 'block';
-        alert("Error al enviar el formulario. Por favor, intenta de nuevo.");
-        btn.disabled = false;
-        btn.innerText = "¡Comenzar el Curso Ahora!";
-      
+  const contentDiv = document.getElementById('courseContent');
+  const statusMsg = document.getElementById('statusMessage');
+
+  // 2. Transición visual: ocultamos formulario y mostramos mensaje de espera
+  btn.disabled = true;
+  btn.innerText = "Procesando...";
+  contentDiv.style.display = 'none';
+  statusMsg.style.display = 'block';
+
+  const params = new URLSearchParams({ action: 'procesarFormulario', email: userEmail });
+  new FormData(event.target).forEach((value, key) => params.append(key, value));
+
+  try {
+    // Primero: Enviamos el formulario
+    await fetch(WEB_APP_URL, {
+      method: 'POST',
+      body: params.toString(),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    });
+
+    // Segundo: Intentamos recargar el curso
+    try {
+      await init();
+    } catch (initError) {
+      console.error("Error al refrescar el curso:", initError);
+      // Si falla la carga, forzamos la recarga de la página como plan B profesional
+      window.location.reload(); 
+      return; 
     }
-    }
+
+    // Si todo salió bien, ocultamos el mensaje
+    statusMsg.style.display = 'none';
+    contentDiv.style.display = 'block';
+
+  } catch (e) {
+    // Si falla el envío del formulario
+    statusMsg.style.display = 'none';
+    contentDiv.style.display = 'block';
+    alert("Error al enviar el formulario. Por favor, intenta de nuevo.");
+    btn.disabled = false;
+    btn.innerText = "¡Comenzar el Curso Ahora!";
+  }
+}
+   
 
     async function verificarYVer(url, titulo) {
       const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${encodeURIComponent(userEmail)}&token=${userToken}`);
