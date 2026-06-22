@@ -332,15 +332,21 @@ if (data.formCompletado === false) {
         content.innerHTML += moduloHtml;
     }
 }
-   async function enviarFormularioProspectos(event) {
+  async function enviarFormularioProspectos(event) {
       event.preventDefault();
       
-      // Elementos de la interfaz
+      // 1. Elementos de la interfaz
+      const btn = event.target.querySelector('button');
+      
+      // 🛡️ PROTECCIÓN ANTI-CLIC MÚLTIPLE
+      if (btn.disabled) return;
+      
       const contentDiv = document.getElementById('courseContent');
       const statusMsg = document.getElementById('statusMessage');
-      const btn = event.target.querySelector('button');
 
-      // Transición visual: ocultamos formulario y mostramos mensaje de espera
+      // 2. Transición visual: ocultamos formulario y mostramos mensaje de espera
+      btn.disabled = true; // Deshabilitamos el botón para evitar doble envío
+      btn.innerText = "Procesando..."; // Feedback visual adicional
       contentDiv.style.display = 'none';
       statusMsg.style.display = 'block';
 
@@ -354,10 +360,8 @@ if (data.formCompletado === false) {
             headers: { "Content-Type": "application/x-www-form-urlencoded" } 
         });
         
-        // Recargamos los datos sin refrescar la página completa
-        await init();
+        await init(); // Recargamos el curso
         
-        // Ocultamos el mensaje de estado (el contenido nuevo ya fue renderizado por init)
         statusMsg.style.display = 'none';
         contentDiv.style.display = 'block';
         
@@ -367,7 +371,8 @@ if (data.formCompletado === false) {
         alert("Error al enviar el formulario. Por favor, intenta de nuevo.");
         btn.disabled = false;
         btn.innerText = "¡Comenzar el Curso Ahora!";
-      }
+      
+    }
     }
 
     async function verificarYVer(url, titulo) {
