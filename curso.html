@@ -93,6 +93,14 @@
     .modal-content { background: white; border-radius: 10px; width: 90%; max-width: 800px; overflow: hidden; position: relative; }
     #loader { color: white; text-align: center; padding: 50px; font-size: 1.2rem; }
 
+    #statusMessage {
+    animation: fadeIn 0.5s;
+}
+    @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
     /* 📱 OPTIMIZACIÓN MÓVIL PARA EL HEADER */
     @media (max-width: 600px) {
       .course-header {
@@ -159,6 +167,10 @@
 
     <div id="loader">Cargando lecciones...</div>
     <div id="courseContent"></div>
+    <!-- En tu HTML, donde está <div id="courseContent"></div> -->
+<div id="statusMessage" style="text-align: center; display: none; padding: 40px; color: #0056b3; font-weight: bold; font-size: 1.2rem;">
+  <i class="fas fa-spinner fa-spin"></i> Activando tu acceso personalizado...
+</div>
   </div>
 
   <div id="videoModal" class="modal">
@@ -320,16 +332,42 @@ if (data.formCompletado === false) {
         content.innerHTML += moduloHtml;
     }
 }
-    async function enviarFormularioProspectos(event) {
+   async function enviarFormularioProspectos(event) {
       event.preventDefault();
+      
+      // Elementos de la interfaz
+      const contentDiv = document.getElementById('courseContent');
+      const statusMsg = document.getElementById('statusMessage');
       const btn = event.target.querySelector('button');
-      btn.innerText = "Registrando..."; btn.disabled = true;
+
+      // Transición visual: ocultamos formulario y mostramos mensaje de espera
+      contentDiv.style.display = 'none';
+      statusMsg.style.display = 'block';
+
       const params = new URLSearchParams({ action: 'procesarFormulario', email: userEmail });
       new FormData(event.target).forEach((value, key) => params.append(key, value));
+
       try {
-        await fetch(WEB_APP_URL, { method: 'POST', body: params.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
-        alert("¡Registro exitoso! Ya puedes acceder."); location.reload();
-      } catch (e) { alert("Error al enviar."); btn.disabled = false; btn.innerText = "Comenzar el Curso Ahora!"; }
+        await fetch(WEB_APP_URL, { 
+            method: 'POST', 
+            body: params.toString(), 
+            headers: { "Content-Type": "application/x-www-form-urlencoded" } 
+        });
+        
+        // Recargamos los datos sin refrescar la página completa
+        await init();
+        
+        // Ocultamos el mensaje de estado (el contenido nuevo ya fue renderizado por init)
+        statusMsg.style.display = 'none';
+        contentDiv.style.display = 'block';
+        
+      } catch (e) {
+        statusMsg.style.display = 'none';
+        contentDiv.style.display = 'block';
+        alert("Error al enviar el formulario. Por favor, intenta de nuevo.");
+        btn.disabled = false;
+        btn.innerText = "¡Comenzar el Curso Ahora!";
+      }
     }
 
     async function verificarYVer(url, titulo) {
@@ -341,23 +379,31 @@ if (data.formCompletado === false) {
         let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
         frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
         document.getElementById('videoModal').style.display = 'flex';
-      } else { alert("Sesión expirada"); cerrarSesion(); }
+      } else { 
+        alert("Sesión expirada"); 
+        cerrarSesion(); 
+      }
     }
 
     async function marcarLeccionManual(leccionId) {
         const btn = document.getElementById(`btn-${leccionId}`);
         if (btn.classList.contains('visto')) return;
-        btn.disabled = true; btn.querySelector('span').innerText = "Guardando...";
+        btn.disabled = true; 
+        btn.querySelector('span').innerText = "Guardando...";
         try {
             const formData = new URLSearchParams({ action: 'marcarCompletada', email: userEmail, curso: cursoId, leccion: leccionId });
             const response = await fetch(WEB_APP_URL, { method: 'POST', body: formData.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
             const resData = await response.json();
             if (resData.status === "success") {
-                btn.classList.add('visto'); btn.querySelector('i').className = "fas fa-check-circle";
+                btn.classList.add('visto'); 
+                btn.querySelector('i').className = "fas fa-check-circle";
                 btn.querySelector('span').innerText = "Lección Completada";
                 actualizarBarraProgreso(resData.nuevoPorcentaje);
             }
-        } catch (e) { btn.disabled = false; btn.querySelector('span').innerText = "Marcar como completada"; }
+        } catch (e) { 
+            btn.disabled = false; 
+            btn.querySelector('span').innerText = "Marcar como completada"; 
+        }
     }
 
     function actualizarBarraProgreso(porcentaje) {
@@ -365,8 +411,16 @@ if (data.formCompletado === false) {
         document.getElementById('progressText').innerText = Math.round(porcentaje) + '%';
     }
 
-    function closeModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('modalVideoFrame').src = ''; }
-    function cerrarSesion() { localStorage.clear(); window.location.href = "index.html"; }
+    function closeModal() { 
+        document.getElementById('videoModal').style.display = 'none'; 
+        document.getElementById('modalVideoFrame').src = ''; 
+    }
+
+    function cerrarSesion() { 
+        localStorage.clear(); 
+        window.location.href = "index.html"; 
+    }
+
     init();
   </script>
   
