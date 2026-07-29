@@ -59,11 +59,11 @@
   gap: 2.5rem !important;
   justify-content: center !important; /* Mantiene todo centrado si hay uno o muchos */
 }
-.course-card { 
-  width: 550px !important; /* "Un poquito más ancho" y SIEMPRE igual */
+.course-card {
+  width: 550px !important;
   background: white !important;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: hidden; /* Esto es clave para contener la imagen dentro de los bordes redondeados */
   display: flex !important;
   flex-direction: column !important;
   box-shadow: 0 15px 35px rgba(0,0,0,0.15);
@@ -77,10 +77,11 @@
     /* 🖼️ IMÁGENES TIPO BANNER (Ajuste preciso) */
 .course-card-image { 
   width: 100% !important; 
-  height: 160px !important; /* Altura de banner real para PC */
+  height: 160px !important; /* Altura ideal para PC */
   object-fit: cover !important; 
   display: block !important;
   border-bottom: 1px solid #eee;
+  flex-shrink: 0 !important;
 }
 .course-card-content {
   padding: 1.5rem !important;
@@ -100,6 +101,9 @@
     /* 📱 MÓVIL: Aquí "flaqueamos" la imagen para que parezca banner */
 /* 📱 OPTIMIZACIÓN MÓVIL FINAL */
 @media (max-width: 768px) { 
+  .course-card {
+    width: 100% !important; /* Para que ocupe todo el ancho en celulares */
+  }
   
   .container { 
     width: 100% !important;
@@ -116,9 +120,7 @@
   }
 
 .course-card-image {
-    height: 80px !important; /* Un toque apenas más fino para que luzca el 100% */
-    width: 100% !important;
-    object-fit: cover !important;
+    height: 120px !important; /* Una altura proporcional y limpia para celular (ni muy alta ni muy comprimida) */
   }
 
   /* Ajuste sutil de títulos para acompañar el cambio */
