@@ -221,20 +221,21 @@
   
 
   <div id="videoModal" class="modal">
-  <div class="modal-content">
-    <div style="background:#0056b3; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
-      <h2 id="modalVideoTitle" style="margin:0; font-size:1.1rem;"></h2>
-      <span onclick="closeModal()" style="cursor:pointer; font-size:2rem; line-height: 1;">&times;</span>
-    </div>
-    
-    <!-- Aviso de optimización -->
-    <div style="background: #fff9c4; color: #856404; padding: 10px; text-align: center; font-size: 0.85rem; border-bottom: 1px solid #ffeeba;">
-      <i class="fas fa-desktop"></i> Por experiencia educativa, recomendamos el uso de <b>PC</b> para optimizar el aprendizaje y realizar los ejercicios en Sheets.
-    </div>
+    <div class="modal-content">
+      <div style="background:#0056b3; color:white; padding:12px 15px; display:flex; justify-content:space-between; align-items:center;">
+        <h2 id="modalVideoTitle" style="margin:0; font-size:1rem;"></h2>
+        <span onclick="closeModal()" style="cursor:pointer; font-size:1.8rem; line-height: 1;">&times;</span>
+      </div>
+      
+      <!-- Aviso de optimización más compacto -->
+      <div class="aviso-pc-responsive" style="background: #fff9c4; color: #856404; padding: 8px 12px; text-align: center; font-size: 0.8rem; border-bottom: 1px solid #ffeeba; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <i class="fas fa-desktop"></i> <span>Recomendamos el uso de <b>PC</b> para realizar los ejercicios en Sheets.</span>
+      </div>
 
-    <div class="video-container-modal" oncontextmenu="return false;">
-      <div class="video-popout-overlay"></div>
-      <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <div class="video-container-modal" oncontextmenu="return false;">
+        <div class="video-popout-overlay"></div>
+        <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
 
