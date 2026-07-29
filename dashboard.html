@@ -102,7 +102,8 @@
 /* 📱 OPTIMIZACIÓN MÓVIL FINAL */
 @media (max-width: 768px) { 
   .course-card {
-    width: 100% !important; /* Para que ocupe todo el ancho en celulares */
+    width: 100% !important;
+    margin-top: 10px;
   }
   
   .container { 
@@ -120,7 +121,11 @@
   }
 
 .course-card-image {
-    height: 120px !important; /* Una altura proporcional y limpia para celular (ni muy alta ni muy comprimida) */
+    height: auto !important; /* Deja que la imagen mantenga su proporción natural */
+    max-height: 150px !important; /* Limita la altura máxima para que no ocupe toda la pantalla */
+    object-fit: contain !important; /* Cambiamos a contain para que NUNCA se corte ninguna parte del banner */
+    background-color: #0f172a; /* Un fondito oscuro elegante por si queda algún espacio a los lados */
+    padding: 5px 0; /* Le da un respiro arriba y abajo para que no pegue con los bordes */
   }
 
   /* Ajuste sutil de títulos para acompañar el cambio */
