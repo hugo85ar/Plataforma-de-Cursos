@@ -120,13 +120,14 @@
   }
 
 .course-card-image {
-    height: auto !important; /* Deja que la imagen mantenga su proporción natural */
-    max-height: 150px !important; /* Limita la altura máxima para que no ocupe toda la pantalla */
-    object-fit: contain !important; /* Cambiamos a contain para que NUNCA se corte ninguna parte del banner */
-    background-color: #0f172a; /* Un fondito oscuro elegante por si queda algún espacio a los lados */
-    padding: 5px 0; /* Le da un respiro arriba y abajo para que no pegue con los bordes */
-  }
-
+  width: 100% !important;
+  height: auto !important;
+  max-height: 180px !important;
+  object-fit: contain !important;
+  display: block !important;
+  background-color: #0f172a;
+  padding: 5px 0;
+}
   /* Ajuste sutil de títulos para acompañar el cambio */
   .course-card-content { padding: 1.2rem !important; }
   .course-card-content h3 { font-size: 1.1rem !important; margin-bottom: 8px !important; }
