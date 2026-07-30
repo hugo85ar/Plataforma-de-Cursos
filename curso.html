@@ -110,6 +110,28 @@
       to { opacity: 1; }
     }
 
+    /* 1. ESTILO BASE PARA COMPUTADORA (Escritorio) */
+    .course-banner-wrapper {
+      width: 100%;
+      height: 210px; /* Altura generosa y elegante para PC */
+      background-image: url('${data.urlBanner}'); 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .course-banner-wrapper img {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
+
     /* 📱 OPTIMIZACIÓN MÓVIL PARA EL HEADER */
     @media (max-width: 600px) {
       .course-header {
