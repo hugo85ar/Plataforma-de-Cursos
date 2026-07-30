@@ -387,13 +387,13 @@ if (data.formCompletado === false) {
 }
 
      // Si ya completó, mostramos las lecciones
+    // Si ya completó, mostramos las lecciones y el banner con imagen real
       if (data.urlBanner) {
-    document.getElementById('courseBannerContainer').innerHTML = `
-      
-        <div class="course-banner-wrapper">
-            <!--<img src="${data.urlBanner}" alt="Banner del curso"> -->
-        </div>`;
-}
+        document.getElementById('courseBannerContainer').innerHTML = `
+          <div class="course-banner-wrapper">
+              <img src="${data.urlBanner}" alt="Banner del curso">
+          </div>`;
+      }
 
   const completadas = data.completadas || [];
     for (const modulo in data.modulos) {
