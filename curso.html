@@ -131,13 +131,10 @@
       object-fit: contain !important;
       display: block !important;
     }
-
-    /* 📱 OPTIMIZACIÓN MÓVIL PARA EL HEADER */
+/* 📱 AJUSTE PARA CELULARES */
     @media (max-width: 600px) {
-      .course-header {
-        flex-direction: column; 
-        text-align: center;
-        padding: 1rem;
+      .course-banner-wrapper {
+        height: 110px !important; /* Altura adaptada para pantallas chicas */
       }
 
       .action-buttons {
@@ -168,18 +165,7 @@
       }
     }
 
-.course-banner-wrapper {
-      width: 100%;
-      height: 140px; /* Ajusta esta altura según lo que consideres ideal para tu diseño */
-      background-image: url('URL_DE_TU_IMAGEN'); /* Pon aquí el enlace de tu imagen */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
+
 
    .course-banner-wrapper img {
       width: 100% !important;
