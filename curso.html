@@ -5,26 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Academia | Hugo Alvigini</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
+  <!-- 🎯 AQUÍ DEBES PEGAR EL CÓDIGO DE TU PÍXEL DE META (REEMPLAZA TU_PIXEL_ID CON TU ID REAL) -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._s)f._s=!0;t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'TU_PIXEL_ID'); // <--- CAMBIA ESTO POR TU ID DE PIXEL
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=TU_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+  <!-- FIN DEL PÍXEL DE META -->
+
   <style>
     /* 📲 BURBUJA DE ESCALABILIDAD PROFESIONAL */
-    .whatsapp-bubble {
-      position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px;
-      background-color: #25D366; border-radius: 50%; display: flex;
-      justify-content: center; align-items: center; z-index: 1000; border: 3px solid white;
+    .whatsapp-bubble { 
+      position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; 
+      background-color: #25D366; border-radius: 50%; display: flex; 
+      justify-content: center; align-items: center; z-index: 1000; border: 3px solid white; 
       transition: 0.3s; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
     .whatsapp-bubble:hover { transform: scale(1.15); }
 
-    /* Ajuste para que todos midan lo mismo en el header */
     .reset-password-button, .logout-button, .inicio-button {
-        width: 180px;    
+        width: 180px;     
         padding: 10px 0;    
         display: block;    
         margin-bottom: 8px;
         text-align: center;
     }
-     
-    /* 🔹 ESTILOS DE BOTONES Y FORMULARIO */
+      
     .material-button {
       display: inline-flex;
       align-items: center;
@@ -47,10 +61,10 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
-     
+      
     .btn-completar { background-color: #f1f5f9; color: #475569; padding: 0.8rem; border-radius: 8px; border: 2px solid #e2e8f0; width: 100%; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; }
     .btn-completar.visto { background-color: #dcfce7 !important; color: #15803d !important; border-color: #22c55e !important; }
-     
+      
     .reset-password-button { background-color: #ff9800; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.9rem; width: 150px; text-align: center; margin-bottom: 5px; }
     .logout-button { background-color: #dc3545; color: white; padding: 0.5rem 1rem; border-radius: 5px; border: none; font-weight: 600; width: 150px; cursor: pointer; margin-bottom: 5px; }
     .inicio-button { background-color: #007bff; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 600; width: 150px; text-align: center; }
@@ -58,7 +72,6 @@
     .formulario-container { background-color: #ffffff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); border: 2px solid #0056b3; margin-top: 1rem; }
     .formulario-submit { background-color: #28a745; color: white; border: none; padding: 1rem; width: 100%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 1.1rem; }
 
-    /* 🔹 TUS ESTILOS ORIGINALES */
     body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #1f2559, #3b82f6); background-attachment: fixed; color: #333; line-height: 1.6; }
     .container { max-width: 960px; margin: 2.5rem auto; padding: 0 1.5rem; }
     .course-header { background-color: #0056b3; color: white; padding: 1.5rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
@@ -66,36 +79,35 @@
     .module { background-color: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
     .lesson { background: #f8fafc; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; }
     .lesson-video-section img { width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; }
-   
-    .video-container-modal {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
+    
+    .video-container-modal { 
+      position: relative; 
+      padding-bottom: 56.25%; 
+      height: 0; 
+      overflow: hidden; 
       background: #000;
       width: 100%;
     }
-   
-    .video-container-modal iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+    
+    .video-container-modal iframe { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
       border: 0;
     }
     .video-popout-overlay { position: absolute; top: 0; right: 0; width: 100px; height: 80px; z-index: 10; background: transparent; }
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
-   
-    /* MODAL OPTIMIZADO PARA CELULAR */
-    .modal-content {
-        background: white;
-        border-radius: 10px;
-        width: 95% !important;
-        max-width: 800px;
-        overflow: hidden;
-        position: relative;
-        max-height: 90vh;
+    
+    .modal-content { 
+        background: white; 
+        border-radius: 10px; 
+        width: 95% !important; 
+        max-width: 800px; 
+        overflow: hidden; 
+        position: relative; 
+        max-height: 90vh; 
         display: flex;
         flex-direction: column;
     }
@@ -110,32 +122,22 @@
       to { opacity: 1; }
     }
 
-    /* 🛡️ TARJETA CONTENEDORA MAESTRA CON RECORTE AUTOMÁTICO */
-    .dashboard-banner-card {
-      background: #ffffff;
-      border-radius: 16px;
-      overflow: hidden; /* <--- ESTO ES LO QUE RECORTA LOS BORDES Y EVITA QUE SOBRESALGA */
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      margin-bottom: 1.5rem;
-    }
-
-    /* 1. ESTILO BASE PARA EL BANNER */
+    /* ESTILO FIJO PARA EL BANNER Y SUS BORDES REDONDEADOS */
     .course-banner-wrapper {
       width: 100%;
-      height: 210px;
+      height: 210px; 
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     }
 
-    /* 📱 AJUSTE PARA CELULARES */
     @media (max-width: 600px) {
       .course-banner-wrapper {
-        height: 110px !important;
+        height: 110px !important; 
       }
 
       .action-buttons {
-        flex-direction: row !important;
+        flex-direction: row !important; 
         flex-wrap: wrap;
         justify-content: center;
         gap: 8px;
@@ -143,18 +145,18 @@
       }
 
       .reset-password-button, .logout-button, .inicio-button {
-        width: auto !important;
+        width: auto !important; 
         min-width: 100px;
         padding: 8px 12px !important;
-        font-size: 0.75rem !important;
+        font-size: 0.75rem !important; 
         margin-bottom: 0;
         border-radius: 6px;
       }
 
       h1#courseTitle {
-        font-size: 1.4rem !important;
+        font-size: 1.4rem !important; 
       }
-     
+      
       .aviso-pc-responsive {
         font-size: 0.75rem !important;
         padding: 6px 8px !important;
@@ -181,54 +183,44 @@
       </div>
     </div>
 
-  <!-- BANNER DE ALTO IMPACTO EN TARJETA BLANCA -->
-<div class="consultoria-banner" style="background: #ffffff; border-radius: 16px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
-   
+  <!-- BANNER DE ALTO IMPACTO SUPERIOR -->
+  <div class="consultoria-banner" style="background: #ffffff; border-radius: 16px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
     <div class="consultoria-content" style="text-align: left; flex: 1; min-width: 260px;">
-        <h3 style="color: #1a1f36; margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 700; font-family: 'Montserrat', sans-serif;">
+        <h3 style="color: #1a1f36; margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 700;">
             🚀 ¿Quieres llevar tu negocio al siguiente nivel?
         </h3>
         <p style="color: #4b5563; margin: 0; font-size: 0.88rem; line-height: 1.4;">
             Adquiere nuestros packs avanzados de forma inmediata o agenda una consultoría a medida.
         </p>
     </div>
-   
     <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-        <a href="https://hugo85ar.github.io/catalogo-promociones/?modo=clientes" target="_blank" rel="noopener" style="background-color: #059669; color: #ffffff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25); transition: 0.3s;">
+        <a href="https://hugo85ar.github.io/catalogo-promociones/?modo=clientes" target="_blank" rel="noopener" style="background-color: #059669; color: #ffffff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);">
             🚀 Ver Catálogo
         </a>
-
-        <a href="https://wa.me/5491176529179?text=%C2%A1Hola%20Hugo%21%20Vengo%20de%20la%20plataforma%20de%20cursos.%20Me%20interesa%20consultar%20una%20asesor%C3%ADa%20personalizada." id="consultoriaBtn" target="_blank" rel="noopener" style="background-color: #1a1f36; color: #ffffff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(26, 31, 54, 0.2); transition: 0.3s;">
+        <a href="https://wa.me/5491176529179?text=%C2%A1Hola%20Hugo%21%20Vengo%20de%20la%20plataforma%20de%20cursos.%20Me%20interesa%20consultar%20una%20asesor%C3%ADa%20personalizada." target="_blank" rel="noopener" style="background-color: #1a1f36; color: #ffffff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(26, 31, 54, 0.2);">
             💬 Asesoría
         </a>
     </div>
-</div>
-   
-   
-   <!-- TARJETA BLANCA MAESTRA QUE CONTIENE TODO -->
-    <div style="background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.15); margin-bottom: 1.5rem;">
-       
-       <!-- 1. El banner arriba (ahora quedará atrapado y con las esquinas redondeadas superiores perfectas) -->
-       <div id="courseBannerContainer"></div>
+  </div>
+    
+  <!-- TARJETA ÚNICA MAESTRA: AQUÍ EL BANNER QUEDA ATRAPADO Y REDONDEADO PERFECTAMENTE -->
+  <div style="background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.15); margin-bottom: 1.5rem;">
+     <div id="courseBannerContainer"></div>
+     <section style="padding: 20px 24px; margin: 0;">
+       <h2 id="welcomeUser" style="margin-top: 0; color: #1e293b; font-size: 1.5rem;">¡Bienvenido/a!</h2>
+       <p id="courseDescription" style="margin-bottom: 0; color: #475569; font-size: 1rem;"></p>
+     </section>
+  </div>
 
-       <!-- 2. El mensaje de bienvenida y descripción abajo dentro de la misma tarjeta -->
-       <section style="padding: 20px 24px; margin: 0;">
-         <h2 id="welcomeUser" style="margin-top: 0; color: #1e293b; font-size: 1.5rem;">¡Bienvenido/a!</h2>
-         <p id="courseDescription" style="margin-bottom: 0; color: #475569; font-size: 1rem;"></p>
-       </section>
-    </div>
+  <div id="loader">Cargando lecciones...</div>
+  <div id="courseContent"></div>
 
-    <div id="loader">Cargando lecciones...</div>
-
-    <div id="courseContent"></div>
-
-    <div id="statusMessage" style="text-align: center; display: none; padding: 40px; color: #0056b3; font-weight: bold; font-size: 1.2rem; background: #ffffff; border-radius: 12px; margin: 20px 0; border: 2px solid #e2e8f0;">
-      <i class="fas fa-spinner fa-spin" style="font-size: 2.5rem; display: block; margin-bottom: 15px; color: #3b82f6;"></i>
-      <span id="statusText">Activando tu acceso personalizado...</span>
-    </div>
+  <div id="statusMessage" style="text-align: center; display: none; padding: 40px; color: #0056b3; font-weight: bold; font-size: 1.2rem; background: #ffffff; border-radius: 12px; margin: 20px 0; border: 2px solid #e2e8f0;">
+    <i class="fas fa-spinner fa-spin" style="font-size: 2.5rem; display: block; margin-bottom: 15px; color: #3b82f6;"></i>
+    <span id="statusText">Activando tu acceso personalizado...</span>
+  </div>
 
 </div>
- 
 
   <div id="videoModal" class="modal">
     <div class="modal-content">
@@ -236,11 +228,9 @@
         <h2 id="modalVideoTitle" style="margin:0; font-size:1rem;"></h2>
         <span onclick="closeModal()" style="cursor:pointer; font-size:1.8rem; line-height: 1;">&times;</span>
       </div>
-     
       <div class="aviso-pc-responsive" style="background: #fff9c4; color: #856404; padding: 8px 12px; text-align: center; font-size: 0.8rem; border-bottom: 1px solid #ffeeba; display: flex; align-items: center; justify-content: center; gap: 6px;">
         <i class="fas fa-desktop"></i> <span>Recomendamos el uso de <b>PC</b> para realizar los ejercicios en Sheets.</span>
       </div>
-
       <div class="video-container-modal" oncontextmenu="return false;">
         <div class="video-popout-overlay"></div>
         <iframe id="modalVideoFrame" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
@@ -251,7 +241,7 @@
   <a id="waLinkCursos" href="#" class="whatsapp-bubble" target="_blank" rel="noopener" aria-label="Consultar por cursos premium o consultoría">
     <i class="fab fa-whatsapp" style="color: white; font-size: 32px;"></i>
   </a>
- 
+  
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
     const userEmail = localStorage.getItem('userEmail');
@@ -264,7 +254,7 @@
       try {
         const response = await fetch(`${WEB_APP_URL}?action=getCourseData&curso=${cursoId}&email=${userEmail}&token=${userToken}`);
         const data = await response.json();
-        if (data.status === "success") { renderCourse(data); }
+        if (data.status === "success") { renderCourse(data); } 
         else { alert("Sesión inválida"); cerrarSesion(); }
       } catch (e) { console.error(e); }
     }
@@ -273,11 +263,11 @@
       document.getElementById('loader').style.display = 'none';
       document.getElementById('statusMessage').style.display = 'none';
       document.getElementById('courseContent').style.display = 'block';
-       
+        
       const nombre = data.nombreUsuario || 'Emprendedor';
       const msgCursos = `Hola Hugo! Soy ${nombre} (${userEmail}). Estoy viendo el curso "${data.nombreCurso}" y me interesa subir mi nivel. ¿Me das info sobre la consultoría o los cursos de Investigación de Mercado, Landings o Clientes en Orden?`;
       document.getElementById('waLinkCursos').href = `https://wa.me/5491136151754?text=${encodeURIComponent(msgCursos)}`;
-     
+      
       document.getElementById('loader').style.display = 'none';
       document.getElementById('courseTitle').innerText = data.nombreCurso;
       document.getElementById('welcomeUser').innerText = `¡Bienvenido/a, ${data.nombreUsuario}!`;
@@ -285,33 +275,29 @@
       actualizarBarraProgreso(data.porcentajeProgreso || 0);
 
       const content = document.getElementById('courseContent');
-      content.innerHTML = '';
+      content.innerHTML = ''; 
 
-      // 🔹 LÓGICA DEL FORMULARIO
       if (data.formCompletado === false) {
         content.innerHTML = `
           <div class="formulario-container">
             <h3 style="color:#0056b3; margin-top:0;">🚀 ¡Hagamos que esta experiencia sea 100% a tu medida!</h3>
-         
             <p style="font-size: 1.05rem; color: #334155; line-height: 1.5; margin-bottom: 20px;">
-          Completa este breve formulario para <b>personalizar tu entorno de aprendizaje</b> y
-          <b style="color: #059669;">prepararte para las automatizaciones avanzadas de tu negocio con WhatsApp</b>.
-        </p>
-
-        <div style="background: #f8fafc; border-left: 4px solid #0056b3; padding: 20px; margin-bottom: 20px; font-size: 0.95rem;">
-          <p style="margin: 0; color: #1e293b;">
-            <i class="fas fa-rocket" style="color: #0056b3; margin-right: 8px;"></i>
-            <b>¿Qué lograrás al terminar?</b><br>
-           • <b>Google Sheets:</b> Dominarás la organización profesional de tus datos y clientes.<br>
-               • <b>Envío de WhatsApp:</b> Automatizarás el contacto con <b>mensajes 100% personalizados</b> (incluyendo links o archivos) enviándolos en <b>solo 3 clics por fila (prospecto)</b>.
-        </div>
-             
+              Completa este breve formulario para <b>personalizar tu entorno de aprendizaje</b> y 
+              <b style="color: #059669;">prepararte para las automatizaciones avanzadas de tu negocio con WhatsApp</b>.
+            </p>
+            <div style="background: #f8fafc; border-left: 4px solid #0056b3; padding: 20px; margin-bottom: 20px; font-size: 0.95rem;">
+              <p style="margin: 0; color: #1e293b;">
+                <i class="fas fa-rocket" style="color: #0056b3; margin-right: 8px;"></i>
+                <b>¿Qué lograrás al terminar?</b><br>
+                • <b>Google Sheets:</b> Dominarás la organización profesional de tus datos y clientes.<br>
+                • <b>Envío de WhatsApp:</b> Automatizarás el contacto con <b>mensajes 100% personalizados</b>.
+              </p>
+            </div>
             <form onsubmit="enviarFormularioProspectos(event)">
               <div style="margin-bottom:15px;">
                 <label style="display:block; font-weight:bold; margin-bottom:5px;">1. ¿Cuál es tu mayor desafío hoy con Google Sheets?</label>
                 <textarea name="desafio" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;" placeholder="Ej: Organizar mis ventas diarias..."></textarea>
               </div>
-
               <div style="margin-bottom:15px;">
                 <label style="display:block; font-weight:bold; margin-bottom:5px;">2. Tipo de Emprendedor:</label>
                 <select name="tipoEmprendedor" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
@@ -322,17 +308,15 @@
                   <option value="Freelance">Freelance 👨‍💻</option>
                 </select>
               </div>
-
               <div style="margin-bottom:15px;">
                 <label style="display:block; font-weight:bold; margin-bottom:5px;">3. ¿Cuál es tu nivel actual con la herramienta?</label>
                 <select name="nivel" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
                   <option value="">Selecciona...</option>
                   <option value="Basico">Básico (Solo sumas y escribir datos)</option>
-                  <option value="Intermedio">Intermedio (Uso fórmulas como BUSCARV, IF, MAX, MIN, CONCATENAR)</option>
-                  <option value="Avanzado">Avanzado (Hago Macros, Codigos para Envío de mails, etc)</option>
+                  <option value="Intermedio">Intermedio (Uso fórmulas como BUSCARV, IF, MAX, MIN)</option>
+                  <option value="Avanzado">Avanzado (Hago Macros, Códigos, etc)</option>
                 </select>
               </div>
-
               <div style="margin-bottom:15px;">
                 <label style="display:block; font-weight:bold; margin-bottom:5px;">4. ¿Qué te gustaría lograr principalmente?</label>
                 <select name="objetivo" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
@@ -342,14 +326,12 @@
                   <option value="Analizar Datos">Tener más herramientas, ser un mejor emprendedor</option>
                 </select>
               </div>
-
               <button type="submit" class="formulario-submit">¡Comenzar el Curso Ahora!</button>
             </form>
           </div>`;
-        return;
+        return; 
       }
 
-      // Si ya completó, inyectamos la imagen de Cloudinary como fondo del banner acotado
       if (data.urlBanner) {
         document.getElementById('courseBannerContainer').innerHTML = `
           <div class="course-banner-wrapper" style="background-image: url('${data.urlBanner}');"></div>`;
@@ -362,7 +344,7 @@
             if (item.tipo === 'leccion') {
                 const yaVisto = completadas.includes(String(item.id));
                 const imgThumb = item.video.imgUrl || 'https://placehold.co/400x225?text=Ver+Leccion';
-               
+                
                 moduloHtml += `
                     <div class="lesson">
                         <div class="lesson-info">
@@ -372,10 +354,9 @@
                         <div class="lesson-video-section" style="text-align:center;">
                             <img src="${imgThumb}" onclick="verificarYVer('${item.video.url}', 'Leccion ${item.id}')" style="cursor:pointer;">
                             <button id="btn-${item.id}" class="btn-completar ${yaVisto ? 'visto' : ''}" onclick="marcarLeccionManual('${item.id}')" ${yaVisto ? 'disabled' : ''}>
-                                <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i>
+                                <i class="${yaVisto ? 'fas fa-check-circle' : 'far fa-circle'}"></i> 
                                 <span>${yaVisto ? 'Lección Completada' : 'Marcar como completada'}</span>
                             </button>
-
                             ${item.material && item.material.trim() !== "" && item.material !== "#" ? `
                                 <div style="margin-top: 15px;">
                                     <a href="${item.material}" target="_blank" class="material-button">
@@ -383,7 +364,6 @@
                                     </a>
                                 </div>
                             ` : ''}
-
                         </div>
                     </div>`;
             }
@@ -416,7 +396,7 @@
           body: params.toString(),
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         });
-        await init();
+        await init(); 
         statusMsg.style.display = 'none';
       } catch (e) {
         statusMsg.style.display = 'none';
@@ -436,30 +416,30 @@
         let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
         frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
         document.getElementById('videoModal').style.display = 'flex';
-      } else {
-        alert("Sesión expirada");
-        cerrarSesion();
+      } else { 
+        alert("Sesión expirada"); 
+        cerrarSesion(); 
       }
     }
 
     async function marcarLeccionManual(leccionId) {
         const btn = document.getElementById(`btn-${leccionId}`);
         if (btn.classList.contains('visto')) return;
-        btn.disabled = true;
+        btn.disabled = true; 
         btn.querySelector('span').innerText = "Guardando...";
         try {
             const formData = new URLSearchParams({ action: 'marcarCompletada', email: userEmail, curso: cursoId, leccion: leccionId });
             const response = await fetch(WEB_APP_URL, { method: 'POST', body: formData.toString(), headers: { "Content-Type": "application/x-www-form-urlencoded" } });
             const resData = await response.json();
             if (resData.status === "success") {
-                btn.classList.add('visto');
+                btn.classList.add('visto'); 
                 btn.querySelector('i').className = "fas fa-check-circle";
                 btn.querySelector('span').innerText = "Lección Completada";
                 actualizarBarraProgreso(resData.nuevoPorcentaje);
             }
-        } catch (e) {
-            btn.disabled = false;
-            btn.querySelector('span').innerText = "Marcar como completada";
+        } catch (e) { 
+            btn.disabled = false; 
+            btn.querySelector('span').innerText = "Marcar como completada"; 
         }
     }
 
@@ -468,14 +448,14 @@
         document.getElementById('progressText').innerText = Math.round(porcentaje) + '%';
     }
 
-    function closeModal() {
-        document.getElementById('videoModal').style.display = 'none';
-        document.getElementById('modalVideoFrame').src = '';
+    function closeModal() { 
+        document.getElementById('videoModal').style.display = 'none'; 
+        document.getElementById('modalVideoFrame').src = ''; 
     }
 
-    function cerrarSesion() {
-        localStorage.clear();
-        window.location.href = "index.html";
+    function cerrarSesion() { 
+        localStorage.clear(); 
+        window.location.href = "index.html"; 
     }
 
     init();
