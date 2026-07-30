@@ -75,13 +75,12 @@
     .course-card:hover { transform: translateY(-10px); }
     
     /* 🖼️ IMÁGENES TIPO BANNER (Ajuste preciso) */
-.course-card-image { 
-  width: 100% !important; 
-  height: 160px !important; /* Altura ideal para PC */
-  object-fit: cover !important; 
-  display: block !important;
-  border-bottom: 1px solid #eee;
-  flex-shrink: 0 !important;
+.course-card-image{
+    width:100%;
+    aspect-ratio:16 / 5;
+    object-fit:contain;
+    background:#0f172a;
+    display:block;
 }
 .course-card-content {
   padding: 1.5rem !important;
