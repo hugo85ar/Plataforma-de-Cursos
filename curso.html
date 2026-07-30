@@ -18,7 +18,7 @@
     /* Ajuste para que todos midan lo mismo en el header */
     .reset-password-button, .logout-button, .inicio-button {
         width: 180px;     
-        padding: 10px 0;   
+        padding: 10px 0;    
         display: block;    
         margin-bottom: 8px;
         text-align: center;
@@ -95,7 +95,7 @@
         max-width: 800px; 
         overflow: hidden; 
         position: relative; 
-        max-height: 90vh; /* Evita que se salga de la pantalla vertical */
+        max-height: 90vh; 
         display: flex;
         flex-direction: column;
     }
@@ -110,31 +110,28 @@
       to { opacity: 1; }
     }
 
-    /* 1. ESTILO BASE PARA COMPUTADORA (Escritorio) */
+    /* 🛡️ TARJETA CONTENEDORA MAESTRA CON RECORTE AUTOMÁTICO */
+    .dashboard-banner-card {
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden; /* <--- ESTO ES LO QUE RECORTA LOS BORDES Y EVITA QUE SOBRESALGA */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    /* 1. ESTILO BASE PARA EL BANNER */
     .course-banner-wrapper {
       width: 100%;
-      height: 210px; /* Altura generosa y elegante para PC */
-      background-image: url('${data.urlBanner}'); 
+      height: 210px; 
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
-    .course-banner-wrapper img {
-      width: 100% !important;
-      max-width: 100% !important;
-      height: auto !important;
-      object-fit: contain !important;
-      display: block !important;
-    }
-/* 📱 AJUSTE PARA CELULARES */
+    /* 📱 AJUSTE PARA CELULARES */
     @media (max-width: 600px) {
       .course-banner-wrapper {
-        height: 110px !important; /* Altura adaptada para pantallas chicas */
+        height: 110px !important; 
       }
 
       .action-buttons {
@@ -158,23 +155,11 @@
         font-size: 1.4rem !important; 
       }
       
-      /* Aviso de PC más compacto en celulares para que no robe espacio al video */
       .aviso-pc-responsive {
         font-size: 0.75rem !important;
         padding: 6px 8px !important;
       }
     }
-
-
-
-   .course-banner-wrapper img {
-      width: 100% !important;
-      max-width: 100% !important;
-      height: auto !important;
-      object-fit: contain !important;
-      display: block !important;
-    }
-    
   </style>
 </head>
 <body oncontextmenu="return false;">
@@ -196,9 +181,6 @@
       </div>
     </div>
 
-
-    
-    <!-- Esto es un comentario privado y no aparecerá en la página web -->
   <!-- BANNER DE ALTO IMPACTO EN TARJETA BLANCA -->
 <div class="consultoria-banner" style="background: #ffffff; border-radius: 16px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
     
@@ -212,31 +194,25 @@
     </div>
     
     <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-        <!-- Botón 1: Catálogo (Abre el catálogo en otra pestaña) -->
         <a href="https://hugo85ar.github.io/catalogo-promociones/?modo=clientes" target="_blank" rel="noopener" style="background-color: #059669; color: #ffffff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25); transition: 0.3s;">
             🚀 Ver Catálogo
         </a>
 
-        <!-- Botón 2: Asesoría de WhatsApp (Enlace directo funcional) -->
         <a href="https://wa.me/5491176529179?text=%C2%A1Hola%20Hugo%21%20Vengo%20de%20la%20plataforma%20de%20cursos.%20Me%20interesa%20consultar%20una%20asesor%C3%ADa%20personalizada." id="consultoriaBtn" target="_blank" rel="noopener" style="background-color: #1a1f36; color: #ffffff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(26, 31, 54, 0.2); transition: 0.3s;">
             💬 Asesoría
         </a>
     </div>
-    
 </div>
     
+    <!-- TARJETA UNIFICADA QUE CONTIENE EL BANNER Y LA BIENVENIDA CON BORDES REDONDEADOS PERFECTOS -->
+    <div class="dashboard-banner-card">
+       <div id="courseBannerContainer"></div>
 
-   <div id="courseBannerContainer"></div>
-
-    <section class="welcome-message module" style="margin-top:20px;">
-      <h2 id="welcomeUser">¡Bienvenido/a!</h2>
-      <p id="courseDescription"></p>
-    </section>
-
-    
-
-
-    
+       <section class="welcome-message" style="padding: 20px; margin: 0;">
+         <h2 id="welcomeUser" style="margin-top: 0;">¡Bienvenido/a!</h2>
+         <p id="courseDescription" style="margin-bottom: 0;"></p>
+       </section>
+    </div>
 
     <div id="loader">Cargando lecciones...</div>
 
@@ -257,7 +233,6 @@
         <span onclick="closeModal()" style="cursor:pointer; font-size:1.8rem; line-height: 1;">&times;</span>
       </div>
       
-      <!-- Aviso de optimización más compacto -->
       <div class="aviso-pc-responsive" style="background: #fff9c4; color: #856404; padding: 8px 12px; text-align: center; font-size: 0.8rem; border-bottom: 1px solid #ffeeba; display: flex; align-items: center; justify-content: center; gap: 6px;">
         <i class="fas fa-desktop"></i> <span>Recomendamos el uso de <b>PC</b> para realizar los ejercicios en Sheets.</span>
       </div>
@@ -291,14 +266,13 @@
     }
 
     function renderCourse(data) {
-      // 1. Limpiamos cualquier estado de carga o mensaje
       document.getElementById('loader').style.display = 'none';
       document.getElementById('statusMessage').style.display = 'none';
       document.getElementById('courseContent').style.display = 'block';
         
       const nombre = data.nombreUsuario || 'Emprendedor';
-        const msgCursos = `Hola Hugo! Soy ${nombre} (${userEmail}). Estoy viendo el curso "${data.nombreCurso}" y me interesa subir mi nivel. ¿Me das info sobre la consultoría o los cursos de Investigación de Mercado, Landings o Clientes en Orden?`;
-        document.getElementById('waLinkCursos').href = `https://wa.me/5491136151754?text=${encodeURIComponent(msgCursos)}`;
+      const msgCursos = `Hola Hugo! Soy ${nombre} (${userEmail}). Estoy viendo el curso "${data.nombreCurso}" y me interesa subir mi nivel. ¿Me das info sobre la consultoría o los cursos de Investigación de Mercado, Landings o Clientes en Orden?`;
+      document.getElementById('waLinkCursos').href = `https://wa.me/5491136151754?text=${encodeURIComponent(msgCursos)}`;
       
       document.getElementById('loader').style.display = 'none';
       document.getElementById('courseTitle').innerText = data.nombreCurso;
@@ -309,77 +283,76 @@
       const content = document.getElementById('courseContent');
       content.innerHTML = ''; 
 
-      // 🔹 LÓGICA DEL FORMULARIO: Si no ha completado, mostramos form y paramos
-if (data.formCompletado === false) {
-  content.innerHTML = `
-    <div class="formulario-container">
-      <h3 style="color:#0056b3; margin-top:0;">🚀 ¡Hagamos que esta experiencia sea 100% a tu medida!</h3>
-    
-    <p style="font-size: 1.05rem; color: #334155; line-height: 1.5; margin-bottom: 20px;">
-  Completa este breve formulario para <b>personalizar tu entorno de aprendizaje</b> y 
-  <b style="color: #059669;">prepararte para las automatizaciones avanzadas de tu negocio con WhatsApp</b>.
-</p>
+      // 🔹 LÓGICA DEL FORMULARIO
+      if (data.formCompletado === false) {
+        content.innerHTML = `
+          <div class="formulario-container">
+            <h3 style="color:#0056b3; margin-top:0;">🚀 ¡Hagamos que esta experiencia sea 100% a tu medida!</h3>
+          
+            <p style="font-size: 1.05rem; color: #334155; line-height: 1.5; margin-bottom: 20px;">
+          Completa este breve formulario para <b>personalizar tu entorno de aprendizaje</b> y 
+          <b style="color: #059669;">prepararte para las automatizaciones avanzadas de tu negocio con WhatsApp</b>.
+        </p>
 
-<!-- Caja informativa mejorada -->
-<div style="background: #f8fafc; border-left: 4px solid #0056b3; padding: 20px; margin-bottom: 20px; font-size: 0.95rem;">
-  <p style="margin: 0; color: #1e293b;">
-    <i class="fas fa-rocket" style="color: #0056b3; margin-right: 8px;"></i>
-    <b>¿Qué lograrás al terminar?</b><br>
-   • <b>Google Sheets:</b> Dominarás la organización profesional de tus datos y clientes.<br>
-      • <b>Envío de WhatsApp:</b> Automatizarás el contacto con <b>mensajes 100% personalizados</b> (incluyendo links o archivos) enviándolos en <b>solo 3 clics por fila (prospecto)</b>.
-</div>
-      
-      <form onsubmit="enviarFormularioProspectos(event)">
-        <div style="margin-bottom:15px;">
-          <label style="display:block; font-weight:bold; margin-bottom:5px;">1. ¿Cuál es tu mayor desafío hoy con Google Sheets?</label>
-          <textarea name="desafio" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;" placeholder="Ej: Organizar mis ventas diarias..."></textarea>
+        <div style="background: #f8fafc; border-left: 4px solid #0056b3; padding: 20px; margin-bottom: 20px; font-size: 0.95rem;">
+          <p style="margin: 0; color: #1e293b;">
+            <i class="fas fa-rocket" style="color: #0056b3; margin-right: 8px;"></i>
+            <b>¿Qué lograrás al terminar?</b><br>
+           • <b>Google Sheets:</b> Dominarás la organización profesional de tus datos y clientes.<br>
+               • <b>Envío de WhatsApp:</b> Automatizarás el contacto con <b>mensajes 100% personalizados</b> (incluyendo links o archivos) enviándolos en <b>solo 3 clics por fila (prospecto)</b>.
         </div>
+              
+            <form onsubmit="enviarFormularioProspectos(event)">
+              <div style="margin-bottom:15px;">
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">1. ¿Cuál es tu mayor desafío hoy con Google Sheets?</label>
+                <textarea name="desafio" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;" placeholder="Ej: Organizar mis ventas diarias..."></textarea>
+              </div>
 
-        <div style="margin-bottom:15px;">
-          <label style="display:block; font-weight:bold; margin-bottom:5px;">2. Tipo de Emprendedor:</label>
-          <select name="tipoEmprendedor" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
-            <option value="">Selecciona...</option>
-            <option value="Servicios">Servicios</option>
-            <option value="Ecommerce">Ecommerce / Productos Digitales</option>
-            <option value="Comercio Fisico/Local">Comercio Físico / Local 🏠</option>
-            <option value="Freelance">Freelance 👨‍💻</option>
-          </select>
-        </div>
+              <div style="margin-bottom:15px;">
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">2. Tipo de Emprendedor:</label>
+                <select name="tipoEmprendedor" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
+                  <option value="">Selecciona...</option>
+                  <option value="Servicios">Servicios</option>
+                  <option value="Ecommerce">Ecommerce / Productos Digitales</option>
+                  <option value="Comercio Fisico/Local">Comercio Físico / Local 🏠</option>
+                  <option value="Freelance">Freelance 👨‍💻</option>
+                </select>
+              </div>
 
-        <div style="margin-bottom:15px;">
-          <label style="display:block; font-weight:bold; margin-bottom:5px;">3. ¿Cuál es tu nivel actual con la herramienta?</label>
-          <select name="nivel" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
-            <option value="">Selecciona...</option>
-            <option value="Basico">Básico (Solo sumas y escribir datos)</option>
-            <option value="Intermedio">Intermedio (Uso fórmulas como BUSCARV, IF, MAX, MIN, CONCATENAR)</option>
-            <option value="Avanzado">Avanzado (Hago Macros, Codigos para Envío de mails, etc)</option>
-          </select>
-        </div>
+              <div style="margin-bottom:15px;">
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">3. ¿Cuál es tu nivel actual con la herramienta?</label>
+                <select name="nivel" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
+                  <option value="">Selecciona...</option>
+                  <option value="Basico">Básico (Solo sumas y escribir datos)</option>
+                  <option value="Intermedio">Intermedio (Uso fórmulas como BUSCARV, IF, MAX, MIN, CONCATENAR)</option>
+                  <option value="Avanzado">Avanzado (Hago Macros, Codigos para Envío de mails, etc)</option>
+                </select>
+              </div>
 
-        <div style="margin-bottom:15px;">
-          <label style="display:block; font-weight:bold; margin-bottom:5px;">4. ¿Qué te gustaría lograr principalmente?</label>
-          <select name="objetivo" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
-            <option value="">Selecciona...</option>
-            <option value="Controlar Finanzas">Tener control de mi negocio</option>
-            <option value="Automatizar">Automatizar tareas para ahorrar tiempo</option>
-            <option value="Analizar Datos">Tener más herramientas, ser un mejor emprendedor</option>
-          </select>
-        </div>
+              <div style="margin-bottom:15px;">
+                <label style="display:block; font-weight:bold; margin-bottom:5px;">4. ¿Qué te gustaría lograr principalmente?</label>
+                <select name="objetivo" required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;">
+                  <option value="">Selecciona...</option>
+                  <option value="Controlar Finanzas">Tener control de mi negocio</option>
+                  <option value="Automatizar">Automatizar tareas para ahorrar tiempo</option>
+                  <option value="Analizar Datos">Tener más herramientas, ser un mejor emprendedor</option>
+                </select>
+              </div>
 
-        <button type="submit" class="formulario-submit">¡Comenzar el Curso Ahora!</button>
-      </form>
-    </div>`;
-  return; 
-}
+              <button type="submit" class="formulario-submit">¡Comenzar el Curso Ahora!</button>
+            </form>
+          </div>`;
+        return; 
+      }
 
-     // Si ya completó, mostramos el banner ajustado al contenedor
+      // Si ya completó, inyectamos la imagen de Cloudinary como fondo del banner acotado
       if (data.urlBanner) {
         document.getElementById('courseBannerContainer').innerHTML = `
           <div class="course-banner-wrapper" style="background-image: url('${data.urlBanner}');"></div>`;
       }
 
-  const completadas = data.completadas || [];
-    for (const modulo in data.modulos) {
+      const completadas = data.completadas || [];
+      for (const modulo in data.modulos) {
         let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
         data.modulos[modulo].forEach(item => {
             if (item.tipo === 'leccion') {
@@ -413,50 +386,42 @@ if (data.formCompletado === false) {
         });
         moduloHtml += `</div>`;
         content.innerHTML += moduloHtml;
+      }
     }
-}
-async function enviarFormularioProspectos(event) {
-  event.preventDefault();
 
-  const btn = event.target.querySelector('button');
-  if (btn.disabled) return;
+    async function enviarFormularioProspectos(event) {
+      event.preventDefault();
+      const btn = event.target.querySelector('button');
+      if (btn.disabled) return;
 
-  const contentDiv = document.getElementById('courseContent');
-  const statusMsg = document.getElementById('statusMessage');
+      const contentDiv = document.getElementById('courseContent');
+      const statusMsg = document.getElementById('statusMessage');
 
-  btn.disabled = true;
-  btn.innerText = "Procesando...";
+      btn.disabled = true;
+      btn.innerText = "Procesando...";
 
-  // Ocultamos el formulario y mostramos el status de "activación"
-  contentDiv.style.display = 'none';
-  statusMsg.style.display = 'block';
+      contentDiv.style.display = 'none';
+      statusMsg.style.display = 'block';
 
-  const params = new URLSearchParams({ action: 'procesarFormulario', email: userEmail });
-  new FormData(event.target).forEach((value, key) => params.append(key, value));
+      const params = new URLSearchParams({ action: 'procesarFormulario', email: userEmail });
+      new FormData(event.target).forEach((value, key) => params.append(key, value));
 
-  try {
-    const response = await fetch(WEB_APP_URL, {
-      method: 'POST',
-      body: params.toString(),
-      headers: { "Content-Type": "application/x-www-form-urlencoded" }
-    });
-    
-    // Al recibir respuesta, recargamos el contenido
-    await init(); 
-    
-    // Si init() tiene éxito, el contenido se vuelve a mostrar 
-    // (renderCourse lo maneja al limpiar el formulario)
-    statusMsg.style.display = 'none';
-
-  } catch (e) {
-    statusMsg.style.display = 'none';
-    contentDiv.style.display = 'block'; // Mostramos de nuevo si falla
-    alert("Hubo un error de conexión. Por favor, intenta de nuevo.");
-    btn.disabled = false;
-    btn.innerText = "¡Comenzar el Curso Ahora!";
-  }
-}
-   
+      try {
+        await fetch(WEB_APP_URL, {
+          method: 'POST',
+          body: params.toString(),
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        });
+        await init(); 
+        statusMsg.style.display = 'none';
+      } catch (e) {
+        statusMsg.style.display = 'none';
+        contentDiv.style.display = 'block';
+        alert("Hubo un error de conexión. Por favor, intenta de nuevo.");
+        btn.disabled = false;
+        btn.innerText = "¡Comenzar el Curso Ahora!";
+      }
+    }
 
     async function verificarYVer(url, titulo) {
       const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${encodeURIComponent(userEmail)}&token=${userToken}`);
@@ -511,7 +476,5 @@ async function enviarFormularioProspectos(event) {
 
     init();
   </script>
-  
 </body>
 </html>
-
