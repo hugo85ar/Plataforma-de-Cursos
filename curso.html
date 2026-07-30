@@ -146,23 +146,25 @@
       }
     }
 
-    .course-banner-wrapper {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  background: #f1f5f9;
-}
+.course-banner-wrapper {
+      width: 100%;
+      background: #0f172a; /* Fondo elegante por si la imagen es transparente o deja espacios */
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-    .course-banner-wrapper img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  object-position: center !important;
-  display: block !important;
-}
+   .course-banner-wrapper img {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
     
   </style>
 </head>
