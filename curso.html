@@ -137,12 +137,14 @@ fbq('track', 'ViewContent', {
 
     /* ESTILO FIJO PARA EL BANNER DINÁMICO */
     .course-banner-wrapper {
-      width: 100%;
-      height: 210px; 
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
+  width: 100%;
+  aspect-ratio: 16 / 4.5;
+  height: auto;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #000;
+}
 
     @media (max-width: 600px) {
       .course-banner-wrapper { height: 110px !important; }
