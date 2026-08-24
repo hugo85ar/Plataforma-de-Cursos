@@ -87,8 +87,37 @@ fbq('track', 'ViewContent', {
 
     body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #1f2559, #3b82f6); background-attachment: fixed; color: #333; line-height: 1.6; }
     .container { max-width: 1100px; margin: 2.5rem auto; padding: 0 1.5rem; }
-    .course-header { background:#fff; color:#1e2335; padding:1.2rem 1.5rem; border-radius:12px;display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; border-left:6px solid #1e2335; box-shadow:0 4px 15px rgba(0,0,0,.1); }
-    .action-buttons { display: flex; flex-direction: column; align-items: center; }
+    
+    .course-header {
+  background: #ffffff !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 1.2rem 1.5rem !important;
+  border-left: 6px solid #1e2335 !important;
+}
+    .course-header h1 {
+  margin: 0 !important;
+  flex: 1;
+  font-size: 1.5rem !important;
+  color: #1e2335 !important;
+}
+    
+    .action-buttons {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 8px !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+
+    .action-buttons a, .action-buttons button {
+  width: auto !important;
+  padding: 8px 14px !important;
+  font-size: 0.8rem !important;
+  margin: 0 !important;
+}
     
     /* 🛡️ REGLA MAESTRA: OBLIGA A CUALQUIER TARJETA/MÓDULO A REDONDEARSE Y RECORTAR LO QUE SOBRESALGA */
     .module { background-color: #ffffff; padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
