@@ -365,28 +365,33 @@ fbq('track', 'ViewContent', {
     }
 
     async function enviarFormularioProspectos(event) {
-      event.preventDefault();
-      const btn = event.target.querySelector('button');
-      if (btn.disabled) return;
+  event.preventDefault();
+  const btn = event.target.querySelector('button');
+  if (btn.disabled) return;
 
-      const contentDiv = document.getElementById('courseContent');
-      const statusMsg = document.getElementById('statusMessage');
+  const contentDiv = document.getElementById('courseContent');
+  const statusMsg = document.getElementById('statusMessage');
 
-      btn.disabled = true;
-      btn.innerText = "Procesando...";
+  btn.disabled = true;
+  btn.innerText = "Procesando...";
+  contentDiv.style.display = 'none';
+  statusMsg.style.display = 'block';
 
-      contentDiv.style.display = 'none';
-      statusMsg.style.display = 'block';
+  const params = new URLSearchParams({ action: 'procesarFormulario', email: userEmail });
+  new FormData(event.target).forEach((value, key) => params.append(key, value));
 
-      const params = new URLSearchParams({ action: 'procesarFormulario', email: userEmail });
-      new FormData(event.target).forEach((value, key) => params.append(key, value));
+  try {
+    await fetch(WEB_APP_URL, {
+      method: 'POST',
+      body: params.toString(),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    });
 
-      try {
-        await fetch(WEB_APP_URL, {
-          method: 'POST',
-          body: params.toString(),
-          headers: { "Content-Type": "application/x-www-form-urlencoded" }
-        });
+    // === ACÁ SÍ: Acaba de completar las 4 preguntas y se guardó en fila 82 ===
+    fbq('track', 'CompleteRegistration', {
+      content_name: 'Formulario Bio 4 preguntas',
+      status: 'completado'
+    });
         await init(); 
         statusMsg.style.display = 'none';
       } catch (e) {
