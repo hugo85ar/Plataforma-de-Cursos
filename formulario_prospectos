@@ -73,7 +73,7 @@
 
 <script>
 // 🔹 CONFIGURACIÓN: La misma URL que usamos en index y dashboard
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyLOXOGA8rMYKyxGrYPNtDo7ZFUlUeQjDRAgrfhSJk2p44pzzHdtx-ZQ9U7JW0bd5wJvQ/exec";
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzepLSJy1NJhZYAcJTNHASfNZc3_Ajq7EBqJ9dc10WqEV1r6M2tbpMfUnXa6MBEe64B7w/exec";
 
   async function enviarFormularioGitHub() {
     // 1. Recuperamos datos del alumno desde la memoria del navegador
