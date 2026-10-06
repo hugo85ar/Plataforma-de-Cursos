@@ -404,19 +404,33 @@ fbq('track', 'ViewContent', {
     }
 
     async function verificarYVer(url, titulo) {
-      const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${encodeURIComponent(userEmail)}&token=${userToken}`);
-      const data = await response.json();
-      if (data.status === "success" || data.esValido === true) {
-        const frame = document.getElementById('modalVideoFrame');
-        document.getElementById('modalVideoTitle').innerText = titulo;
-        let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
-        frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
-        document.getElementById('videoModal').style.display = 'flex';
-      } else { 
-        alert("Sesión expirada"); 
-        cerrarSesion(); 
-      }
+  // === PARCHE PARA CHECKLIST MAESTRO 360 ===
+  if (url.includes('.html') || url.includes('checklist') || url.includes('github.io')) {
+    // Abre el checklist manteniendo la sesión del alumno
+    const sep = url.includes('?') ? '&' : '?';
+    const urlConSesion = url + sep + `email=${encodeURIComponent(userEmail)}&token=${userToken}&nombre=${encodeURIComponent(localStorage.getItem('userName')||'')}`;
+    window.open(url, '_blank'); // Abre directo, el checklist lee localStorage solo
+    return;
+  }
+  // === FIN PARCHE ===
+
+  const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${encodeURIComponent(userEmail)}&token=${userToken}`);
+  const data = await response.json();
+  if (data.status === "success" || data.esValido === true) {
+    const frame = document.getElementById('modalVideoFrame');
+    document.getElementById('modalVideoTitle').innerText = titulo;
+    let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
+    if (!videoId) { // Si no es Drive, abrilo directo
+      window.open(url, '_blank');
+      return;
     }
+    frame.src = `https://drive.google.com/file/d/${videoId}/preview`;
+    document.getElementById('videoModal').style.display = 'flex';
+  } else { 
+    alert("Sesión expirada"); 
+    cerrarSesion(); 
+  }
+}
 
     async function marcarLeccionManual(leccionId) {
         const btn = document.getElementById(`btn-${leccionId}`);
