@@ -1,1 +1,138 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checklist Maestro 360 — Auditoría Final VIP</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#1E3A8A;--bg:#EDEEF2;--card:#fff;--muted:#6B7280;--ok:#15803d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#111827;font-family:Inter,system-ui,sans-serif}
+.mono{font-family:"JetBrains Mono",monospace}
+.header{position:sticky;top:0;z-index:20;background:rgba(237,238,242,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06)}
+.wrap{max-width:1120px;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.badge{background:var(--primary);color:#fff;padding:4px 10px;border-radius:999px;font-size:10px;letter-spacing:.12em;font-weight:700}
+.bar{height:3px;background:#fff}.bar>div{height:100%;background:var(--primary);transition:width.4s}
+.card{background:var(--card);border-radius:14px;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 10px rgba(0,0,0,.03);padding:18px}
+.grid3{display:grid;grid-template-columns:1fr;gap:12px;padding:12px}
+@media(min-width:900px){.grid3{grid-template-columns:repeat(3,1fr)}}
+.item{display:flex;gap:10px;padding:7px 6px;border-radius:8px;cursor:pointer}.item:hover{background:#F7F8FB}
+.chk{width:16px;height:16px;border:1.5px solid #D1D5DB;border-radius:4px;display:grid;place-items:center;transition:.15s}
+.chk.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.progress{height:3px;background:#EEF0F5;border-radius:99px;overflow:hidden}.progress>div{height:100%;transition:width.4s}
+.a4{max-width:1120px;margin:16px auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(17,24,39,.08);border:1px solid rgba(0,0,0,.06)}
+@media print{.header,.no-print{display:none!important}.a4{box-shadow:none;border:none;margin:0;max-width:100%} }
+</style>
+</head>
+<body>
+<div class="header">
+<div class="wrap">
+<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="badge">360</span><span class="mono" style="font-size:10px;letter-spacing:.15em;color:var(--muted)">AUDITORÍA FINAL VIP / PACK 3</span><span id="topCounter" class="mono" style="background:#fff;border:1px solid rgba(0,0,0,.08);padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700">0/27 · 0%</span><span id="saveState" class="mono" style="font-size:10px;color:var(--muted)"></span></div>
+<div style="display:flex;gap:8px;align-items:center"><span id="userInfo" class="mono" style="font-size:11px"></span><div style="width:88px;height:8px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:999px;overflow:hidden"><div id="topBar" style="height:100%;width:0%;background:var(--primary)"></div></div></div>
+</div>
+<div class="bar"><div id="topBar2" style="width:0%"></div></div>
+</div>
+
+<div class="a4">
+<div style="padding:22px 28px;border-bottom:1px solid rgba(0,0,0,.06);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+<div><div class="badge" style="margin-bottom:8px">LISTA DE VERIFICACIÓN MAESTRO</div><h1 style="margin:0;font-size:28px;letter-spacing:-.03em;line-height:.95;font-weight:800">LISTA DE VERIFICACIÓN MAESTRO 360 — <span style="color:var(--primary);font-weight:400">AUDITORÍA FINAL VIP</span></h1><p style="color:#4B5563;font-size:13px;margin-top:8px;max-width:68ch"><b>Pack 3 Transformación Empresarial 360</b> | De Emprendedor Manual a Empresario Automatizado. Validación integral de marca, web y operación.</p></div>
+<div style="text-align:right"><div class="mono" style="font-size:10px;letter-spacing:.15em;color:var(--muted)">PROGRESO</div><div id="bigCounter" style="font-size:26px;font-weight:800">0/27 · 0%</div></div>
+</div>
+
+<div class="grid3" id="grid"></div>
+
+<div style="padding:14px 28px;background:#F7F8FB;border-top:1px solid rgba(0,0,0,.06);display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+<div style="flex:1;min-width:260px" class="mono" style="font-size:11px;color:#6B7280">💡 <b>Nota Mentoría:</b> “Tu index.html es tu motor. Si el motor está limpio y ligero, el negocio corre más rápido. Si está sucio, no avanza”.</div>
+<button id="btnWA" style="background:#25D366;border:none;padding:12px 18px;border-radius:12px;font-weight:800;cursor:pointer">💬 Enviar a WhatsApp para Auditoría VIP</button>
+</div>
+</div>
+
+<p class="no-print" style="text-align:center;color:#6B7280;font-size:12px;margin:16px">Marcá cada ítem — se guarda automático en Sheets en <b>CHECKLIST_360</b></p>
+
+<script>
+const API="https://script.google.com/macros/s/AKfycbzepLSJy1NJhZYAcJTNHASfNZc3_Ajq7EBqJ9dc10WqEV1r6M2tbpMfUnXa6MBEe64B7w/exec";
+const SECCIONES=[
+{id:"cimientos",num:"01",title:"CIMIENTOS",sub:"(DOC1) — MARCA",color:"#1E3A8A",items:["Logotipo principal + variante secundaria","Paleta HEX: Primario / Segunda / Acento","Jerarquía H1/H2/H3 definida","PUV clara y memorable","Tono de Voz y Diferencial","Formatos: Reels 9:16, Post 4:5, YT 16:9","Prompt IA Identidad aplicada","3 Piezas Canva: Poste / Pulgar / Banner","Matriz Estratégica completa"]},
+{id:"motor",num:"02",title:"MOTOR WEB",sub:"(DOC2) — SEO",color:"#2563EB",items:["PageSpeed >80 / Carga <3 seg","Imágenes WebP, fuentes optimizadas","Título persuasivo (<60 carac)","Meta Descripción con CTA","H1 único por página","H2 beneficios / H3 detalles","ALT descriptivo en imágenes","Prompt Maestro Auditoría IA aplicado","Correcciones index.html hechas"]},
+{id:"operacion",num:"03",title:"OPERACIÓN",sub:"(DOC3) — CRM",color:"#0F2A6B",items:["Formularios de Google -> Hojas de cálculo OK","Validación de datos activa","FILTER() para segmentar","SEQUENCE() + CONTAR.SI() numeración","Ficha Cliente con BUSCARV()","Macro Historial grabada","Valores de Apps Script + $","Tabla Dinámica + Dashboard","Total mensual en tiempo real"]}
+];
+let state={cimientos:Array(9).fill(false),motor:Array(9).fill(false),operacion:Array(9).fill(false)};
+let user={email:localStorage.getItem("userEmail"),name:localStorage.getItem("userName"),token:localStorage.getItem("userToken")};
+let saving=false, firstLoad=true;
+
+function render(){
+ const flat=[...state.cimientos,...state.motor,...state.operacion];
+ const total=27, done=flat.filter(Boolean).length, pct=Math.round(done/total*100);
+ document.getElementById("topCounter").textContent=`${done}/${total} · ${pct}%`;
+ document.getElementById("bigCounter").textContent=`${done}/27 · ${pct}%`;
+ document.getElementById("topBar").style.width=pct+"%";
+ document.getElementById("topBar2").style.width=pct+"%";
+ document.getElementById("userInfo").textContent=user.email?`Hola, ${user.name||"Alumno"} — ${user.email}`:"Sin sesión — guardado local";
+ const grid=document.getElementById("grid"); grid.innerHTML="";
+ SECCIONES.forEach(sec=>{
+  const c=state[sec.id].filter(Boolean).length;
+  const card=document.createElement("div"); card.className="card"; card.style.borderTop=`3.5px solid ${sec.color}`;
+  card.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px"><div style="display:flex;gap:10px;align-items:center"><div style="width:32px;height:32px;background:${sec.color};color:#fff;border-radius:8px;display:grid;place-items:center;font-weight:800" class="mono">${sec.num}</div><div><div style="font-weight:800;font-size:13px">${sec.title}</div><div class="mono" style="font-size:10px;color:#6B7280">${sec.sub}</div></div></div><span class="mono" style="font-size:11px;background:#F3F4F6;border:1px solid rgba(0,0,0,.06);padding:3px 8px;border-radius:999px">${c}/9</span></div><div class="progress"><div style="width:${c/9*100}%;background:${sec.color}"></div></div><div id="list-${sec.id}" style="margin-top:10px"></div>`;
+  grid.appendChild(card);
+  const list=card.querySelector(`#list-${sec.id}`);
+  sec.items.forEach((txt,i)=>{
+   const on=state[sec.id][i];
+   const row=document.createElement("div"); row.className="item";
+   row.innerHTML=`<span class="chk ${on?'on':''}">${on?'✓':''}</span><span style="font-size:12.5px;line-height:1.35;${on?'color:#6B7280;text-decoration:line-through':''}">${txt}</span>`;
+   row.onclick=()=>{state[sec.id][i]=!state[sec.id][i]; render(); scheduleSave();};
+   list.appendChild(row);
+  });
+ });
+}
+
+let saveTimer=null;
+function scheduleSave(){
+ if(!user.email) return localStorage.setItem("checklist_360_local",JSON.stringify(state));
+ if(firstLoad) return;
+ clearTimeout(saveTimer);
+ document.getElementById("saveState").textContent="Guardando…";
+ saveTimer=setTimeout(async()=>{
+  const flat=[...state.cimientos,...state.motor,...state.operacion];
+  const done=flat.filter(Boolean).length;
+  const detalles={cimientos:state.cimientos.filter(Boolean).length,motor:state.motor.filter(Boolean).length,operacion:state.operacion.filter(Boolean).length};
+  const payload={action:"guardarchecklist",email:user.email,nombre:user.name,token:user.token,progreso:`${done}/27`,detalles,checks:flat,checksFlat:flat};
+  try{
+   const r=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+   const j=await r.json();
+   document.getElementById("saveState").textContent=j.status==="success"?"✓ Guardado en Sheets":"Error";
+  }catch(e){document.getElementById("saveState").textContent="Error guardando";}
+  setTimeout(()=>document.getElementById("saveState").textContent="",2000);
+ },700);
+}
+
+async function load(){
+ if(!user.email) return render();
+ try{
+  document.getElementById("saveState").textContent="Restaurando…";
+  const url=`${API}?action=getchecklist&email=${encodeURIComponent(user.email)}&token=${encodeURIComponent(user.token)}&t=${Date.now()}`;
+  const r=await fetch(url); const j=await r.json();
+  if(j.status==="success" && j.progreso && Array.isArray(j.progreso.checks)){
+   const flat=j.progreso.checks;
+   if(flat.length===27){
+    state={cimientos:flat.slice(0,9),motor:flat.slice(9,18),operacion:flat.slice(18,27)};
+   }
+  }
+ }catch(e){}
+ render();
+ setTimeout(()=>{firstLoad=false; document.getElementById("saveState").textContent="";},800);
+}
+
+document.getElementById("btnWA").onclick=()=>{
+ const flat=[...state.cimientos,...state.motor,...state.operacion].filter(Boolean).length;
+ const msg=`¡Hola Hugo! Soy ${user.name||"alumno"} (${user.email||""}) — Completé mi Checklist Maestro 360 — ${flat}/27 — Ya estoy listo para mi Auditoría Final VIP del Pack 3. 🚀`;
+ window.open(`https://wa.me/5491136151754?text=${encodeURIComponent(msg)}`,"_blank");
+};
+
+if(!user.email ||!user.token){
+ document.body.insertAdjacentHTML("beforeend",`<div style="position:fixed;inset:0;background:rgba(17,24,39,.85);backdrop-filter:blur(12px);display:grid;place-items:center;z-index:9999;padding:16px"><div style="background:#fff;padding:28px;border-radius:20px;max-width:420px;text-align:center"><h2 style="margin:0">🔒 Iniciá sesión en la Academia</h2><p style="color:#6B7280;font-size:13px">Este checklist guarda automático en tu ficha. Entrá desde el login.</p><a href="index.html" style="display:inline-flex;background:#1E3A8A;color:#fff;padding:11px 18px;border-radius:12px;text-decoration:none;font-weight:700;margin-top:12px">Ir al Login →</a></div></div>`);
+}
+load();
+</script>
+</body>
+</html>
