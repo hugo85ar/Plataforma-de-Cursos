@@ -350,7 +350,7 @@ fbq('track', 'ViewContent', {
                             </button>
                             ${item.material && item.material.trim() !== "" && item.material !== "#" ? `
                                 <div style="margin-top: 15px;">
-                                    <a href="${item.material}" target="_blank" class="material-button">
+                                    <a href="${item.material}" target="_blank" rel="noopener noreferrer" class="material-button" onclick="if(this.href.includes('.html')){ event.preventDefault(); window.open(this.href, '_blank'); }">
                                         <i class="fas fa-file-download"></i> Descargar Material de Apoyo
                                     </a>
                                 </div>
