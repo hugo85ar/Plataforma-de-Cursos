@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,7 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
   <!-- META PIXEL -->
-<!-- META PIXEL -->
 <script>
 !function(f,b,e,v,n,t,s)
 {
@@ -22,30 +20,21 @@ n.callMethod ?
 n.callMethod.apply(n,arguments) :
 n.queue.push(arguments)
 };
-
 if(!f._fbq)f._fbq=n;
-
 n.push=n;
 n.loaded=!0;
 n.version='2.0';
 n.queue=[];
-
 t=b.createElement(e);
 t.async=!0;
 t.src=v;
-
 s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s);
 }
 (window, document, 'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-
 fbq('init', '2189151328193841');
-
-/* La persona entró al Dashboard */
 fbq('track', 'PageView');
-
-/* La persona vio el panel de cursos */
 fbq('track', 'ViewContent', {
   content_name: 'Panel de Cursos',
   content_type: 'product'
@@ -53,24 +42,15 @@ fbq('track', 'ViewContent', {
 </script>
 
 <noscript>
-<img
-  height="1"
-  width="1"
-  style="display:none"
-  src="https://www.facebook.com/tr?id=2189151328193841&ev=PageView&noscript=1"
-/>
+<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2189151328193841&ev=PageView&noscript=1" />
 </noscript>
 
-  
   <style>
-    /* 🔹 ESTILOS BASE */
     body {
       font-family: 'Open Sans', sans-serif; margin: 0; padding: 0;
       background: linear-gradient(135deg, #1f2559, #3b82f6); color: #333; line-height: 1.6; min-height: 100vh;
     }
     .container { max-width: 1200px; margin: 2.5rem auto; padding: 0 1.5rem 3rem; }
-
-    /* 🔹 HEADER */
     .header {
       background: rgba(15, 23, 42, 0.96); color: #f9fafb;
       padding: 1.25rem 1.5rem; border-radius: 18px;
@@ -82,8 +62,6 @@ fbq('track', 'ViewContent', {
       padding: 0.65rem 1.4rem; border-radius: 999px; text-decoration: none;
       font-weight: 600; cursor: pointer; border: none; transition: 0.3s;
     }
-
-    /* 💼 TARJETA DE CONSULTORÍA (PROYECTO EMPRENDEDOR) */
     .consultoria-banner {
       background: #ffffff; padding: 2rem; border-radius: 20px;
       margin-bottom: 2.5rem; border-left: 8px solid #3b82f6;
@@ -97,96 +75,72 @@ fbq('track', 'ViewContent', {
       text-decoration: none; font-weight: 700; transition: 0.3s;
     }
     .consultoria-btn:hover { background: #3b82f6; transform: scale(1.05); }
-
     .welcome-message {
       background: rgba(248, 250, 252, 0.98); padding: 1.5rem;
       margin-bottom: 1.8rem; border-radius: 16px; border-left: 5px solid #22c55e;
     }
-
-    /* 🔹 GRID DE CURSOS */
-.course-grid { 
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 2.5rem !important;
-  justify-content: center !important; /* Mantiene todo centrado si hay uno o muchos */
-}
-.course-card {
-  width: 550px !important;
-  background: white !important;
-  border-radius: 16px;
-  overflow: hidden; /* Esto es clave para contener la imagen dentro de los bordes redondeados */
-  display: flex !important;
-  flex-direction: column !important;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-  transition: 0.3s;
-}
-
-    /* 🎀 CINTA "GRATIS" (Ahora es un sticker flotante) */
-
+    .course-grid { 
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 2.5rem !important;
+      justify-content: center !important;
+    }
+    .course-card {
+      width: 550px !important;
+      background: white !important;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex !important;
+      flex-direction: column !important;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      transition: 0.3s;
+    }
     .course-card:hover { transform: translateY(-10px); }
-    
-    /* 🖼️ IMÁGENES TIPO BANNER (Ajuste preciso) */
-.course-card-image{
-    width:100%;
-    display:block;
-   /* height:auto;*/
-    /*max-height:180px;    antes 150 */
-    /*object-fit:contain;*/
-    /*background:#0f172a;*/
-    /*padding:5px 0;*/
-}
-.course-card-content {
-  padding: 1.5rem !important;
-  flex-grow: 1;
-}
-   .course-card-content h3 { 
-  font-size: 1.4rem !important; 
-  margin-bottom: 10px !important;
-  color: #1f2559;
-}
+    .course-card-image{
+        width:100%;
+        display:block;
+    }
+    .course-card-content {
+      padding: 1.5rem !important;
+      flex-grow: 1;
+    }
+    .course-card-content h3 { 
+      font-size: 1.4rem !important; 
+      margin-bottom: 10px !important;
+      color: #1f2559;
+    }
     .course-card-button { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 0.8rem; border-radius: 12px; text-align: center; font-weight: 600; border: none; cursor: pointer; transition: 0.3s; }
-
-    
-
     #loader { color: white; text-align: center; font-size: 1.2rem; margin-top: 50px; }
-
-    /* 📱 MÓVIL: Aquí "flaqueamos" la imagen para que parezca banner */
-/* 📱 OPTIMIZACIÓN MÓVIL FINAL */
-@media (max-width: 768px) { 
-  .course-card {
-    width: 100% !important;
-    margin-top: 10px;
-  }
-  
-  .container { 
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0 20px 3rem !important;
-    margin: 1rem 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .course-grid { 
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1.5rem !important;
-  }
-
-.course-card-image {
-  width: 100% !important;
-  height: auto !important;
-  max-height: 180px !important;
-  object-fit: contain !important;
-  display: block !important;
-  background-color: #0f172a;
-  padding: 5px 0;
-}
-  /* Ajuste sutil de títulos para acompañar el cambio */
-  .course-card-content { padding: 1.2rem !important; }
-  .course-card-content h3 { font-size: 1.1rem !important; margin-bottom: 8px !important; }
-  .course-card-content p { font-size: 0.85rem !important; margin-bottom: 12px !important; }
-}
-    
+    @media (max-width: 768px) { 
+      .course-card {
+        width: 100% !important;
+        margin-top: 10px;
+      }
+      .container { 
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 20px 3rem !important;
+        margin: 1rem 0 !important;
+        box-sizing: border-box !important;
+      }
+      .course-grid { 
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+      }
+      .course-card-image {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 180px !important;
+        object-fit: contain !important;
+        display: block !important;
+        background-color: #0f172a;
+        padding: 5px 0;
+      }
+      .course-card-content { padding: 1.2rem !important; }
+      .course-card-content h3 { font-size: 1.1rem !important; margin-bottom: 8px !important; }
+      .course-card-content p { font-size: 0.85rem !important; margin-bottom: 12px !important; }
+    }
   </style>
 </head>
 <body>
@@ -197,24 +151,18 @@ fbq('track', 'ViewContent', {
       <button class="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button>
     </header>
 
-   <div class="consultoria-banner" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; margin-bottom: 20px; gap: 15px; flex-wrap: wrap;">
-    <div class="consultoria-content" style="text-align: left; margin: 0;">
-        <h4 style="color: #ffffff; margin: 0; font-size: 1rem; font-weight: 600;">¿Buscas acelerar tus resultados?</h4>
-        <p style="color: #cbd5e1; margin: 0; font-size: 0.85rem;">Explora nuestros packs avanzados o agenda una consultoría.</p>
+   <!-- BANNER HOLA EMPRENDEDOR - DASHBOARD -->
+   <div style="background: #ffffff; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+    <div style="text-align: left; flex: 1; min-width: 240px;">
+        <h3 style="color: #1a1f36; margin: 0 0 4px 0; font-size: 1.05rem; font-weight: 800;">🎉 Nuevo curso para alumnos VIP por solo $5</h3>
+        <p style="color: #4b5563; margin: 0; font-size: 0.88rem; line-height: 1.4;"><b>Hola Emprendedor</b> — Tu primer paso para emprender sin saber por dónde empezar. 3 módulos, 7 lecciones, 2 plantillas. Acceso de por vida.</p>
     </div>
-    
     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <!-- Botón sutil 1: Catálogo -->
-        <a href="https://hugo85ar.github.io/catalogo-promociones/" target="_blank" rel="noopener" class="consultoria-btn" style="background-color: #059669; border-color: #059669; padding: 6px 14px; font-size: 0.85rem;">
-            🚀 Ver Catálogo
-        </a>
-
-        <!-- Botón sutil 2: Consultoría WhatsApp -->
-        <a href="#" id="consultoriaBtn" class="consultoria-btn" style="padding: 6px 14px; font-size: 0.85rem;" target="_blank" rel="noopener">
-            💬 Asesoría
+        <a href="https://hugoalvigini.github.io/Hola-Emprendedor/" target="_blank" rel="noopener" style="background-color: #ff5a1f; color: #ffffff; padding: 11px 18px; border-radius: 999px; text-decoration: none; font-weight: 800; font-size: 0.88rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255,90,31,0.25);">
+            Entrá a mirar lo que te llevás! →
         </a>
     </div>
-</div>
+   </div>
 
     <section class="welcome-message">
       <h2 id="welcomeText" style="margin:0 0 5px 0;">Cargando...</h2>
@@ -225,40 +173,30 @@ fbq('track', 'ViewContent', {
     <div class="course-grid" id="courseGrid"></div>
   </div>
  
- 
-
 <script>                 
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzepLSJy1NJhZYAcJTNHASfNZc3_Ajq7EBqJ9dc10WqEV1r6M2tbpMfUnXa6MBEe64B7w/exec";
-
     const userEmail = localStorage.getItem('userEmail');
     const userToken = localStorage.getItem('userToken');
-
     if (!userEmail || !userToken) {
         window.location.href = "index.html";
     } else {
         cargarDashboard();
     }
-
     async function cargarDashboard() {
         const loader = document.getElementById('loader');
         const welcome = document.getElementById('welcomeText');
         try {
             const response = await fetch(`${WEB_APP_URL}?action=getDashboard&email=${userEmail}&token=${userToken}`);
             const data = await response.json();
-            
             if (data.status === "success") {
                 loader.style.display = 'none';
                 const nombre = data.nombre || localStorage.getItem('userName') || 'Emprendedor';
                 welcome.innerText = "¡Bienvenido, " + nombre + "!";
-                
-               // 🚀 PERSONALIZACIÓN DINÁMICA DEL MENSAJE
-            const msg = `Hola Hugo! Soy ${nombre} (${userEmail}), vengo desde mi Panel de Cursos y me gustaría consultarte por una asesoría personalizada`;
-            const finalUrl = `https://wa.me/5491136151754?text=${encodeURIComponent(msg)}`;
-            
-            // ✅ ACTUALIZAMOS ÚNICAMENTE EL BANNER (Quitamos la línea de 'waLink')
-            document.getElementById('consultoriaBtn').href = finalUrl;
-            
-            renderizarCursos(data.cursos);
+                const msg = `Hola Hugo! Soy ${nombre} (${userEmail}), vengo desde mi Panel de Cursos y me gustaría consultarte por una asesoría personalizada`;
+                const finalUrl = `https://wa.me/5491136151754?text=${encodeURIComponent(msg)}`;
+                const consultoriaBtn = document.getElementById('consultoriaBtn');
+                if (consultoriaBtn) consultoriaBtn.href = finalUrl;
+                renderizarCursos(data.cursos);
             } else {
                 cerrarSesion();
             }
@@ -266,7 +204,6 @@ fbq('track', 'ViewContent', {
             loader.innerText = "Error de conexión. Reintenta en unos momentos.";
         }
     }
-
     function renderizarCursos(cursos) {
         const grid = document.getElementById('courseGrid');
         grid.innerHTML = cursos && cursos.length > 0 
@@ -281,12 +218,10 @@ fbq('track', 'ViewContent', {
                 </div>`).join('')
             : '<p style="color:white; grid-column: 1/-1; text-align:center;">No tienes cursos asignados aún.</p>';
     }
-
     function irAlCurso(id) {
         localStorage.setItem('cursoActual', id);
         window.location.href = "curso.html";
     }
-
     function cerrarSesion() {
         localStorage.clear();
         window.location.href = "index.html";
