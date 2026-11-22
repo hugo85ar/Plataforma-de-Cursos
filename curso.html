@@ -10,51 +10,33 @@
 !function(f,b,e,v,n,t,s)
 {
 if(f.fbq)return;
-
 n=f.fbq=function(){
 n.callMethod ?
 n.callMethod.apply(n,arguments) :
 n.queue.push(arguments)
 };
-
 if(!f._fbq)f._fbq=n;
-
 n.push=n;
 n.loaded=!0;
 n.version='2.0';
 n.queue=[];
-
 t=b.createElement(e);
 t.async=!0;
 t.src=v;
-
 s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s);
-
 }(window, document, 'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-
 fbq('init', '2189151328193841');
-
-/* La persona llegó a la página */
 fbq('track', 'PageView');
-
-/* La persona está viendo el contenido del curso */
 fbq('track', 'ViewContent', {
   content_name: 'Curso Google Sheets para Emprendedores',
   content_type: 'product'
 });
 </script>
-
 <noscript>
-<img
-  height="1"
-  width="1"
-  style="display:none"
-  src="https://www.facebook.com/tr?id=2189151328193841&ev=PageView&noscript=1"
-/>
+<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2189151328193841&ev=PageView&noscript=1" />
 </noscript>
-  
   <style>
     .whatsapp-bubble { 
       position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; 
@@ -63,31 +45,24 @@ fbq('track', 'ViewContent', {
       transition: 0.3s; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
     .whatsapp-bubble:hover { transform: scale(1.15); }
-
     .reset-password-button, .logout-button, .inicio-button {
         width: 180px; padding: 10px 0; display: block; margin-bottom: 8px; text-align: center;
     }
-      
     .material-button {
       display: inline-flex; align-items: center; gap: 10px; background-color: #0d6efd;
       color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none;
       font-weight: 600; font-size: 0.9rem; margin-top: 15px; transition: 0.3s; border: none; cursor: pointer;
     }
     .material-button:hover { background-color: #0b5ed7; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-      
     .btn-completar { background-color: #f1f5f9; color: #475569; padding: 0.8rem; border-radius: 8px; border: 2px solid #e2e8f0; width: 100%; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; }
     .btn-completar.visto { background-color: #dcfce7 !important; color: #15803d !important; border-color: #22c55e !important; }
-      
     .reset-password-button { background-color: #ff9800; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.9rem; width: 150px; text-align: center; margin-bottom: 5px; }
     .logout-button { background-color: #dc3545; color: white; padding: 0.5rem 1rem; border-radius: 5px; border: none; font-weight: 600; width: 150px; cursor: pointer; margin-bottom: 5px; }
     .inicio-button { background-color: #007bff; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: 600; width: 150px; text-align: center; }
-
     .formulario-container { background-color: #ffffff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); border: 2px solid #0056b3; margin-top: 1rem; }
     .formulario-submit { background-color: #28a745; color: white; border: none; padding: 1rem; width: 100%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 1.1rem; }
-
     body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #1f2559, #3b82f6); background-attachment: fixed; color: #333; line-height: 1.6; }
     .container { max-width: 1100px; margin: 2.5rem auto; padding: 0 1.5rem; }
-    
     .course-header {
   background: #ffffff !important;
   display: flex !important;
@@ -103,7 +78,6 @@ fbq('track', 'ViewContent', {
   font-size: 1.5rem !important;
   color: #1e2335 !important;
 }
-    
     .action-buttons {
   display: flex !important;
   flex-direction: row !important;
@@ -111,31 +85,22 @@ fbq('track', 'ViewContent', {
   align-items: center !important;
   flex-wrap: wrap !important;
 }
-
     .action-buttons a, .action-buttons button {
   width: auto !important;
   padding: 8px 14px !important;
   font-size: 0.8rem !important;
   margin: 0 !important;
 }
-    
-    /* 🛡️ REGLA MAESTRA: OBLIGA A CUALQUIER TARJETA/MÓDULO A REDONDEARSE Y RECORTAR LO QUE SOBRESALGA */
     .module { background-color: #ffffff; padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
-    
     .lesson { display:grid; grid-template-columns:1fr 320px; gap:20px; align-items:center; background:#f8fafc; border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; border:1px solid #e2e8f0; }
      @media(max-width:768px){ .lesson{grid-template-columns:1fr} }
     .lesson-video-section img { width: 100%; max-width: 450px; border-radius: 12px; cursor: pointer; }
-    
     .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; width: 100%; }
     .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .video-popout-overlay { position: absolute; top: 0; right: 0; width: 100px; height: 80px; z-index: 10; background: transparent; }
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
-    
     .modal-content { background: white; border-radius: 10px; width: 95% !important; max-width: 800px; overflow: hidden; position: relative; max-height: 90vh; display: flex; flex-direction: column; }
-
     #loader { color: white; text-align: center; padding: 50px; font-size: 1.2rem; }
-
-    /* ESTILO FIJO PARA EL BANNER DINÁMICO */
     .course-banner-wrapper {
   width: 100%;
   aspect-ratio: 16 / 4.5;
@@ -145,7 +110,6 @@ fbq('track', 'ViewContent', {
   background-repeat: no-repeat;
   background-color: #000;
 }
-
     @media (max-width: 600px) {
       .course-banner-wrapper { height: 110px !important; }
       .action-buttons { display:flex; flex-direction:row; gap:8px; flex-wrap:wrap; }
@@ -174,22 +138,19 @@ fbq('track', 'ViewContent', {
       </div>
     </div>
 
-  <!-- BANNER DE ALTO IMPACTO SUPERIOR -->
-  <div class="consultoria-banner" style="background: #ffffff; border-radius: 16px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
-    <div class="consultoria-content" style="text-align: left; flex: 1; min-width: 260px;">
-        <h3 style="color: #1a1f36; margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 700;">
-            🚀 ¿Quieres llevar tu negocio al siguiente nivel?
+  <!-- BANNER HOLA EMPRENDEDOR - ALUMNOS VIP -->
+  <div style="background: linear-gradient(135deg, #ff5a1f, #ff8a3d); border-radius: 16px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(255,90,31,0.35); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+    <div style="text-align: left; flex: 1; min-width: 260px;">
+        <h3 style="color: #ffffff; margin: 0 0 6px 0; font-size: 1.1rem; font-weight: 800;">
+            🎉 Nuevo curso para alumnos VIP por solo $5
         </h3>
-        <p style="color: #4b5563; margin: 0; font-size: 0.88rem; line-height: 1.4;">
-            Adquiere nuestros packs avanzados de forma inmediata o agenda una consultoría a medida.
+        <p style="color: #ffffff; margin: 0; font-size: 0.9rem; line-height: 1.4; opacity: 0.95;">
+            <b>Hola Emprendedor</b> — Tu primer paso para emprender sin saber por dónde empezar. 3 módulos, 7 lecciones, 2 plantillas. Acceso de por vida.
         </p>
     </div>
     <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-        <a href="https://hugo85ar.github.io/catalogo-promociones/?modo=clientes" target="_blank" rel="noopener" style="background-color: #059669; color: #ffffff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);">
-            🚀 Ver Catálogo
-        </a>
-        <a href="https://wa.me/5491176529179?text=%C2%A1Hola%20Hugo%21%20Vengo%20de%20la%20plataforma%20de%20cursos.%20Me%20interesa%20consultar%20una%20asesor%C3%ADa%20personalizada." target="_blank" rel="noopener" style="background-color: #1a1f36; color: #ffffff; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(26, 31, 54, 0.2);">
-            💬 Asesoría
+        <a href="https://hugoalvigini.github.io/Hola-Emprendedor/" target="_blank" rel="noopener" style="background-color: #ffffff; color: #ff5a1f; padding: 11px 20px; border-radius: 999px; text-decoration: none; font-weight: 800; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.18);">
+            Entrá a mirar lo que te llevás! →
         </a>
     </div>
   </div>
@@ -238,9 +199,7 @@ fbq('track', 'ViewContent', {
     const userEmail = localStorage.getItem('userEmail');
     const userToken = localStorage.getItem('userToken');
     const cursoId = localStorage.getItem('cursoActual');
-
     if (!userEmail || !userToken || !cursoId) window.location.href = "index.html";
-
     async function init() {
       try {
         const response = await fetch(`${WEB_APP_URL}?action=getCourseData&curso=${cursoId}&email=${userEmail}&token=${userToken}`);
@@ -249,25 +208,20 @@ fbq('track', 'ViewContent', {
         else { alert("Sesión inválida"); cerrarSesion(); }
       } catch (e) { console.error(e); }
     }
-
     function renderCourse(data) {
       document.getElementById('loader').style.display = 'none';
       document.getElementById('statusMessage').style.display = 'none';
       document.getElementById('courseContent').style.display = 'block';
-        
       const nombre = data.nombreUsuario || 'Emprendedor';
       const msgCursos = `Hola Hugo! Soy ${nombre} (${userEmail}). Estoy viendo el curso "${data.nombreCurso}" y me interesa subir mi nivel. ¿Me das info sobre la consultoría o los cursos de Investigación de Mercado, Landings o Clientes en Orden?`;
       document.getElementById('waLinkCursos').href = `https://wa.me/5491136151754?text=${encodeURIComponent(msgCursos)}`;
-      
       document.getElementById('loader').style.display = 'none';
       document.getElementById('courseTitle').innerText = data.nombreCurso;
       document.getElementById('welcomeUser').innerText = `¡Bienvenido/a, ${data.nombreUsuario}!`;
       document.getElementById('progressContainer').style.display = 'block';
       actualizarBarraProgreso(data.porcentajeProgreso || 0);
-
       const content = document.getElementById('courseContent');
       content.innerHTML = ''; 
-
       if (data.formCompletado === false) {
         content.innerHTML = `
           <div class="formulario-container">
@@ -296,7 +250,7 @@ fbq('track', 'ViewContent', {
                   <option value="Servicios">Servicios</option>
                   <option value="Ecommerce">Ecommerce / Productos Digitales</option>
                   <option value="Comercio Fisico/Local">Comercio Físico / Local 🏠</option>
-                  <option value="Freelance">Freelance 👨‍💻</option>
+                  <option value="Freelance">Freelance 👨💻</option>
                 </select>
               </div>
               <div style="margin-bottom:15px;">
@@ -322,12 +276,10 @@ fbq('track', 'ViewContent', {
           </div>`;
         return; 
       }
-
       if (data.urlBanner) {
         document.getElementById('courseBannerContainer').innerHTML = `
           <div class="course-banner-wrapper" style="background-image: url('${data.urlBanner}');"></div>`;
       }
-
       const completadas = data.completadas || [];
       for (const modulo in data.modulos) {
         let moduloHtml = `<div class="module"><h2>${modulo}</h2>`;
@@ -335,7 +287,6 @@ fbq('track', 'ViewContent', {
             if (item.tipo === 'leccion') {
                 const yaVisto = completadas.includes(String(item.id));
                 const imgThumb = item.video.imgUrl || 'https://placehold.co/400x225?text=Ver+Leccion';
-                
                 moduloHtml += `
                     <div class="lesson">
                         <div class="lesson-info">
@@ -363,31 +314,24 @@ fbq('track', 'ViewContent', {
         content.innerHTML += moduloHtml;
       }
     }
-
     async function enviarFormularioProspectos(event) {
   event.preventDefault();
   const btn = event.target.querySelector('button');
   if (btn.disabled) return;
-
   const contentDiv = document.getElementById('courseContent');
   const statusMsg = document.getElementById('statusMessage');
-
   btn.disabled = true;
   btn.innerText = "Procesando...";
   contentDiv.style.display = 'none';
   statusMsg.style.display = 'block';
-
   const params = new URLSearchParams({ action: 'procesarFormulario', email: userEmail });
   new FormData(event.target).forEach((value, key) => params.append(key, value));
-
   try {
     await fetch(WEB_APP_URL, {
       method: 'POST',
       body: params.toString(),
       headers: { "Content-Type": "application/x-www-form-urlencoded" }
     });
-
-    // === ACÁ SÍ: Acaba de completar las 4 preguntas y se guardó en fila 82 ===
     fbq('track', 'CompleteRegistration', {
       content_name: 'Formulario Bio 4 preguntas',
       status: 'completado'
@@ -402,25 +346,20 @@ fbq('track', 'ViewContent', {
         btn.innerText = "¡Comenzar el Curso Ahora!";
       }
     }
-
     async function verificarYVer(url, titulo) {
-  // === PARCHE PARA CHECKLIST MAESTRO 360 ===
   if (url.includes('.html') || url.includes('checklist') || url.includes('github.io')) {
-    // Abre el checklist manteniendo la sesión del alumno
     const sep = url.includes('?') ? '&' : '?';
     const urlConSesion = url + sep + `email=${encodeURIComponent(userEmail)}&token=${userToken}&nombre=${encodeURIComponent(localStorage.getItem('userName')||'')}`;
-    window.open(url, '_blank'); // Abre directo, el checklist lee localStorage solo
+    window.open(url, '_blank');
     return;
   }
-  // === FIN PARCHE ===
-
   const response = await fetch(`${WEB_APP_URL}?action=checkSession&email=${encodeURIComponent(userEmail)}&token=${userToken}`);
   const data = await response.json();
   if (data.status === "success" || data.esValido === true) {
     const frame = document.getElementById('modalVideoFrame');
     document.getElementById('modalVideoTitle').innerText = titulo;
     let videoId = url.includes('d/') ? url.split('d/')[1].split('/')[0] : (url.includes('id=') ? url.split('id=')[1].split('&')[0] : "");
-    if (!videoId) { // Si no es Drive, abrilo directo
+    if (!videoId) {
       window.open(url, '_blank');
       return;
     }
@@ -431,7 +370,6 @@ fbq('track', 'ViewContent', {
     cerrarSesion(); 
   }
 }
-
     async function marcarLeccionManual(leccionId) {
         const btn = document.getElementById(`btn-${leccionId}`);
         if (btn.classList.contains('visto')) return;
@@ -452,22 +390,18 @@ fbq('track', 'ViewContent', {
             btn.querySelector('span').innerText = "Marcar como completada"; 
         }
     }
-
     function actualizarBarraProgreso(porcentaje) {
         document.getElementById('progressBar').style.width = porcentaje + '%';
         document.getElementById('progressText').innerText = Math.round(porcentaje) + '%';
     }
-
     function closeModal() { 
         document.getElementById('videoModal').style.display = 'none'; 
         document.getElementById('modalVideoFrame').src = ''; 
     }
-
     function cerrarSesion() { 
         localStorage.clear(); 
         window.location.href = "index.html"; 
     }
-
     init();
   </script>
 </body>
