@@ -223,33 +223,38 @@ fbq('track', 'ViewContent', {
         window.location.href = "curso.html";
     }
     function cerrarSesion() {
-        localStorage.clear();
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userToken');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('cursoActual');
         window.location.href = "index.html";
     }
 </script>
 
-
-<div id="vip-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;align-items:center;justify-content:center;padding:20px">
-  <div style="background:#fff;max-width:420px;width:100%;border-radius:16px;overflow:hidden;position:relative;text-align:center">
-    <button onclick="cerrarVip()" style="position:absolute;top:10px;right:12px;border:0;background:#fff;border-radius:999px;width:28px;height:28px;font-size:16px;cursor:pointer;z-index:2">X</button>
-    <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/v1795378573/image_20261122_171456_e8zxde.jpg" style="width:100%;display:block" alt="Hola Emprendedor">
-    <div style="padding:20px">
-      <h3 style="margin:0 0 8px">Nuevo curso para alumnos VIP por solo $5</h3>
-      <p style="margin:0 0 16px">Entrá a mirar lo que te llevás!</p>
-      <a href="https://hugoalvigini.github.io/Hola-Emprendedor/" style="display:block;background:#FF5A1F;color:#fff;padding:14px;border-radius:999px;font-weight:800;text-decoration:none;font-size:16px">VER HOLA EMPRENDEDOR POR $5</a>
-    </div>
+<div id="vip-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px">
+  <div style="position:relative;max-width:640px;width:100%">
+    <button onclick="cerrarVip()" style="position:absolute;top:10px;right:12px;border:0;background:#fff;border-radius:999px;width:30px;height:30px;font-size:16px;cursor:pointer;z-index:2">X</button>
+    <a href="https://hugoalvigini.github.io/Hola-Emprendedor/" onclick="marcarVipVisto()" target="_blank" rel="noopener">
+      <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/v1795378573/image_20261122_171456_e8zxde.jpg" style="width:100%;display:block;border-radius:16px" alt="Ahora podés ser Alumno VIP por solo 5 dólares">
+    </a>
   </div>
 </div>
 
 <script>
-  if (!localStorage.getItem('vipPopupSeen')) {
+  var emailActual = localStorage.getItem('userEmail') || 'anon';
+  var vipKey = 'vipPopupSeen_' + emailActual;
+  if (emailActual !== 'anon' && !localStorage.getItem(vipKey)) {
     setTimeout(function(){
       document.getElementById('vip-popup').style.display = 'flex';
+      localStorage.setItem(vipKey, '1');
     }, 3000);
   }
   function cerrarVip(){
     document.getElementById('vip-popup').style.display = 'none';
-    localStorage.setItem('vipPopupSeen','1');
+    localStorage.setItem(vipKey, '1');
+  }
+  function marcarVipVisto(){
+    localStorage.setItem(vipKey, '1');
   }
 </script>
   
